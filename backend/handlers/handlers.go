@@ -45,9 +45,6 @@ func CreateTokenHandler(w http.ResponseWriter, r *http.Request) {
 	apiPassword := os.Getenv("API_PASSWORD")
 	tenantID := os.Getenv("TENANT_ID")
 
-	fmt.Println(apiUserID)
-	fmt.Println(apiPassword)
-	fmt.Println(tenantID)
 	if apiUserID == "" || apiPassword == "" || tenantID == "" {
 		http.Error(w, "Environment variables not set", http.StatusInternalServerError)
 		return
