@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"os"
+	"fmt"
 )
 
 type AuthRequest struct {
@@ -39,20 +41,44 @@ type Project struct {
 }
 
 func CreateTokenHandler(w http.ResponseWriter, r *http.Request) {
-	var authRequest AuthRequest
+	apiUserID := os.Getenv("API_USER_ID")
+	apiPassword := os.Getenv("API_PASSWORD")
+	tenantID := os.Getenv("TENANT_ID")
 
-	if err := json.NewDecoder(r.Body).Decode(&authRequest); err != nil {
-		http.Error(w, "Failed to parse request body", http.StatusBadRequest)
+	fmt.Println(apiUserID)
+	fmt.Println(apiPassword)
+	fmt.Println(tenantID)
+	if apiUserID == "" || apiPassword == "" || tenantID == "" {
+		http.Error(w, "Environment variables not set", http.StatusInternalServerError)
 		return
 	}
 
-	apiURL := "https://identity.c3j1.conoha.io/v3/auth/tokens"
+	authRequest := AuthRequest{
+		Auth: Auth{
+			Identity: Identity{
+				Methods: []string{"password"},
+				Password: Password{
+					User: User{
+						ID:       apiUserID,
+						Password: apiPassword,
+					},
+				},
+			},
+			Scope: Scope{
+				Project: Project{
+					ID: tenantID,
+				},
+			},
+		},
+	}
 
 	payload, err := json.Marshal(authRequest)
 	if err != nil {
 		http.Error(w, "Failed to marshal request body", http.StatusInternalServerError)
 		return
 	}
+
+	apiURL := "https://identity.c3j1.conoha.io/v3/auth/tokens"
 
 	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer(payload))
 	if err != nil {
@@ -61,7 +87,6 @@ func CreateTokenHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer your_api_key")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
