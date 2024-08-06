@@ -1,5 +1,3 @@
-import Vps from './Vps';
-import Game from './Game';
 import '../App.css';
 import React from 'react';
 
@@ -29,5 +27,5 @@ const MainContent: React.FC = () => {
 		</div>
 	  </main>
 	);
-  }
+	}
 export default MainContent;

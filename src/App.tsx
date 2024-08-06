@@ -1,7 +1,7 @@
 import './App.css';
 import Header from "./components/Header";
 import MainContent from "./components/MainContent";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Vps from './components/Vps';
 import Game from './components/Game';
 // import Sidebar from './components/Sidebar';
