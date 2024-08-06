@@ -127,6 +127,7 @@ main {
   aspect-ratio: 1/1;
 }
 
+
 .radio-button input:checked + label {
   background-color: #00bcd4;
   color: white;
