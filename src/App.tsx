@@ -12,16 +12,11 @@ const App: React.FC = () => {
       <Header />
       <div className="content">
         {/* <Sidebar /> */}
-        <BrowserRouter>
-          <Routes>
-          <Route path="/" element={<MainContent />} />
-          <Route path="/vps" element={<Vps />} />
-          <Route path="/game" element={<Game />} />
-          </Routes>
-        </BrowserRouter>
-        <div className='right-area'>
-		       aaa
-		</div>
+        <Routes>
+        <Route path="/" element={<MainContent />} />
+        <Route path="/vps" element={<Vps />} />
+        <Route path="/game" element={<Game />} />
+        </Routes>
       </div>
     </div>
   );
