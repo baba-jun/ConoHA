@@ -1,5 +1,7 @@
 import Vps from './Vps';
 import Game from './Game';
+import '../App.css';
+import React from 'react';
 
 const MainContent: React.FC = () => {
 	return (
@@ -15,17 +17,12 @@ const MainContent: React.FC = () => {
 			<div className="service-item">DBサーバー</div>
 		  </div>
 		</section>
-		  <Vps/>
-		  <Game/>
 		<section className="server-info">
 		  {/* Add server information */}
 		</section>
 		<section className="server-info">
 		  {/* Add server information */}
 		</section>
-		</div>
-		<div className='right-area'>
-		  aaa
 		</div>
 	  </main>
 	);

@@ -1,6 +1,7 @@
 
 const Game = () => {
   return (
+    <main>
     <section className="os-selection">
       <h2>イメージタイプ</h2>
       <div className="os-grid">
@@ -46,6 +47,7 @@ const Game = () => {
         </div>
       </div>
     </section>
+    </main>
   );
 };
 
