@@ -8,37 +8,6 @@ import (
 	"os"
 )
 
-type AuthRequest struct {
-	Auth Auth `json:"auth"`
-}
-
-type Auth struct {
-	Identity Identity `json:"identity"`
-	Scope    Scope    `json:"scope"`
-}
-
-type Identity struct {
-	Methods  []string `json:"methods"`
-	Password Password `json:"password"`
-}
-
-type Password struct {
-	User User `json:"user"`
-}
-
-type User struct {
-	ID       string `json:"id"`
-	Password string `json:"password"`
-}
-
-type Scope struct {
-	Project Project `json:"project"`
-}
-
-type Project struct {
-	ID string `json:"id"`
-}
-
 func CreateTokenHandler(w http.ResponseWriter, r *http.Request) {
 	apiUserID := os.Getenv("API_USER_ID")
 	apiPassword := os.Getenv("API_PASSWORD")

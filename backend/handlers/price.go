@@ -8,12 +8,6 @@ import (
 	"encoding/json"
 )
 
-type Price struct {
-	TypeID        int
-	PlanID        int
-	OriginalPrice float64
-	RealPrice     float64
-}
 
 func LoadPrices(filePath string) ([]Price, error) {
 	file, err := os.Open(filePath)
