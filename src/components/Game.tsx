@@ -1,7 +1,9 @@
+import PricingCard from "./PricingCard";
 
 const Game = () => {
   return (
     <main>
+    <div className='left-area'>
     <section className="os-selection">
       <h2>イメージタイプ</h2>
       <div className="os-grid">
@@ -53,6 +55,10 @@ const Game = () => {
         </div>
       </div>
     </section>
+    </div>
+    <div className="right-area">
+      <PricingCard />
+    </div>
     </main>
   );
 };

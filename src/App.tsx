@@ -19,9 +19,6 @@ const App: React.FC = () => {
           <Route path="/game" element={<Game />} />
           </Routes>
         </BrowserRouter>
-        <div className='right-area'>
-		       aaa
-		</div>
       </div>
     </div>
   );

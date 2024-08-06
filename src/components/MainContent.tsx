@@ -24,6 +24,9 @@ const MainContent: React.FC = () => {
 		  {/* Add server information */}
 		</section>
 		</div>
+		<div className='right-area'>
+			aaaa
+		</div>
 	  </main>
 	);
   }
