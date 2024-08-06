@@ -241,3 +241,29 @@ main {
 .circle-button:hover {
   background-color: #0097a7;
 }
+
+.vps-main {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  padding: 2.5%;
+}
+
+.service-section, .os-selection {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+.os-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
