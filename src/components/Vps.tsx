@@ -1,6 +1,9 @@
+import PricingCard from "./PricingCard";
+
 const Vps = () => {
   return (
-    <main className="vps-main">
+    <main>
+      <div className="left-area">
       <section className="service-section">
         <h2>サービス</h2>
         <div className="os-grid">
@@ -109,6 +112,10 @@ const Vps = () => {
           </div>
         </div>
       </section>
+      </div>
+      <div className="right-area">
+      <PricingCard />
+    </div>
     </main>
   );
 };

@@ -135,6 +135,7 @@ main {
 
 .right-area {
   width: 30%;
+  padding-left: 35px;
 }
 
 .service-grid, .os-grid {
@@ -300,7 +301,7 @@ main {
   display: flex;
   flex-direction: column;
   width: 70%;
-  padding: 2.5%;
+  padding: 2.5% 0% 2.5% 5%;
 }
 
 .service-section, .os-selection {
@@ -311,13 +312,6 @@ main {
 .service-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-  justify-items: center;
-}
-
-.os-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   justify-items: center;
 }
