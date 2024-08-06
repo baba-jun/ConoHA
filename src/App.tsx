@@ -1,12 +1,29 @@
-// App.tsx
 import './App.css';
+import { Button } from "@mui/material";
+import styled from "@emotion/styled";
+
+const TextButton = styled(Button)`
+  text-transform: none;
+  background-color: #e0e0e0;
+  color:black;
+  &:hover {
+    background-color: #00bcd4;
+    color: white;
+  }
+  max-height: 100px;
+  max-width: 100px;
+  min-height: 100px;
+  min-width: 100px;
+  border-radius: 20px;
+  aspect-ratio: 1 / 1;
+`;
+
 
 const App: React.FC = () => {
   return (
     <div className="app">
       <Header />
       <div className="content">
-        <Sidebar />
         <MainContent />
       </div>
     </div>
@@ -22,41 +39,25 @@ const Header: React.FC = () => {
       <nav>
         <ul>
           <li>VPS</li>
-          <li>WING</li>
           <li>GAME</li>
-          <li>AI</li>
         </ul>
       </nav>
-      <div className="user-info">
-        <span>ヘルプ</span>
-        <span>お知らせ</span>
-        <span>Intern2024-TeamB@gmo.jp</span>
-      </div>
     </header>
   );
 }
 
 // Sidebar.tsx
-const Sidebar: React.FC = () => {
-  return (
-    <aside>
-      <button className="add-server">サーバー追加</button>
-      <ul>
-        <li>サーバー</li>
-        <li>ストレージ</li>
-        <li>イメージ</li>
-        <li>ネットワーク</li>
-        <li>セキュリティ</li>
-        <li>オブジェクトストレージ</li>
-        <li>DNS</li>
-        <li>ライセンス</li>
-        <li>ドメイン</li>
-        <li>API</li>
-      </ul>
-      <div className="version">Ver.3.0</div>
-    </aside>
-  );
-}
+// const Sidebar: React.FC = () => {
+//   return (
+//     <aside>
+//       <button className="add-server">サーバー追加</button>
+//       <ul>
+//         <li>サーバー</li>
+//       </ul>
+//       <div className="version">Ver.3.0</div>
+//     </aside>
+//   );
+// }
 
 // MainContent.tsx
 const MainContent: React.FC = () => {
@@ -75,12 +76,9 @@ const MainContent: React.FC = () => {
       <section className="os-selection">
         <h2>イメージタイプ</h2>
         <div className="os-grid">
-          <div className="os-item active">CentOS</div>
-          <div className="os-item">Ubuntu</div>
-          <div className="os-item">Debian</div>
-          <div className="os-item">Rocky Linux</div>
-          <div className="os-item">AlmaLinux</div>
-          {/* Add more OS items */}
+          <TextButton>CentOS</TextButton>
+          <TextButton>Ubuntu</TextButton>
+          <TextButton>Debian</TextButton>
         </div>
       </section>
       <section className="server-info">
