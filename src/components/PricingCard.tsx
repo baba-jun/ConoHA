@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 
+
 const PricingCard = () => {
+
+
   return (
     <div className="pricing-card-wrapper">
     <div className="pricing-card">
@@ -25,8 +28,8 @@ const PricingCard = () => {
       </div>
       </div>
       <div className="button-container">
-        <div className="circle-button">料金比較</div>
-        <div className="circle-button">何かお困りですか？</div>
+        <button className="circle-button">料金比較</button>
+        <button className="circle-button">何かお困りですか？</button>
     </div>
     </div>
   );
