@@ -41,3 +41,11 @@ type Scope struct {
 type Project struct {
 	ID string `json:"id"`
 }
+
+type AuthResponse struct {
+	Token Token `json:"token"`
+}
+
+type Token struct {
+	ExpiresAt string `json:"expires_at"`
+}
