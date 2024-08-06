@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Header: React.FC = () => {
 	return (
 	  <header>
@@ -6,8 +8,8 @@ const Header: React.FC = () => {
 		</div>
 		<nav>
 		  <ul>
-			<li>VPS</li>
-			<li>GAME</li>
+        <Link to="/vps" className='header-nav-link'>VPS</Link>
+        <Link to="/game" className='header-nav-link'>Game</Link>
 		  </ul>
 		</nav>
 	  </header>

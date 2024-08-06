@@ -1,6 +1,7 @@
 
 const Vps = () => {
     return (
+      <main>
         <section className="os-selection">
         <h2>イメージタイプ</h2>
         <div className="os-grid">
@@ -38,6 +39,7 @@ const Vps = () => {
             </div>
           </div>
         </section>
+        </main>
     );
   };
 
