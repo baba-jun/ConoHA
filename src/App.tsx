@@ -35,7 +35,9 @@ export default App;
 const Header: React.FC = () => {
   return (
     <header>
-      <div className="logo">ConoHa</div>
+      <div className="logo">
+        <img src="logo.png" alt="logo" />
+      </div>
       <nav>
         <ul>
           <li>VPS</li>
