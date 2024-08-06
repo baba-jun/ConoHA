@@ -159,3 +159,85 @@ main {
 .undercaption {
   text-align: center;
 }
+
+.pricing-card {
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  margin: auto auto auto 0
+}
+
+.card-content {
+  margin-bottom: 20px;
+}
+
+.service-details p,
+.billing-details p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
+  margin-top: 20px;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.add-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ddd;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.action-buttons button {
+  width: 45%;
+  padding: 10px;
+  background-color: #00aced;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button-container {
+  display: flex;
+  gap: 24px;
+  margin: 24px auto 0 auto;
+}
+
+.circle-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  background-color: #00bcd4;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 14px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.circle-button:hover {
+  background-color: #0097a7;
+}
