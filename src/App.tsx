@@ -1,6 +1,6 @@
 import './App.css';
-import Game from './modules/Game';
-import Vps from './modules/Vps';
+import Game from './componets/Game';
+import Vps from './componets/Vps';
 
 
 const App: React.FC = () => {
