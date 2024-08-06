@@ -1,22 +1,5 @@
 import './App.css';
-import { Button } from "@mui/material";
-import styled from "@emotion/styled";
 
-const TextButton = styled(Button)`
-  text-transform: none;
-  background-color: #e0e0e0;
-  color:black;
-  &:hover {
-    background-color: #00bcd4;
-    color: white;
-  }
-  max-height: 100px;
-  max-width: 100px;
-  min-height: 100px;
-  min-width: 100px;
-  border-radius: 20px;
-  aspect-ratio: 1 / 1;
-`;
 
 
 const App: React.FC = () => {
@@ -63,6 +46,7 @@ const Header: React.FC = () => {
 const MainContent: React.FC = () => {
   return (
     <main>
+        <div className='left-area'>
       <section className="services">
         <h2>サービス</h2>
         <div className="service-grid">
@@ -76,14 +60,47 @@ const MainContent: React.FC = () => {
       <section className="os-selection">
         <h2>イメージタイプ</h2>
         <div className="os-grid">
-          <TextButton>CentOS</TextButton>
-          <TextButton>Ubuntu</TextButton>
-          <TextButton>Debian</TextButton>
+        <div className="radio-button">
+              <input type="radio" id="centos" name="os" value="CentOS" />
+              <label htmlFor="centos">CentOS</label>
+            </div>
+            <div className="radio-button">
+              <input type="radio" id="ubuntu" name="os" value="Ubuntu" />
+              <label htmlFor="ubuntu">Ubuntu</label>
+            </div>
+            <div className="radio-button">
+              <input type="radio" id="debian" name="os" value="Debian" />
+              <label htmlFor="debian">Debian</label>
+            </div>
+            <div className="radio-button">
+              <input type="radio" id="rocky" name="os" value="Rocky Linux" />
+              <label htmlFor="rocky">Rocky Linux</label>
+            </div>
+            <div className="radio-button">
+              <input type="radio" id="alma" name="os" value="AlmaLinux" />
+              <label htmlFor="alma">AlmaLinux</label>
+            </div>
+            <div className="radio-button">
+              <input type="radio" id="oracle" name="os" value="Oracle Linux" />
+              <label htmlFor="oracle">Oracle Linux</label>
+            </div>
+            <div className="radio-button">
+              <input type="radio" id="freebsd" name="os" value="FreeBSD" />
+              <label htmlFor="freebsd">FreeBSD</label>
+            </div>
+            <div className="radio-button">
+              <input type="radio" id="arch" name="os" value="Arch Linux" />
+              <label htmlFor="arch">Arch Linux</label>
+            </div>
         </div>
       </section>
       <section className="server-info">
         {/* Add server information */}
       </section>
+      </div>
+      <div className='right-area'>
+        aaa
+      </div>
     </main>
   );
 }

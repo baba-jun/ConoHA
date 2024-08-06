@@ -69,15 +69,27 @@ aside ul li {
 }
 
 main {
-  flex-grow: 1;
-  padding: 20px;
+  display: flex;
+  width: 100%;
+}
+
+
+.left-area {
+  flex-grow: 7;
+  margin-right: 20px;
+}
+
+.right-area {
+  flex-grow: 3;
 }
 
 .service-grid, .os-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 20px;
+  justify-items: center;
 }
+
 
 .service-item, .os-item {
   border: 1px solid #e0e0e0;
@@ -86,6 +98,36 @@ main {
 }
 
 .active {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.radio-button {
+  display: inline-block;
+  margin: 5px;
+}
+
+.radio-button input {
+  display: none;
+}
+
+.radio-button label {
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e0e0e0;
+  color: black;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 160px;
+  width: 160px;
+  text-align: center;
+  font-size: 25px;
+  aspect-ratio: 1/1;
+}
+
+.radio-button input:checked + label {
   background-color: #00bcd4;
   color: white;
 }
