@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
+import Chat from './Chat';
 
 
 const PricingCard = () => {
@@ -18,7 +19,7 @@ const PricingCard = () => {
   return (
     <div>
       {isFareButton && <div className="fare-button">料金比較</div>}
-      {isChatButton && <div className="chat-button">チャット画面</div>}
+      {isChatButton && <div className="chat-button"><Chat/></div>}
       {!isFareButton && !isChatButton && (
         <div className="pricing-card-wrapper">
           <div className="pricing-card">
