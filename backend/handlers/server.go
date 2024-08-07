@@ -20,6 +20,17 @@ func CreateServerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var requestData RequestData
+	if err := json.NewDecoder(r.Body).Decode(&requestData); err != nil {
+		http.Error(w, fmt.Sprintf("Failed to parse request body: %v", err), http.StatusBadRequest)
+		return
+	}
+
+	if requestData.Flag == "" || requestData.Password == "" || requestData.ServerName == "" {
+		http.Error(w, "Flag, password, and server name must be provided", http.StatusBadRequest)
+		return
+	}
+
 	token, err := getToken(apiUserID, apiPassword, tenantID)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to get token: %v", err), http.StatusInternalServerError)
@@ -55,7 +66,7 @@ func CreateServerHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("securityGroup")
 	fmt.Println(securityGroup)
 
-	flavorID, err := getFlavorID(token)
+	flavorID, err := getFlavorID(token, requestData.FlavorName)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to get flavor ID: %v", err), http.StatusInternalServerError)
 		return
@@ -64,7 +75,7 @@ func CreateServerHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(flavorID)
 	time.Sleep(6 * time.Second)
 
-	serverID, err := createVPS(token, flavorID, volumeID, securityGroup)
+	serverID, err := createVPS(token, flavorID, volumeID, securityGroup, requestData.Password, requestData.ServerName)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to create VPS: %v", err), http.StatusInternalServerError)
 		return
@@ -296,7 +307,7 @@ func getSecurityGroup(token string) (string, error) {
 	return "", fmt.Errorf("security group not found")
 }
 
-func getFlavorID(token string) (string, error) {
+func getFlavorID(token string, flavorName string) (string, error) {
 	url := "https://compute.c3j1.conoha.io/v2.1/flavors"
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -323,19 +334,19 @@ func getFlavorID(token string) (string, error) {
 	}
 
 	for _, flavor := range data["flavors"] {
-		if flavor["name"] == "g2l-t-c2m1" {
+		if flavor["name"] == flavorName {
 			return flavor["id"].(string), nil
 		}
 	}
 	return "", fmt.Errorf("flavor ID not found")
 }
 
-func createVPS(token, flavorID, volumeID, securityGroup string) (string, error) {
+func createVPS(token, flavorID, volumeID, securityGroup, adminPass, instanceName string) (string, error) {
 	url := "https://compute.c3j1.conoha.io/v2.1/servers"
 	payload := map[string]interface{}{
 		"server": map[string]interface{}{
 			"flavorRef": flavorID,
-			"adminPass": "Password111",
+			"adminPass": adminPass,
 			"block_device_mapping_v2": []map[string]interface{}{
 				{
 					"uuid": volumeID,
@@ -346,7 +357,7 @@ func createVPS(token, flavorID, volumeID, securityGroup string) (string, error) 
 				},
 			},
 			"metadata": map[string]interface{}{
-				"instance_name_tag": "test-vps-from-mac",
+				"instance_name_tag": instanceName,
 			},
 			"security_groups": []map[string]interface{}{
 				{
