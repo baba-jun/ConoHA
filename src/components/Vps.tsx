@@ -1,54 +1,130 @@
+import PricingCard from "./PricingCard";
+
 const Vps = () => {
+
+  const services =[
+    { id: "VPS", value: "VPS", alt: "VPS", caption: "VPS" },
+    { id: "WindowsServer", value: "Windows Server", alt: "WindowsServer", caption: "WindowsServer" },
+    { id: "GPUServer", value: "GPUServer", alt: "GPUServer", caption: "GPUサーバー" },
+    { id: "MailServer", value: "MailServer", alt: "MailServer", caption: "メールサーバー" },
+    { id: "DBServer", value: "DBServer", alt: "DBServer", caption: "DBサーバー" },
+  ]
+
+  const images = [
+    { id: "centos", value: "CentOS", alt: "CentOS", caption: "CentOS" },
+    { id: "ubuntu", value: "Ubuntu", alt: "Ubuntu", caption: "Ubuntu" },
+    { id: "debian", value: "Debian", alt: "Debian", caption: "Debian" },
+    { id: "rocky", value: "Rocky Linux", alt: "Rocky", caption: "Rocky Linux" },
+    { id: "alma", value: "AlmaLinux", alt: "Alma", caption: "AlmaLinux" },
+    { id: "oracle", value: "Oracle Linux", alt: "Oracle", caption: "Oracle Linux" },
+    { id: "freebsd", value: "FreeBSD", alt: "FreeBSD", caption: "FreeBSD" },
+    { id: "arch", value: "Arch Linux", alt: "Arch", caption: "Arch Linux" },
+  ]
+
+  const fares = [
+    { id: "timefare", value: "timefare", caption: "時間料金" },
+    { id: "1month", value: "1month", caption: "1ヶ月" },
+    { id: "3months", value: "3months", caption: "3ヶ月" },
+    { id: "6months", value: "6months", caption: "6ヶ月" },
+    { id: "12months", value: "12months", caption: "12ヶ月" },
+    { id: "24months", value: "24months", caption: "24ヶ月" },
+    { id: "36months", value: "36months", caption: "36ヶ月" },
+  ]
+
+  const plans = [
+    { size: '512MB', price: '750円/月', cpu: '1Core', ssd: '30GB', value: '512MB' },
+    { size: '1GB', price: '1,064円/月', cpu: '2Core', ssd: '100GB', value: '1GB', highlighted: true },
+    { size: '2GB', price: '2,032円/月', cpu: '3Core', ssd: '100GB', value: '2GB' },
+    { size: '4GB', price: '3,968円/月', cpu: '4Core', ssd: '100GB', value: '4GB' },
+    { size: '8GB', price: '8,082円/月', cpu: '6Core', ssd: '100GB', value: '8GB' },
+    { size: '16GB', price: '15,730円/月', cpu: '8Core', ssd: '100GB', value: '16GB' },
+    { size: '32GB', price: '31,460円/月', cpu: '12Core', ssd: '100GB', value: '32GB' },
+    { size: '64GB', price: '59,290円/月', cpu: '24Core', ssd: '100GB', value: '64GB' },
+  ];
+
+
+
+
   return (
-    <main className="vps-main">
-      <section className="service-section">
-        <h2>サービス</h2>
-        <div className="service-grid">
-          <div className="service-item active">VPS</div>
-          <div className="service-item">Windows Server</div>
-          <div className="service-item">GPUサーバー</div>
-          <div className="service-item">メールサーバー</div>
-          <div className="service-item">DBサーバー</div>
-        </div>
-      </section>
-      
-      <section className="os-selection">
-        <h2>イメージタイプ</h2>
-        <div className="os-grid">
-          <div className="radio-button">
-            <input type="radio" id="centos" name="os" value="CentOS" />
-            <label htmlFor="centos">CentOS</label>
+    <main>
+      <div className="left-area">
+        <section className="service-section">
+          <h2>サービス</h2>
+          <div className="os-grid">
+            {services.map((item) => (
+              <div className="radio-button" key={item.id}>
+                <input type="radio" id={item.id} name="service" value={item.value} />
+                <label htmlFor={item.id}>
+                  <img src={`src/assets/games/${item.alt}.png`} alt={item.alt} />
+                </label>
+                <p className="undercaption">{item.caption}</p>
+              </div>
+            ))}
           </div>
-          <div className="radio-button">
-            <input type="radio" id="ubuntu" name="os" value="Ubuntu" />
-            <label htmlFor="ubuntu">Ubuntu</label>
+        </section>
+
+        <section className="os-selection">
+          <h2>イメージタイプ</h2>
+          <div className="os-grid">
+            {images.map((item) => (
+              <div className="radio-button" key={item.id}>
+                <input type="radio" id={item.id} name="image" value={item.value} />
+                <label htmlFor={item.id}>
+                  <img src={`src/assets/games/${item.alt}.png`} alt={item.alt} />
+                </label>
+                <p className="undercaption">{item.caption}</p>
+              </div>
+            ))}
           </div>
-          <div className="radio-button">
-            <input type="radio" id="debian" name="os" value="Debian" />
-            <label htmlFor="debian">Debian</label>
+        </section>
+        <section className="fare-type-selection">
+          <h2>料金タイプ</h2>
+          <div className="fare-grid">
+            {fares.map((item) => (
+              <div className="radio-button-landscape" key={item.id}>
+                <input type="radio" id={item.id} name="fare" value={item.value} />
+                <label htmlFor={item.id}>{item.caption}</label>
+              </div>
+            ))}
           </div>
-          <div className="radio-button">
-            <input type="radio" id="rocky" name="os" value="Rocky Linux" />
-            <label htmlFor="rocky">Rocky Linux</label>
+        </section>
+
+        <section className="plan-selection">
+          <h2>プラン</h2>
+          <div className="os-grid">
+          {plans.map((item) => (
+              <div className="radio-button" key={item.size}>
+                <input type="radio" id={item.size} name="service" value={item.value} />
+                <label htmlFor={item.size}>
+                <div className="pricing-table">
+                <div className="size">{item.size}</div>
+                <div className="price">{item.price}</div>
+                <div className="cpu">CPU {item.cpu}</div>
+                <div className="ssd">SSD {item.ssd}</div>
+                </div>
+                </label>
+              </div>
+            ))}
+            </div>
+        </section>
+
+        <section className="root-password">
+          <h2>Rootパスワード</h2>
+          <div className="root-password-area">
+            <input type="password" className="text-input" id="root-password" name="root-password" />
           </div>
-          <div className="radio-button">
-            <input type="radio" id="alma" name="os" value="AlmaLinux" />
-            <label htmlFor="alma">AlmaLinux</label>
+        </section>
+
+        <section className="name-tag">
+          <h2>ネームタグ</h2>
+          <div className="name-tag-area">
+            <input type="text" className="text-input" id="name-tag" name="name-tag" />
           </div>
-          <div className="radio-button">
-            <input type="radio" id="oracle" name="os" value="Oracle Linux" />
-            <label htmlFor="oracle">Oracle Linux</label>
-          </div>
-          <div className="radio-button">
-            <input type="radio" id="freebsd" name="os" value="FreeBSD" />
-            <label htmlFor="freebsd">FreeBSD</label>
-          </div>
-          <div className="radio-button">
-            <input type="radio" id="arch" name="os" value="Arch Linux" />
-            <label htmlFor="arch">Arch Linux</label>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
+      <div className="right-area">
+        <PricingCard />
+      </div>
     </main>
   );
 };
