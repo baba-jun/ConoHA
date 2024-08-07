@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"time"
 	"os"
 	"io/ioutil"
 	"net/http"
@@ -47,25 +48,29 @@ func CreateServerHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Failed to create boot storage: %v", err), http.StatusInternalServerError)
 		return
 	}
+	fmt.Println("volumeID")
 	fmt.Println(volumeID)
 
-	securityGroup, err := getSecurityGroup(token)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to get security group: %v", err), http.StatusInternalServerError)
-		return
-	}
+	securityGroup := "IPv4v6-Web" //web決め打ち
+	fmt.Println("securityGroup")
+	fmt.Println(securityGroup)
 
 	flavorID, err := getFlavorID(token)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to get flavor ID: %v", err), http.StatusInternalServerError)
 		return
 	}
+	fmt.Println("flavorID")
+	fmt.Println(flavorID)
+	time.Sleep(10 * time.Second)
 
 	serverID, err := createVPS(token, flavorID, volumeID, securityGroup)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to create VPS: %v", err), http.StatusInternalServerError)
 		return
 	}
+	fmt.Println("serverID")
+	fmt.Println(serverID)
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(fmt.Sprintf("VPS created with ID: %s", serverID)))
@@ -205,7 +210,7 @@ func createBootStorage(token, volumeTypeID, imageID, tenantID string) (string, e
 	url := fmt.Sprintf("https://block-storage.c3j1.conoha.io/v3/%s/volumes", tenantID)
 	payload := map[string]interface{}{
 		"volume": map[string]interface{}{
-			"size":        100,
+			"size":        30,
 			"description": nil,
 			"name":        "boot-volume-nametag",
 			"volume_type": volumeTypeID,
@@ -237,12 +242,24 @@ func createBootStorage(token, volumeTypeID, imageID, tenantID string) (string, e
 		return "", err
 	}
 
-	var data map[string]map[string]interface{}
+	fmt.Println("Response Body:", string(body))
+
+	var data map[string]interface{}
 	if err := json.Unmarshal(body, &data); err != nil {
 		return "", err
 	}
 
-	return data["volume"]["id"].(string), nil
+	volume, ok := data["volume"].(map[string]interface{})
+	if !ok {
+		return "", fmt.Errorf("invalid volume format")
+	}
+
+	volumeID, ok := volume["id"].(string)
+	if !ok {
+		return "", fmt.Errorf("invalid volume ID format")
+	}
+
+	return volumeID, nil
 }
 
 func getSecurityGroup(token string) (string, error) {
@@ -318,14 +335,18 @@ func createVPS(token, flavorID, volumeID, securityGroup string) (string, error) 
 	payload := map[string]interface{}{
 		"server": map[string]interface{}{
 			"flavorRef": flavorID,
-			"adminPass": "管理者パスワード",
+			"adminPass": "Password111",
 			"block_device_mapping_v2": []map[string]interface{}{
 				{
 					"uuid": volumeID,
+					"boot_index": 0,
+					"source_type": "volume",
+					"destination_type": "volume",
+					"delete_on_termination": true,
 				},
 			},
 			"metadata": map[string]interface{}{
-				"instance_name_tag": "test-vps",
+				"instance_name_tag": "test-vps-from-mac",
 			},
 			"security_groups": []map[string]interface{}{
 				{
@@ -359,10 +380,22 @@ func createVPS(token, flavorID, volumeID, securityGroup string) (string, error) 
 		return "", err
 	}
 
-	var data map[string]map[string]interface{}
+	fmt.Println("Response Body:", string(body))
+
+	var data map[string]interface{}
 	if err := json.Unmarshal(body, &data); err != nil {
 		return "", err
 	}
 
-	return data["server"]["id"].(string), nil
+	server, ok := data["server"].(map[string]interface{})
+	if !ok {
+		return "", fmt.Errorf("invalid server format")
+	}
+
+	serverID, ok := server["id"].(string)
+	if !ok {
+		return "", fmt.Errorf("invalid server ID format")
+	}
+
+	return serverID, nil
 }
