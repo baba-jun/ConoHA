@@ -17,8 +17,11 @@ const Vps = () => {
     { id: "rocky", value: "Rocky Linux", alt: "Rocky", caption: "Rocky Linux" },
     { id: "alma", value: "AlmaLinux", alt: "Alma", caption: "AlmaLinux" },
     { id: "oracle", value: "Oracle Linux", alt: "Oracle", caption: "Oracle Linux" },
+    { id: "miracle", value: "MIRACLE LINUX", alt: "Miracle", caption: "MIRACLE LINUX" },
     { id: "freebsd", value: "FreeBSD", alt: "FreeBSD", caption: "FreeBSD" },
     { id: "arch", value: "Arch Linux", alt: "Arch", caption: "Arch Linux" },
+    { id: "netbsd", value: "NetBSD", alt: "NetBSD", caption: "NetBSD" },
+    { id: "openbsd", value: "OpenBSD", alt: "OpenBSD", caption: "OpenBSD" },
   ]
 
   const fares = [
@@ -55,7 +58,7 @@ const Vps = () => {
               <div className="radio-button" key={item.id}>
                 <input type="radio" id={item.id} name="service" value={item.value} />
                 <label htmlFor={item.id}>
-                  <img src={`src/assets/games/${item.alt}.png`} alt={item.alt} />
+                  <img src={`src/assets/VPSs/${item.alt}.png`} alt={item.alt} />
                 </label>
                 <p className="undercaption">{item.caption}</p>
               </div>
@@ -70,7 +73,7 @@ const Vps = () => {
               <div className="radio-button" key={item.id}>
                 <input type="radio" id={item.id} name="image" value={item.value} />
                 <label htmlFor={item.id}>
-                  <img src={`src/assets/games/${item.alt}.png`} alt={item.alt} />
+                  <img src={`src/assets/VPSs/${item.alt}.png`} alt={item.alt} />
                 </label>
                 <p className="undercaption">{item.caption}</p>
               </div>
