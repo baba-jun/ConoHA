@@ -43,8 +43,8 @@ const PricingCard = () => {
             </div>
           </div>
           <div className="button-container">
-            <button className="circle-button" onClick={handleFareButton}>料金比較</button>
-            <button className="circle-button" onClick={handleChatButton}>何かお困りですか？</button>
+            <button id="fare-button" className="circle-button" onClick={handleFareButton}>料金比較</button>
+            <button id="chat-button" className="circle-button" onClick={handleChatButton}>何かお困りですか？</button>
           </div>
         </div>
       )}
