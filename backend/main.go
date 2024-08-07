@@ -36,6 +36,7 @@ func main() {
 	r.Route("/api", func(r chi.Router) {
 		r.Use(corsHandler)
 		r.Post("/token/create", handlers.CreateTokenHandler)
+		r.Get("/price", handlers.GetPriceHandler)
 	})
 
 	port := os.Getenv("PORT")

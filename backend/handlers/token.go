@@ -8,37 +8,6 @@ import (
 	"os"
 )
 
-type AuthRequest struct {
-	Auth Auth `json:"auth"`
-}
-
-type Auth struct {
-	Identity Identity `json:"identity"`
-	Scope    Scope    `json:"scope"`
-}
-
-type Identity struct {
-	Methods  []string `json:"methods"`
-	Password Password `json:"password"`
-}
-
-type Password struct {
-	User User `json:"user"`
-}
-
-type User struct {
-	ID       string `json:"id"`
-	Password string `json:"password"`
-}
-
-type Scope struct {
-	Project Project `json:"project"`
-}
-
-type Project struct {
-	ID string `json:"id"`
-}
-
 func CreateTokenHandler(w http.ResponseWriter, r *http.Request) {
 	apiUserID := os.Getenv("API_USER_ID")
 	apiPassword := os.Getenv("API_PASSWORD")
@@ -92,13 +61,40 @@ func CreateTokenHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
+	token := resp.Header.Get("X-Subject-Token")
+	if token == "" {
+		http.Error(w, "Failed to get token from response", http.StatusInternalServerError)
+		return
+	}
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		http.Error(w, "Failed to read response", http.StatusInternalServerError)
 		return
 	}
 
+	var authResponse AuthResponse
+	err = json.Unmarshal(body, &authResponse)
+	if err != nil {
+		http.Error(w, "Failed to unmarshal response body", http.StatusInternalServerError)
+		return
+	}
+
+	expiresAt := authResponse.Token.ExpiresAt
+
+	responseData := map[string]string{
+		"token":     token,
+		"expiresAt": expiresAt,
+	}
+
+	responseJSON, err := json.Marshal(responseData)
+	if err != nil {
+		http.Error(w, "Failed to marshal response JSON", http.StatusInternalServerError)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("X-Subject-Token", token)
 	w.WriteHeader(http.StatusOK)
-	w.Write(body)
+	w.Write(responseJSON)
 }
