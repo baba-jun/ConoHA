@@ -1,8 +1,13 @@
 import { useState } from "react";
 import "../Chat.css";
 
+interface Question {
+  question: string;
+  options: string[];
+}
+
 const Chat = () => {
-  const questions = [
+  const questions: Question[] = [
     {
       question: "どの用途に使用したいですか？",
       options: ["Webサイトの公開", "ゲームサーバーのホスティング"],
@@ -38,30 +43,32 @@ const Chat = () => {
     },
     {
       question: "どのくらいの期間使い続ける予定ですか？",
-      option: ["1ヶ月", "3ヶ月","6ヶ月","1年間", "2年間", "3年間"],
-    }
+      options: ["1ヶ月", "3ヶ月", "6ヶ月", "1年間", "2年間", "3年間"],
+    },
   ];
 
-  const result = [
-    "Ubuntu：24.04, 4GB, IPv4V6-Webがおすすめです",
-    "Ubuntu：24.04, 2GB, IPv4V6-Webがおすすめです",
-    "2GBプランがおすすめです",
-    "4GBプランがおすすめです",
-    "8GBプランがおすすめです",
-    "16GBプランがおすすめです",
-    "16GB（安定した運用には32GB）プランがおすすめです"
+  const result: { type: string; description: string; flavor: string | null }[] = [
+      {type: "vps", description :"Ubuntu：24.04, 4GB, IPv4V6-Webがおすすめです", flavor: "g2l-t-c4m4"},
+      {type: "vps", description: "Ubuntu：24.04, 2GB, IPv4V6-Webがおすすめです", flavor: "g2l-t-c3m2"},
+      {type: "game", description: "2GBプランがおすすめです", flavor: null},
+      {type: "game", description: "4GBプランがおすすめです", flavor: null},
+      {type: "game", description: "8GBプランがおすすめです", flavor: null},
+      {type: "game", description: "16GBプランがおすすめです", flavor: null},
+      {type: "game", description: "16GB（安定した運用には32GB）プランがおすすめです", flavor: null},
   ];
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [resultIndex, setResultIndex] = useState(0);
-  const [iscontinue, setIscontinue] = useState(true);
-  const [chatHistory, setChatHistory] = useState([
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [resultIndex, setResultIndex] = useState<number>(0);
+  const [iscontinue, setIscontinue] = useState<boolean>(true);
+  const [chatHistory, setChatHistory] = useState<
+    { type: "bot" | "user"; text: string }[]
+  >([
     {
       type: "bot",
       text: "サーバーを借りるために、いくつか質問しますね。",
     },
   ]);
-  const [ , setAnswers] = useState<string[]>([]);
+  const [, setAnswers] = useState<string[]>([]);
 
   const handleOptionClick = (option: string) => {
     // ユーザーの回答をチャット履歴に追加
@@ -176,45 +183,32 @@ const Chat = () => {
         </div>
       )}
 
+
       {!iscontinue && (
         <div className="message">
           <div className="avatar">A</div>
           <div className="message-bubble">
-            <div className="result">{result[resultIndex]}</div>
+            <div className="result">{result[resultIndex].description}</div>
           </div>
         </div>
       )}
 
       {!iscontinue && (
         <div className="message">
-        <div className="avatar">A</div>
-        <div className="message-bubble">
-          どのくらいの期間使い続ける予定ですか？
-          <div className="options">
-            <div className="option">
-              1ヶ月
-            </div>
-            <div className="option">
-              3ヶ月
-            </div>
-            <div className="option">
-              6ヶ月
-            </div>
-            <div className="option">
-              6ヶ月
-            </div>
-            <div className="option">
-              1年間
-            </div>
-            <div className="option">
-              2年間
-            </div>
-            <div className="option">
-              3年間
+          <div className="avatar">A</div>
+          <div className="message-bubble">
+            どのくらいの期間使い続ける予定ですか？
+            <div className="options">
+              <div className="option">1ヶ月</div>
+              <div className="option">3ヶ月</div>
+              <div className="option">6ヶ月</div>
+              <div className="option">6ヶ月</div>
+              <div className="option">1年間</div>
+              <div className="option">2年間</div>
+              <div className="option">3年間</div>
             </div>
           </div>
         </div>
-      </div>
       )}
     </div>
   );
