@@ -36,6 +36,10 @@ const Chat = () => {
       question: "何人程度でプレイしますか？",
       options: ["最大プレーヤーが30人以下", "最大プレーヤーが70人以下"],
     },
+    {
+      question: "どのくらいの期間使い続ける予定ですか？",
+      option: ["1ヶ月", "3ヶ月","6ヶ月","1年間", "2年間", "3年間"],
+    }
   ];
 
   const result = [
@@ -179,6 +183,38 @@ const Chat = () => {
             <div className="result">{result[resultIndex]}</div>
           </div>
         </div>
+      )}
+
+      {!iscontinue && (
+        <div className="message">
+        <div className="avatar">A</div>
+        <div className="message-bubble">
+          どのくらいの期間使い続ける予定ですか？
+          <div className="options">
+            <div className="option">
+              1ヶ月
+            </div>
+            <div className="option">
+              3ヶ月
+            </div>
+            <div className="option">
+              6ヶ月
+            </div>
+            <div className="option">
+              6ヶ月
+            </div>
+            <div className="option">
+              1年間
+            </div>
+            <div className="option">
+              2年間
+            </div>
+            <div className="option">
+              3年間
+            </div>
+          </div>
+        </div>
+      </div>
       )}
     </div>
   );
