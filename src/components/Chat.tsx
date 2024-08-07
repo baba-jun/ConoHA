@@ -57,7 +57,7 @@ const Chat = () => {
       text: "サーバーを借りるために、いくつか質問しますね。",
     },
   ]);
-  const [answers, setAnswers] = useState<string[]>([]);
+  const [ , setAnswers] = useState<string[]>([]);
 
   const handleOptionClick = (option: string) => {
     // ユーザーの回答をチャット履歴に追加
@@ -132,7 +132,7 @@ const Chat = () => {
     }
 
     // 次の質問をチャット履歴に追加
-    if (iscontinue) {
+    if (iscontinue && nextQuestionIndex < questions.length) {
       setChatHistory((prevChatHistory) => [
         ...prevChatHistory,
         { type: "bot", text: questions[nextQuestionIndex].question },
