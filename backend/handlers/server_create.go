@@ -73,7 +73,7 @@ func CreateServerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println("flavorID")
 	fmt.Println(flavorID)
-	time.Sleep(6 * time.Second)
+	time.Sleep(10 * time.Second)
 
 	serverID, err := createVPS(token, flavorID, volumeID, securityGroup, requestData.Password, requestData.ServerName)
 	if err != nil {
