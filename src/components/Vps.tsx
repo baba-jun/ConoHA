@@ -1,6 +1,13 @@
+import { useState } from "react";
 import PricingCard from "./PricingCard";
 
 const Vps = () => {
+  const [selectedService, setSelectedService] = useState<number | null>(null);
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [selectedFare, setSelectedFare] = useState<number | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
+
+
 
   const services =[
     { id: "VPS", value: "VPS", alt: "VPS", caption: "VPS", check: "checked" },
@@ -45,8 +52,17 @@ const Vps = () => {
     { size: '64GB', price: '59,290円/月', cpu: '24Core', ssd: '100GB', value: '64GB' },
   ];
 
+  const selectServiceItem = (index:number) => {
+    setSelectedService(index)
+  }
 
+  const selectImageItem = (index:number) => {
+    setSelectedService(index)
+  }
 
+  const selectFareitem = (index:number) => {
+    setSelectedFare(index)
+  }
 
   return (
     <main>
@@ -54,9 +70,9 @@ const Vps = () => {
         <section className="service-section">
           <h2>サービス</h2>
           <div className="os-grid">
-            {services.map((item) => (
+            {services.map((item, index) => (
               <div className="radio-button" key={item.id}>
-                <input type="radio" id={item.id} name="service" value={item.value} />
+                <input type="radio" id={item.id} name="service" value={item.value} onChange={() => selectServiceItem(index)}/>
                 <label htmlFor={item.id}>
                   <img src={`src/assets/VPSs/${item.alt}.png`} alt={item.alt} />
                 </label>
@@ -69,9 +85,9 @@ const Vps = () => {
         <section className="os-selection">
           <h2>イメージタイプ</h2>
           <div className="os-grid">
-            {images.map((item) => (
+            {images.map((item, index) => (
               <div className="radio-button" key={item.id}>
-                <input type="radio" id={item.id} name="image" value={item.value} />
+                <input type="radio" id={item.id} name="image" value={item.value} onChange={() => selectImageItem(index)}/>
                 <label htmlFor={item.id}>
                   <img src={`src/assets/VPSs/${item.alt}.png`} alt={item.alt} />
                 </label>
@@ -83,9 +99,9 @@ const Vps = () => {
         <section className="fare-type-selection">
           <h2>料金タイプ</h2>
           <div className="fare-grid">
-            {fares.map((item) => (
+            {fares.map((item, index) => (
               <div className="radio-button-landscape" key={item.id}>
-                <input type="radio" id={item.id} name="fare" value={item.value} />
+                <input type="radio" id={item.id} name="fare" value={item.value} onChange={() => selectFareitem(index)}/>
                 <label htmlFor={item.id}>{item.caption}</label>
               </div>
             ))}
@@ -95,9 +111,9 @@ const Vps = () => {
         <section className="plan-selection">
           <h2>プラン</h2>
           <div className="os-grid">
-          {plans.map((item) => (
+          {plans.map((item, index) => (
               <div className="radio-button" key={item.size}>
-                <input type="radio" id={item.size} name="service" value={item.value} />
+                <input type="radio" id={item.size} name="service" value={item.value} onChange={() => selectFareitem(index)}/>
                 <label htmlFor={item.size}>
                 <div className="pricing-table">
                 <div className="size">{item.size}</div>
