@@ -1,8 +1,14 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import '../App.css';
 import Chat from './Chat';
 import Fare from './Fare';
 
+type PricingData = {
+  service : number | null;
+  image : number | null;
+  realFare : number | null;
+  fare : number | null;
+};
 
 type PricingCardProps = {
   service: number | null;
@@ -24,6 +30,7 @@ const PricingCard = (props: PricingCardProps) => {
     {ram: "16GB", cpu: "8Core", ssd: "100GB"},
     {ram: "32GB", cpu: "12Core", ssd: "100GB"},
   ]
+
   const [isFareButton, setIsFareBUtton] = useState(false);
   const [isChatButton, setIsChatbutton] = useState(false);
 
@@ -40,6 +47,7 @@ const PricingCard = (props: PricingCardProps) => {
       {isFareButton && <div className="fare-button"><Fare/></div>}
       {isChatButton && <div className="chat-button"><Chat/></div>}
       {!isFareButton && !isChatButton && (
+      <div className="pricing-card-wrapper-wrapper">
         <div className="pricing-card-wrapper">
           <table className="pricing-card">
             <tbody>
@@ -84,8 +92,16 @@ const PricingCard = (props: PricingCardProps) => {
                 </td>
               </tr>
               <tr>
+                <td>リージョン</td>
+                <td>東京</td>
+              </tr>
+              <tr>
                 <td>サーバー料金</td>
                 <td>14.6 円/時間</td>
+              </tr>
+              <tr>
+                <td>VPS割引きっぷ</td>
+                <td>利用しない</td>
               </tr>
               <tr>
                 <td>合計</td>
@@ -100,6 +116,7 @@ const PricingCard = (props: PricingCardProps) => {
           </table>
           <button className="add-button">追加</button>
         </div>
+      </div>
       )}
       {!isFareButton && !isChatButton && (
       <div className="button-container">

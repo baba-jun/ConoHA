@@ -10,3 +10,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </HashRouter>
   </React.StrictMode>,
 )
+
+// export const API_URL = 'http://160.251.180.174'
+export const API_URL = 'http://localhost:8080'

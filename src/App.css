@@ -290,6 +290,10 @@ main {
   text-align: center;
 }
 
+.pricing-card-wrapper-wrapper{
+  position: fixed;
+}
+
 .pricing-card-wrapper {
   width: 80%;
 }

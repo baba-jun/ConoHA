@@ -161,7 +161,7 @@ const Chat = () => {
     console.log(passwordValue)
 
     // try {
-    //   const response = await fetch("http://localhost:8080/api/server/create", {
+    //   const response = await fetch(`${API_URL}/api/server/create`, {
     //     method: "POST",
     //     headers: {
     //       "Content-Type": "application/json",

@@ -19,6 +19,7 @@ type RequestData struct {
 }
 
 type ServerData struct {
+	ID 		   string `json:"id"`
 	ServerName string `json:"server_name"`
 	Status     string `json:"status"`
 	FlavorName string `json:"flavor_name"`

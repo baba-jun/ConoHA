@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../Fare.css';
 import PricingCard from './PricingCard';
+import { API_URL } from '../main';
 
 interface Price {
   OriginalPrice: number;
@@ -92,7 +93,7 @@ const SelectionForm: React.FC = () => {
 
   const fetchPrice = async (type_id: number, plan_id: number): Promise<Price | 'error'> => {
     try {
-      const response = await fetch(`http://localhost:8080/api/price?type_id=${type_id}&plan_id=${plan_id}`);
+      const response = await fetch(`${API_URL}/api/price?type_id=${type_id}&plan_id=${plan_id}`);
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
@@ -139,7 +140,7 @@ const SelectionForm: React.FC = () => {
     if (selectedPlans.length > 0 && selectedStorages.length > 0) {
       fetchPrices();
     }
-  }, [selectedPlans, selectedStorages]);
+  }, [selectedPlans, selectedStorages, planOptions, storageOptions]);
 
   const renderTableRows = () => {
     const rows: JSX.Element[] = [];

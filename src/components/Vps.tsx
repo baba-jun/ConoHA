@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import PricingCard from "./PricingCard";
+import { API_URL } from "../main";
 
 const Vps = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [ , setSelectedImage] = useState<number | null>(null);
   const [selectedFare, setSelectedFare] = useState<number | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [originalPare, setOriginalFare] = useState<number | null>(0);
@@ -22,7 +23,7 @@ const Vps = () => {
 
   const fetchPrice = async (type_id: number, plan_id: number): Promise<Price | 'error'> => {
     try {
-      const response = await fetch(`http://localhost:8080/api/price?type_id=${type_id}&plan_id=${plan_id}`);
+      const response = await fetch(`${API_URL}/api/price?type_id=${type_id}&plan_id=${plan_id}`);
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
@@ -167,7 +168,7 @@ const Vps = () => {
               <div className="radio-button" key={item.id}>
                 <input type="radio" id={item.id} name="service" value={item.value} onChange={() => selectServiceItem(index)}/>
                 <label htmlFor={item.id}>
-                  <img src={`src/assets/VPSs/${item.alt}.png`} alt={item.alt} />
+                  <img src={`VPSs/${item.alt}.png`} alt={item.alt} />
                 </label>
                 <p className="undercaption">{item.caption}</p>
               </div>
@@ -182,7 +183,7 @@ const Vps = () => {
               <div className="radio-button" key={item.id}>
                 <input type="radio" id={item.id} name="image" value={item.value} onChange={() => selectImageItem(index)}/>
                 <label htmlFor={item.id}>
-                  <img src={`src/assets/VPSs/${item.alt}.png`} alt={item.alt} />
+                  <img src={`VPSs/${item.alt}.png`} alt={item.alt} />
                 </label>
                 <p className="undercaption">{item.caption}</p>
               </div>

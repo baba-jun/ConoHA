@@ -1,12 +1,14 @@
 import "../ServerList.css";
 import { useState, useEffect } from "react";
+import { API_URL } from "../main";
 
 type ServerData = {
+  id: string;
   server_name: string;
   status: string;
+  flavor_name: string;
   ip_address: string;
-  spec: string;
-  tag: string;
+  os_name: string;
 };
 
 const ServerList = () => {
@@ -29,7 +31,7 @@ const ServerList = () => {
 
   useEffect(() => {
     console.log("Fetching server list...");
-    fetch("http://localhost:8080/api/server/list")
+    fetch(`${API_URL}/api/server/list`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -86,18 +88,18 @@ const ServerList = () => {
                 <>
                   <td>{server.ip_address}</td>
                   <td>
-                    {server.spec}&nbsp;
-                    <span className={server.tag?.includes("Windows") ? "tag windows" : "tag vps"}>
-                      {server.tag || "Unknown"}
+                    {server.flavor_name.replace(/.*-.*-c(\d+)m(\d+)/, "CPU $1core/メモリ $2MB ")}
+                    <span className={server.os_name?.includes("win") ? "tag windows" : "tag vps"}>
+                      {server.os_name?.includes("win") ? "Windows" : server.os_name.replace(/^[^-]*-(.*)-[^-]*$/, "$1")}
                     </span>
                   </td>
                 </>
               )}
               <td className="control">
                 {server.status === "ACTIVE" ? (
-                  <button className="button" onClick={() => handleStop(server.server_name)}>停止</button>
+                  <button className="button" onClick={() => handleStop(server.id)}>停止</button>
                 ) : (
-                  <button className="button" onClick={() => handleStart(server.server_name)}>再開</button>
+                  <button className="button" onClick={() => handleStart(server.id)}>再開</button>
                 )}
               </td>
             </tr>
@@ -108,14 +110,28 @@ const ServerList = () => {
   );
 };
 
-const handleStop = (serverName: string) => {
-  // サーバー停止のロジックをここに追加
-  console.log(`サーバー ${serverName} を停止します`);
+const handleStop = (serverId: string) => {
+  fetch(`${API_URL}/api/server/operation/stop`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      server_id: serverId,
+    }),
+  })
 };
 
-const handleStart = (serverName: string) => {
-  // サーバー再開のロジックをここに追加
-  console.log(`サーバー ${serverName} を再開します`);
+const handleStart = (serverId: string) => {
+  fetch(`${API_URL}/api/server/operation/start`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      server_id: serverId,
+    }),
+  })
 };
 
 export default ServerList;
