@@ -127,14 +127,32 @@ main {
   padding: 2.5%;
 }
 
-
 .left-area {
   width: 70%;
 }
 
 .right-area {
   width: 30%;
-  padding-left: 35px;
+  padding-left: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .left-area {
+    width: 60%;
+  }
+  .right-area {
+    width: 40%;
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .left-area {
+    width: 100%;
+  }
+  .right-area {
+    display: none;
+  }
 }
 
 .service-grid, .os-grid, .fare-grid, .root-password-area, .name-tag-area{
@@ -143,9 +161,18 @@ main {
 
 .service-grid, .os-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, 160px);
   gap: 20px;
   justify-items: center;
+}
+
+@media screen and (max-width: 599px) {
+  .service-grid, .os-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 160px);
+    gap: 20px;
+    justify-items: center;
+  }
 }
 
 .fare-grid{
@@ -257,7 +284,7 @@ main {
 }
 
 .pricing-card-wrapper {
-  width: 70%;
+  width: 80%;
 }
 
 .pricing-card {
@@ -266,6 +293,10 @@ main {
   padding: 16px;
   background-color: #fff;
   margin: auto auto auto 0
+}
+
+.pricing-card td{
+  border: none;
 }
 
 .card-content {
