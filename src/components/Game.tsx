@@ -8,7 +8,7 @@ const Game = () => {
       <h2>イメージタイプ</h2>
       <div className="os-grid">
       <div className="radio-button">
-          <input type="radio" id="7DaystoDie" name="os" value="7 DaystoDie" />
+          <input type="radio" id="7DaystoDie" name="image" value="7DaystoDie" />
           <label htmlFor="7DaystoDie">
             <img src="src/assets/games/7daysToDie.png" alt="7 Days to Die" />
           </label>
@@ -16,7 +16,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Survival Evolved" name="os" value="ARK: Survival Evolved" />
+          <input type="radio" id="Survival Evolved" name="image" value="ARK:Survival Evolved" />
           <label htmlFor="Survival Evolved">
             <img src="src/assets/games/ARK.png" alt="ARK: Survival Evolved" />
           </label>
@@ -24,7 +24,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Arma3" name="os" value="Arma3" />
+          <input type="radio" id="Arma3" name="image" value="Arma3" />
           <label htmlFor="Arma3">
             <img src="src/assets/games/Arma3.png" alt="Arma3" />
           </label>
@@ -32,7 +32,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="AssettoCorsa" name="os" value="AssettoCorsa" />
+          <input type="radio" id="AssettoCorsa" name="image" value="AssettoCorsa" />
           <label htmlFor="AssettoCorsa">
             <img src="src/assets/games/AssettoCorsa.png" alt="AssettoCorsa" />
           </label>
@@ -40,7 +40,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="CoreKeeper" name="os" value="CoreKeeper" />
+          <input type="radio" id="CoreKeeper" name="image" value="CoreKeeper" />
           <label htmlFor="CoreKeeper">
             <img src="src/assets/games/CoreKeeper.png" alt="CoreKeeper" />
           </label>
@@ -48,7 +48,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="CS2" name="os" value="CS2" />
+          <input type="radio" id="CS2" name="image" value="CS2" />
           <label htmlFor="CS2">
             <img src="src/assets/games/CS2.png" alt="CS2" />
           </label>
@@ -56,7 +56,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="DayZ" name="os" value="DayZ" />
+          <input type="radio" id="DayZ" name="image" value="DayZ" />
           <label htmlFor="DayZ">
             <img src="src/assets/games/DayZ.png" alt="DayZ" />
           </label>
@@ -64,7 +64,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Enshrouded" name="os" value="Enshrouded" />
+          <input type="radio" id="Enshrouded" name="image" value="Enshrouded" />
           <label htmlFor="Enshrouded">
             <img src="src/assets/games/Enshrouded.png" alt="Enshrouded" />
           </label>
@@ -72,7 +72,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Factorio" name="os" value="Factorio" />
+          <input type="radio" id="Factorio" name="image" value="Factorio" />
           <label htmlFor="Factorio">
             <img src="src/assets/games/Factorio.png" alt="Factorio" />
           </label>
@@ -80,7 +80,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="FiveM" name="os" value="FiveM" />
+          <input type="radio" id="FiveM" name="image" value="FiveM" />
           <label htmlFor="FiveM">
             <img src="src/assets/games/FiveM.png" alt="FiveM" />
           </label>
@@ -88,7 +88,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="MinecraftI" name="os" value="MinecraftI" />
+          <input type="radio" id="MinecraftI" name="image" value="MinecraftI" />
           <label htmlFor="MinecraftI">
             <img src="src/assets/games/Minecraft.png" alt="MinecraftI" />
           </label>
@@ -96,7 +96,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="MinecraftJ" name="os" value="MinecraftJ" />
+          <input type="radio" id="MinecraftJ" name="image" value="MinecraftJ" />
           <label htmlFor="MinecraftJ">
             <img src="src/assets/games/Minecraft.png" alt="MinecraftJ" />
           </label>
@@ -104,7 +104,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="MinecraftF" name="os" value="MinecraftF" />
+          <input type="radio" id="MinecraftF" name="image" value="MinecraftF" />
           <label htmlFor="MinecraftF">
             <img src="src/assets/games/Minecraft.png" alt="MinecraftF" />
           </label>
@@ -112,7 +112,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="MinecraftP" name="os" value="MinecraftP" />
+          <input type="radio" id="MinecraftP" name="image" value="MinecraftP" />
           <label htmlFor="MinecraftP">
             <img src="src/assets/games/Minecraft.png" alt="MinecraftP" />
           </label>
@@ -120,7 +120,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="MinecraftS" name="os" value="MinecraftS" />
+          <input type="radio" id="MinecraftS" name="image" value="MinecraftS" />
           <label htmlFor="MinecraftS">
             <img src="src/assets/games/Minecraft.png" alt="MinecraftS" />
           </label>
@@ -128,7 +128,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Palworld" name="os" value="Palworld" />
+          <input type="radio" id="Palworld" name="image" value="Palworld" />
           <label htmlFor="Palworld">
             <img src="src/assets/games/Palworld.png" alt="Palworld" />
           </label>
@@ -136,7 +136,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="ProjectZomboid" name="os" value="ProjectZomboid" />
+          <input type="radio" id="ProjectZomboid" name="image" value="ProjectZomboid" />
           <label htmlFor="ProjectZomboid">
             <img src="src/assets/games/ProjectZomboid.png" alt="ProjectZomboid" />
           </label>
@@ -144,7 +144,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Rust" name="os" value="Rust" />
+          <input type="radio" id="Rust" name="image" value="Rust" />
           <label htmlFor="Rust">
             <img src="src/assets/games/Rust.png" alt="Rust" />
           </label>
@@ -152,7 +152,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Satisfactory" name="os" value="Satisfactory" />
+          <input type="radio" id="Satisfactory" name="image" value="Satisfactory" />
           <label htmlFor="Satisfactory">
             <img src="src/assets/games/Satisfactory.png" alt="Satisfactory" />
           </label>
@@ -160,7 +160,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Soulmask" name="os" value="Soulmask" />
+          <input type="radio" id="Soulmask" name="image" value="Soulmask" />
           <label htmlFor="Soulmask">
             <img src="src/assets/games/Soulmask.png" alt="Soulmask" />
           </label>
@@ -168,7 +168,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="TeamFortress2" name="os" value="TeamFortress2" />
+          <input type="radio" id="TeamFortress2" name="image" value="TeamFortress2" />
           <label htmlFor="TeamFortress2">
             <img src="src/assets/games/TeamFortress2.png" alt="TeamFortress2" />
           </label>
@@ -176,7 +176,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Terraria" name="os" value="Terraria" />
+          <input type="radio" id="Terraria" name="image" value="Terraria" />
           <label htmlFor="Terraria">
             <img src="src/assets/games/Terraria.png" alt="Terraria" />
           </label>
@@ -184,7 +184,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Unturned" name="os" value="Unturned" />
+          <input type="radio" id="Unturned" name="image" value="Unturned" />
           <label htmlFor="Unturned">
             <img src="src/assets/games/Unturned.png" alt="Unturned" />
           </label>
@@ -192,7 +192,7 @@ const Game = () => {
         </div>
 
         <div className="radio-button">
-          <input type="radio" id="Valheim" name="os" value="Valheim" />
+          <input type="radio" id="Valheim" name="image" value="Valheim" />
           <label htmlFor="Valheim">
             <img src="src/assets/games/Valheim.png" alt="Valheim" />
           </label>

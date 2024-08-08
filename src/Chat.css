@@ -48,12 +48,12 @@
     background-color: #607d8b;
 }
 
-.options {
+.options, .options-term {
     display: flex;
     flex-direction: column;
 }
 
-.option {
+.option, .option-term {
     background-color: #eceff1;
     margin: 5px 0;
     padding: 10px;
@@ -61,4 +61,8 @@
     text-align: center;
     cursor: pointer;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+ .option-term:hover {
+    background-color: #ffcc80; /* クリック時の背景色 */
 }

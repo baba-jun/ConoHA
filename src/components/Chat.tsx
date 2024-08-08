@@ -1,8 +1,13 @@
 import { useState } from "react";
 import "../Chat.css";
 
+interface Question {
+  question: string;
+  options: string[];
+}
+
 const Chat = () => {
-  const questions = [
+  const questions: Question[] = [
     {
       question: "どの用途に使用したいですか？",
       options: ["Webサイトの公開", "ゲームサーバーのホスティング"],
@@ -36,28 +41,37 @@ const Chat = () => {
       question: "何人程度でプレイしますか？",
       options: ["最大プレーヤーが30人以下", "最大プレーヤーが70人以下"],
     },
+    {
+      question: "どのくらいの期間使い続ける予定ですか？",
+      options: ["1ヶ月", "3ヶ月", "6ヶ月", "1年間", "2年間", "3年間"],
+    },
   ];
 
-  const result = [
-    "Ubuntu：24.04, 4GB, IPv4V6-Webがおすすめです",
-    "Ubuntu：24.04, 2GB, IPv4V6-Webがおすすめです",
-    "2GBプランがおすすめです",
-    "4GBプランがおすすめです",
-    "8GBプランがおすすめです",
-    "16GBプランがおすすめです",
-    "16GB（安定した運用には32GB）プランがおすすめです"
+  const result: { type: string; description: string; flavor: string | null }[] = [
+      {type: "vps", description :"Ubuntu：24.04, 4GB, IPv4V6-Webがおすすめです", flavor: "g2l-t-c4m4"},
+      {type: "vps", description: "Ubuntu：24.04, 2GB, IPv4V6-Webがおすすめです", flavor: "g2l-t-c3m2"},
+      {type: "game", description: "2GBプランがおすすめです", flavor: null},
+      {type: "game", description: "4GBプランがおすすめです", flavor: null},
+      {type: "game", description: "8GBプランがおすすめです", flavor: null},
+      {type: "game", description: "16GBプランがおすすめです", flavor: null},
+      {type: "game", description: "16GB（安定した運用には32GB）プランがおすすめです", flavor: null},
   ];
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [resultIndex, setResultIndex] = useState(0);
-  const [iscontinue, setIscontinue] = useState(true);
-  const [chatHistory, setChatHistory] = useState([
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [resultIndex, setResultIndex] = useState<number>(0);
+  const [iscontinue, setIscontinue] = useState<boolean>(true);
+  const [chatHistory, setChatHistory] = useState<
+    { type: "bot" | "user"; text: string }[]
+  >([
     {
       type: "bot",
       text: "サーバーを借りるために、いくつか質問しますね。",
     },
   ]);
-  const [answers, setAnswers] = useState<string[]>([]);
+  const [, setAnswers] = useState<string[]>([]);
+  const [isFinishedSetting, setIsFinishedSetting] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
+  const [term, setTerm] = useState<number>(0);
 
   const handleOptionClick = (option: string) => {
     // ユーザーの回答をチャット履歴に追加
@@ -65,6 +79,7 @@ const Chat = () => {
       ...prevChatHistory,
       { type: "user", text: option },
     ]);
+
 
     // 選択された回答を保存
     setAnswers((prevAnswers) => [...prevAnswers, option]);
@@ -74,65 +89,57 @@ const Chat = () => {
     // 次の質問を設定（条件に応じて分岐）
     switch (option) {
       case "Webサイトの公開":
-        nextQuestionIndex = 1;
-        break;
+      nextQuestionIndex = 1;
+      break;
       case "ゲームサーバーのホスティング":
-        nextQuestionIndex = 2;
-        break;
+      nextQuestionIndex = 2;
+      break;
       case "WordPress":
-        nextQuestionIndex = 3;
-        break;
+      nextQuestionIndex = 3;
+      break;
       case "それ以外":
-        setResultIndex(0);
-        setIscontinue(false);
-        break;
       case "1つ":
-        setResultIndex(1);
-        setIscontinue(false);
-        break;
       case "複数サイト":
-        setResultIndex(0);
-        setIscontinue(false);
-        break;
+      setResultIndex(0);
+      setIscontinue(false);
+      break;
       case "Minecraft java版":
-        nextQuestionIndex = 5;
-        break;
       case "Minecraft 統合版":
-        nextQuestionIndex = 5;
-        break;
+      nextQuestionIndex = 5;
+      break;
       case "ARK: Survival Evolved":
-        nextQuestionIndex = 6;
-        break;
+      nextQuestionIndex = 6;
+      break;
       case "4人以下":
-        setResultIndex(2);
-        setIscontinue(false);
-        break;
+      setResultIndex(2);
+      setIscontinue(false);
+      break;
       case "5人から10人":
-        setResultIndex(3);
-        setIscontinue(false);
-        break;
+      setResultIndex(3);
+      setIscontinue(false);
+      break;
       case "11人以上":
-        setResultIndex(4);
-        setIscontinue(false);
-        break;
+      setResultIndex(4);
+      setIscontinue(false);
+      break;
       case "最大プレーヤーが30人以下":
-        setResultIndex(4);
-        setIscontinue(false);
-        break;
+      setResultIndex(4);
+      setIscontinue(false);
+      break;
       case "最大プレーヤーが70人以下":
-        setResultIndex(5);
-        setIscontinue(false);
-        break;
+      setResultIndex(5);
+      setIscontinue(false);
+      break;
       case "Palworld":
-        setResultIndex(6);
-        setIscontinue(false);
-        break;
+      setResultIndex(6);
+      setIscontinue(false);
+      break;
       default:
-        break;
+      break;
     }
 
     // 次の質問をチャット履歴に追加
-    if (iscontinue) {
+    if (iscontinue && nextQuestionIndex < questions.length) {
       setChatHistory((prevChatHistory) => [
         ...prevChatHistory,
         { type: "bot", text: questions[nextQuestionIndex].question },
@@ -141,6 +148,16 @@ const Chat = () => {
 
     setCurrentQuestionIndex(nextQuestionIndex);
   };
+
+  const handleTermonClick = (term:number) => {
+    setIsFinishedSetting(true);
+    setTerm(term);
+  };
+
+  const handleSendInfo = () => {
+    const passwordInput = document.getElementById("root-password") as HTMLInputElement;
+    setPassword(passwordInput?.value);
+  }
 
   return (
     <div className="chat-container">
@@ -172,14 +189,51 @@ const Chat = () => {
         </div>
       )}
 
+
       {!iscontinue && (
         <div className="message">
           <div className="avatar">A</div>
           <div className="message-bubble">
-            <div className="result">{result[resultIndex]}</div>
+            <div className="result">{result[resultIndex].description}</div>
           </div>
         </div>
       )}
+
+      {!iscontinue && (
+        <div className="message">
+          <div className="avatar">A</div>
+          <div className="message-bubble">
+            どのくらいの期間使い続ける予定ですか？
+            <div className="options-term">
+              <div className="option-term" onClick={() => handleTermonClick(1)}>1ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(3)}>3ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(6)}>6ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(12)}>12ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(24)}>24ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(36)}>36ヶ月</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isFinishedSetting && (
+        <div className="message user">
+        <div className="message-bubble">
+          {term}ヶ月
+        </div>
+        <div className="avatar">B</div>
+      </div>
+      )}
+
+      {isFinishedSetting && (
+          <div className="message">
+          <div className="avatar">A</div>
+          <div className="message-bubble">
+            <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password" /></div>
+            <button className="submit-button" onClick={handleSendInfo}>送信</button>
+          </div>
+        </div>
+        )}
     </div>
   );
 };
