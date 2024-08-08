@@ -64,6 +64,12 @@ const PricingCard = () => {
           <button className="add-button">追加</button>
         </div>
       )}
+      {!isFareButton && !isChatButton && (
+      <div className="button-container">
+            <button id="fare-button" className="circle-button" onClick={handleFareButton}>料金比較</button>
+            <button id="chat-button" className="circle-button" onClick={handleChatButton}>何かお困りですか？</button>
+          </div>
+      )}
     </div>
   );
 };

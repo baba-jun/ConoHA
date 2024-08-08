@@ -149,14 +149,39 @@ const Chat = () => {
     setCurrentQuestionIndex(nextQuestionIndex);
   };
 
-  const handleTermonClick = (term:number) => {
+  const handleTermonClick = async (term:number) => {
     setIsFinishedSetting(true);
     setTerm(term);
   };
 
-  const handleSendInfo = () => {
+  const handleSendInfo = async () => {
     const passwordInput = document.getElementById("root-password") as HTMLInputElement;
     setPassword(passwordInput?.value);
+
+    try {
+      const response = await fetch("http://localhost:8080/api/server/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://127.0.0.1:8080",
+        },
+        body: JSON.stringify({
+          flag: "1",
+          password: password,
+          server_name: "test_server",
+          flavor_name: result[resultIndex].flavor,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Server response:", data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
   return (
