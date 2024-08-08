@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { API_URL } from "../main";
 
 type ServerData = {
+  id: string;
   server_name: string;
   status: string;
   ip_address: string;
@@ -96,9 +97,9 @@ const ServerList = () => {
               )}
               <td className="control">
                 {server.status === "ACTIVE" ? (
-                  <button className="button" onClick={() => handleStop(server.server_name)}>停止</button>
+                  <button className="button" onClick={() => handleStop(server.id)}>停止</button>
                 ) : (
-                  <button className="button" onClick={() => handleStart(server.server_name)}>再開</button>
+                  <button className="button" onClick={() => handleStart(server.id)}>再開</button>
                 )}
               </td>
             </tr>
@@ -109,14 +110,28 @@ const ServerList = () => {
   );
 };
 
-const handleStop = (serverName: string) => {
-  // サーバー停止のロジックをここに追加
-  console.log(`サーバー ${serverName} を停止します`);
+const handleStop = (serverId: string) => {
+  fetch(`${API_URL}/api/server/operation/stop`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      server_id: serverId,
+    }),
+  })
 };
 
-const handleStart = (serverName: string) => {
-  // サーバー再開のロジックをここに追加
-  console.log(`サーバー ${serverName} を再開します`);
+const handleStart = (serverId: string) => {
+  fetch(`${API_URL}/api/server/operation/start`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      server_id: serverId,
+    }),
+  })
 };
 
 export default ServerList;
