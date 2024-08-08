@@ -19,9 +19,9 @@ type RequestData struct {
 }
 
 type ServerData struct {
-	ServerName  string `json:"server_name"`
+	ServerName string `json:"server_name"`
+	IsRun      string `json:"is_run"`
 	OSName  string `json:"os_name"`
-	isRun  string `json:"is_run"`
 	plan  string `json:"plan"`
 	ip  string `json:"ip_address"`
 }

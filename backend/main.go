@@ -38,6 +38,7 @@ func main() {
 		r.Post("/token/create", handlers.CreateTokenHandler)
 		r.Get("/price", handlers.GetPriceHandler)
 		r.Get("/server/create", handlers.CreateServerHandler)
+		r.Get("/server/list", handlers.GetServerHandler)
 	})
 
 	port := os.Getenv("PORT")
