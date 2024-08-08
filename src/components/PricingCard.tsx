@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import '../App.css';
 import Chat from './Chat';
 import Fare from './Fare';
 
 
-const PricingCard = (props) => {
+type PricingCardProps = {
+  service: number | null;
+  image: number | null;
+  realFare: number | null;
+  fare: number | null;
+};
+
+const PricingCard = (props: PricingCardProps) => {
   const serviceList = ["VPS", "WindowsServer", "GPUサーバー", "メールサーバー", "DBサーバー"];
   const [isFareButton, setIsFareBUtton] = useState(false);
   const [isChatButton, setIsChatbutton] = useState(false);

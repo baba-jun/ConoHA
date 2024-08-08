@@ -204,7 +204,7 @@ const Game = () => {
     </section>
     </div>
     <div className="right-area">
-      <PricingCard />
+      <PricingCard service={null} image={null} realFare={null} fare={null}/>
     </div>
     </main>
   );
