@@ -4,7 +4,9 @@ const Header: React.FC = () => {
 	return (
 		<header>
 		<div className="logo">
-			<img src="logo.png" alt="logo" />
+			<Link to="/">
+				<img src="logo.png" alt="logo" />
+			</Link>
 		</div>
 		<nav>
 			<ul>
