@@ -58,6 +58,15 @@ const Chat = () => {
     {type: "game", description: "16GB（安定した運用には32GB）プランがおすすめです", flavor: null},
   ];
 
+  const termzlist: { term: number; description: string }[] = [
+    {term: 1, description: "1ヶ月"},
+    {term: 3, description: "3ヶ月"},
+    {term: 6, description: "6ヶ月"},
+    {term: 12, description: "12ヶ月"},
+    {term: 24, description: "24ヶ月"},
+    {term: 36, description: "36ヶ月"},
+  ]
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [resultIndex, setResultIndex] = useState<number>(0);
   const [iscontinue, setIscontinue] = useState<boolean>(true);
@@ -264,7 +273,7 @@ const Chat = () => {
       {isFinishedSetting && (
         <div className="message user">
         <div className="message-bubble">
-          {term}ヶ月
+          {termzlist[term-1].description}
         </div>
         <div className="avatar">B</div>
       </div>
