@@ -4,7 +4,7 @@ import { API_URL } from "../main";
 
 const Vps = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
-  const [ , setSelectedImage] = useState<number | null>(null);
+  const [ selectedImage, setSelectedImage] = useState<number | null>(null);
   const [selectedFare, setSelectedFare] = useState<number | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [originalPare, setOriginalFare] = useState<number | null>(0);

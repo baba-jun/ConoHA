@@ -3,12 +3,6 @@ import '../App.css';
 import Chat from './Chat';
 import Fare from './Fare';
 
-type PricingData = {
-  service : number | null;
-  image : number | null;
-  realFare : number | null;
-  fare : number | null;
-};
 
 type PricingCardProps = {
   service: number | null;
