@@ -9,6 +9,15 @@ type Price struct {
 	RealPrice     float64
 }
 
+/*==========================Server==========================*/
+
+type RequestData struct {
+	Flag        string `json:"flag"`
+	Password    string `json:"password"`
+	ServerName  string `json:"server_name"`
+	FlavorName  string `json:"flavor_name"`
+}
+
 /*==========================Auth==========================*/
 
 type AuthRequest struct {

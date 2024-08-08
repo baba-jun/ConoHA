@@ -71,6 +71,7 @@ const Chat = () => {
   const [, setAnswers] = useState<string[]>([]);
   const [isFinishedSetting, setIsFinishedSetting] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
+  const [term, setTerm] = useState<number>(0);
 
   const handleOptionClick = (option: string) => {
     // ユーザーの回答をチャット履歴に追加
@@ -79,9 +80,6 @@ const Chat = () => {
       { type: "user", text: option },
     ]);
 
-  const handleTermOnClick = () => {
-    setIsFinishedSetting(true);
-  }
 
     // 選択された回答を保存
     setAnswers((prevAnswers) => [...prevAnswers, option]);
@@ -91,61 +89,53 @@ const Chat = () => {
     // 次の質問を設定（条件に応じて分岐）
     switch (option) {
       case "Webサイトの公開":
-        nextQuestionIndex = 1;
-        break;
+      nextQuestionIndex = 1;
+      break;
       case "ゲームサーバーのホスティング":
-        nextQuestionIndex = 2;
-        break;
+      nextQuestionIndex = 2;
+      break;
       case "WordPress":
-        nextQuestionIndex = 3;
-        break;
+      nextQuestionIndex = 3;
+      break;
       case "それ以外":
-        setResultIndex(0);
-        setIscontinue(false);
-        break;
       case "1つ":
-        setResultIndex(1);
-        setIscontinue(false);
-        break;
       case "複数サイト":
-        setResultIndex(0);
-        setIscontinue(false);
-        break;
+      setResultIndex(0);
+      setIscontinue(false);
+      break;
       case "Minecraft java版":
-        nextQuestionIndex = 5;
-        break;
       case "Minecraft 統合版":
-        nextQuestionIndex = 5;
-        break;
+      nextQuestionIndex = 5;
+      break;
       case "ARK: Survival Evolved":
-        nextQuestionIndex = 6;
-        break;
+      nextQuestionIndex = 6;
+      break;
       case "4人以下":
-        setResultIndex(2);
-        setIscontinue(false);
-        break;
+      setResultIndex(2);
+      setIscontinue(false);
+      break;
       case "5人から10人":
-        setResultIndex(3);
-        setIscontinue(false);
-        break;
+      setResultIndex(3);
+      setIscontinue(false);
+      break;
       case "11人以上":
-        setResultIndex(4);
-        setIscontinue(false);
-        break;
+      setResultIndex(4);
+      setIscontinue(false);
+      break;
       case "最大プレーヤーが30人以下":
-        setResultIndex(4);
-        setIscontinue(false);
-        break;
+      setResultIndex(4);
+      setIscontinue(false);
+      break;
       case "最大プレーヤーが70人以下":
-        setResultIndex(5);
-        setIscontinue(false);
-        break;
+      setResultIndex(5);
+      setIscontinue(false);
+      break;
       case "Palworld":
-        setResultIndex(6);
-        setIscontinue(false);
-        break;
+      setResultIndex(6);
+      setIscontinue(false);
+      break;
       default:
-        break;
+      break;
     }
 
     // 次の質問をチャット履歴に追加
@@ -159,13 +149,40 @@ const Chat = () => {
     setCurrentQuestionIndex(nextQuestionIndex);
   };
 
-  const handleTermonClick = () => {
+  const handleTermonClick = async (term:number) => {
     setIsFinishedSetting(true);
+    setTerm(term);
   };
 
-  const handleSendInfo = () => {
+  const handleSendInfo = async () => {
     const passwordInput = document.getElementById("root-password") as HTMLInputElement;
-    setPassword(passwordInput?.value);
+    const passwordValue = passwordInput?.value;
+    setPassword(passwordValue);
+    console.log(passwordValue)
+
+    // try {
+    //   const response = await fetch("http://localhost:8080/api/server/create", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       flag: "1",
+    //       password: "adminPass111",
+    //       server_name: "test_server",
+    //       flavor_name: result[resultIndex].flavor,
+    //     }),
+    //   });
+
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! status: ${response.status}`);
+    //   }
+
+    //   const data = await response.json();
+    //   console.log("Server response:", data);
+    // } catch (error) {
+    //   console.error("Error fetching data:", error);
+    // }
   }
 
   return (
@@ -213,24 +230,32 @@ const Chat = () => {
           <div className="avatar">A</div>
           <div className="message-bubble">
             どのくらいの期間使い続ける予定ですか？
-            <div className="options">
-              <div className="option" onClick={handleTermonClick}>1ヶ月</div>
-              <div className="option">3ヶ月</div>
-              <div className="option">6ヶ月</div>
-              <div className="option">6ヶ月</div>
-              <div className="option">1年間</div>
-              <div className="option">2年間</div>
-              <div className="option">3年間</div>
+            <div className="options-term">
+              <div className="option-term" onClick={() => handleTermonClick(1)}>1ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(3)}>3ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(6)}>6ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(12)}>12ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(24)}>24ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(36)}>36ヶ月</div>
             </div>
           </div>
         </div>
       )}
 
       {isFinishedSetting && (
+        <div className="message user">
+        <div className="message-bubble">
+          {term}ヶ月
+        </div>
+        <div className="avatar">B</div>
+      </div>
+      )}
+
+      {isFinishedSetting && (
           <div className="message">
           <div className="avatar">A</div>
           <div className="message-bubble">
-            <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password" /></div>
+            <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password"/></div>
             <button className="submit-button" onClick={handleSendInfo}>送信</button>
           </div>
         </div>
