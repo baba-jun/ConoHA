@@ -26,7 +26,7 @@ nav ul {
   list-style-type: none;
 }
 
-nav ul li {
+nav ul .header-nav-link {
   margin-right: 20px;
 }
 
@@ -63,21 +63,96 @@ aside ul li {
   margin-bottom: 10px;
 }
 
+h2 {
+  position: relative; /* relativeを追加して疑似要素を正しく配置 */
+  padding-left: 20px; /* 四角形とテキストの間にスペースを確保 */
+}
+
+h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px; /* 四角形の幅 */
+  height: 100%; /* 四角形の高さをタイトルと同じに */
+  background-color: #00bcd4; /* 四角形の色 */
+}
+
+.next {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	width: 120px;
+	margin: auto;
+	padding: 1rem 1rem;
+	font-weight: bold;
+	border: 2px solid #00bcd4;
+	color: #00bcd4;
+	cursor: pointer;
+	position: relative;
+ 	overflow: hidden;
+ 	z-index: 1;
+}
+
+.next::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #00bcd4;
+	transform: translateX(-100%);
+	transition: all .3s;
+	z-index: -1;
+}
+
+.next:hover::before {
+	transform: translateX(0);
+}
+
+.next:hover {
+	color: #fff;
+}
+
 .version {
   margin-top: 20px;
   font-size: 12px;
 }
 
 main {
-  flex-grow: 1;
-  padding: 20px;
+  display: flex;
+  width: 100%;
+  padding: 2.5%;
+}
+
+
+.left-area {
+  width: 70%;
+}
+
+.right-area {
+  width: 30%;
+  padding-left: 35px;
+}
+
+.service-grid, .os-grid, .fare-grid, .root-password-area, .name-tag-area{
+  margin-left: 2%;
 }
 
 .service-grid, .os-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 20px;
+  justify-items: center;
 }
+
+.fare-grid{
+  display: flex;
+  justify-items: left;
+}
+
 
 .service-item, .os-item {
   border: 1px solid #e0e0e0;
@@ -88,4 +163,256 @@ main {
 .active {
   background-color: #00bcd4;
   color: white;
+}
+
+.text-input{
+  border: 1px solid #dadada;
+  padding: 5px 10px;
+}
+
+.radio-button .radio-button-landscape{
+  display: inline-block;
+  margin: 5px;
+  position:		relative;	/* 相対位置指定 */
+  overflow:		hidden;
+}
+
+.radio-button .caption {
+	font-size:		70%;
+	text-align: 		center;
+	padding-top:		70px;
+	color:			#fff;
+}
+
+.radio-button  input {
+  display: none;
+}
+
+.radio-button-landscape{
+  width: 14.26%;
+}
+
+.radio-button-landscape input {
+  display: none;
+}
+
+.radio-button .radio-button-landscape .mask {
+	width:			100%;
+	height:			100%;
+	position:		absolute;	/* 絶対位置指定 */
+	top:			0;
+	left:			0;
+	opacity:		0;	/* マスクを表示しない */
+	background-color:	rgba(0,0,0,0.4);	/* マスクは半透明 */
+  border-radius: 20px;
+	-webkit-transition:	all 0.2s ease;
+	transition:		all 0.2s ease;
+}
+
+
+.radio-button label {
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  color: black;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 160px;
+  width: 160px;
+  text-align: center;
+  font-size: 25px;
+  aspect-ratio: 1/1;
+}
+
+.radio-button-landscape label{
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 1rem 0 1rem 0;
+  text-align: center;
+  font-size: 15px;
+}
+
+
+
+.radio-button input:checked + label {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.radio-button-landscape input:checked + label {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.undercaption {
+  text-align: center;
+}
+
+.pricing-card-wrapper {
+  width: 70%;
+}
+
+.pricing-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  margin: auto auto auto 0
+}
+
+.card-content {
+  margin-bottom: 20px;
+}
+
+.service-details p,
+.billing-details p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
+  margin-top: 20px;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.add-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ddd;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.action-buttons button {
+  width: 45%;
+  padding: 10px;
+  background-color: #00aced;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button-container {
+  display: flex;
+  gap: 24px;
+  margin: 24px auto 0 auto;
+  justify-content: space-around;
+}
+
+.circle-button {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  background-color: #00bcd4;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 14px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.circle-button:hover {
+  background-color: #0097a7;
+}
+
+#fare-button {
+  bottom: 20px;
+  right: 20px;
+}
+
+#chat-button {
+  bottom: 20px;
+  right: 160px;
+}
+
+.chat-container{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.vps-main {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  padding: 2.5% 0% 2.5% 5%;
+}
+
+.service-section, .os-selection, .fare-type-selection {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+.fare-grid{
+  background-color: #f5f5f5;
+}
+
+
+
+.plan {
+  width: 150px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.highlighted {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.size {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.cpu,
+.ssd {
+  font-size: 14px;
+  color: #555;
 }
