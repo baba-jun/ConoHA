@@ -48,14 +48,14 @@ const Chat = () => {
     },
   ];
 
-  const result: { type: string; description: string; flavor: string | null }[] = [
-      {type: "vps", description :"Ubuntu：24.04, 4GB, IPv4V6-Webがおすすめです", flavor: "g2l-t-c4m4"},
-      {type: "vps", description: "Ubuntu：24.04, 2GB, IPv4V6-Webがおすすめです", flavor: "g2l-t-c3m2"},
-      {type: "game", description: "2GBプランがおすすめです", flavor: null},
-      {type: "game", description: "4GBプランがおすすめです", flavor: null},
-      {type: "game", description: "8GBプランがおすすめです", flavor: null},
-      {type: "game", description: "16GBプランがおすすめです", flavor: null},
-      {type: "game", description: "16GB（安定した運用には32GB）プランがおすすめです", flavor: null},
+  const result: { type: string; description: string; flavor: string | null; plan?: number }[] = [
+    {type: "vps", description :"Ubuntu：24.04, 4GB, IPv4V6-Webがおすすめです", plan:3, flavor: "g2l-t-c4m4"},
+    {type: "vps", description: "Ubuntu：24.04, 2GB, IPv4V6-Webがおすすめです", plan:2, flavor: "g2l-t-c3m2"},
+    {type: "game", description: "2GBプランがおすすめです", flavor: null},
+    {type: "game", description: "4GBプランがおすすめです", flavor: null},
+    {type: "game", description: "8GBプランがおすすめです", flavor: null},
+    {type: "game", description: "16GBプランがおすすめです", flavor: null},
+    {type: "game", description: "16GB（安定した運用には32GB）プランがおすすめです", flavor: null},
   ];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -73,6 +73,7 @@ const Chat = () => {
   const [isFinishedSetting, setIsFinishedSetting] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [term, setTerm] = useState<number>(0);
+  const [fare, setFare] = useState<number>(0);
 
   const handleOptionClick = (option: string) => {
     // ユーザーの回答をチャット履歴に追加
@@ -153,10 +154,10 @@ const Chat = () => {
   const handleTermonClick = async (term:number) => {
     setIsFinishedSetting(true);
     setTerm(term);
+    fetchFare(term)
   };
 
   const handleSendInfo = async () => {
-    console.log(password);
 
     try {
       const response = await fetch(`${API_URL}/api/server/create`, {
@@ -182,6 +183,26 @@ const Chat = () => {
       console.error("Error fetching data:", error);
     }
   }
+
+  const fetchFare = async (term: number) => {
+    try {
+      const response = await fetch(`${API_URL}/api/price?type_id=${term}&plan_id=${result[resultIndex].plan}`);
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      const data = await response.json();
+      if (data.real_price != 0) {
+        setFare(data.RealPrice);
+      }else{
+        setFare(data.OriginalPrice);
+      }
+    } catch (error) {
+      console.error(`Failed to fetch price for type_id=${term}, plan_id=${result[resultIndex].plan}:`, error);
+      return 'error';
+    }
+  }
+
+
 
   return (
     <div className="chat-container">
@@ -230,11 +251,11 @@ const Chat = () => {
             どのくらいの期間使い続ける予定ですか？
             <div className="options-term">
               <div className="option-term" onClick={() => handleTermonClick(1)}>1ヶ月</div>
-              <div className="option-term" onClick={() => handleTermonClick(3)}>3ヶ月</div>
-              <div className="option-term" onClick={() => handleTermonClick(6)}>6ヶ月</div>
-              <div className="option-term" onClick={() => handleTermonClick(12)}>12ヶ月</div>
-              <div className="option-term" onClick={() => handleTermonClick(24)}>24ヶ月</div>
-              <div className="option-term" onClick={() => handleTermonClick(36)}>36ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(2)}>3ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(3)}>6ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(4)}>12ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(5)}>24ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(6)}>36ヶ月</div>
             </div>
           </div>
         </div>
@@ -250,6 +271,16 @@ const Chat = () => {
       )}
 
       {isFinishedSetting && (
+        <div>
+          {result[resultIndex].type === "vps" && (
+          <div className="message">
+            <div className="avatar"></div>
+            <div className="message-bubble">
+              料金は{fare}円/月です
+            </div>
+          </div>
+          )}
+
           <div className="message">
           <div className="avatar"></div>
           <div className="message-bubble">
@@ -257,6 +288,7 @@ const Chat = () => {
             <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password" onChange={(e) => {setPassword(e.target.value)}}/></div>
             <button className="submit-button" onClick={handleSendInfo}>申し込む</button>
           </div>
+        </div>
         </div>
         )}
     </div>
