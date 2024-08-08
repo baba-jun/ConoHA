@@ -158,29 +158,29 @@ const Chat = () => {
   const handleSendInfo = async () => {
     console.log(password);
 
-    // try {
-    //   const response = await fetch(`${API_URL}/api/server/create`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       flag: "1",
-    //       password: "adminPass111",
-    //       server_name: "test_server",
-    //       flavor_name: result[resultIndex].flavor,
-    //     }),
-    //   });
+    try {
+      const response = await fetch(`${API_URL}/api/server/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          flag: "1",
+          password: password,
+          server_name: "automatically-created-server",
+          flavor_name: result[resultIndex].flavor,
+        }),
+      });
 
-    //   if (!response.ok) {
-    //     throw new Error(`HTTP error! status: ${response.status}`);
-    //   }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    //   const data = await response.json();
-    //   console.log("Server response:", data);
-    // } catch (error) {
-    //   console.error("Error fetching data:", error);
-    // }
+      const data = await response.json();
+      console.log("Server response:", data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
   return (
