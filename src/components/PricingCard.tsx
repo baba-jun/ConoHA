@@ -1,18 +1,10 @@
-import  { useState } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import Chat from './Chat';
 import Fare from './Fare';
 
 
-type PricingCardProps = {
-  service: number | null;
-  image: number | null;
-  realFare: number | null;
-  fare: number | null;
-};
-
-const PricingCard = (props: PricingCardProps) => {
-  const serviceList = ["VPS", "WindowsServer", "GPUサーバー", "メールサーバー", "DBサーバー"];
+const PricingCard = (props) => {
   const [isFareButton, setIsFareBUtton] = useState(false);
   const [isChatButton, setIsChatbutton] = useState(false);
 
@@ -29,20 +21,13 @@ const PricingCard = (props: PricingCardProps) => {
       {isFareButton && <div className="fare-button"><Fare/></div>}
       {isChatButton && <div className="chat-button"><Chat/></div>}
       {!isFareButton && !isChatButton && (
+      <div className="pricing-card-wrapper-wrapper">
         <div className="pricing-card-wrapper">
           <table className="pricing-card">
             <tbody>
               <tr>
                 <td>サービス</td>
-                <td>
-                  {
-                    props.service && serviceList[props.service]
-                  }
-                </td>
-              </tr>
-              <tr>
-                <td>イメージタイプ</td>
-                <td>Ubuntu</td>
+                <td>VPS</td>
               </tr>
               <tr>
                 <td>CPU</td>
@@ -57,8 +42,16 @@ const PricingCard = (props: PricingCardProps) => {
                 <td>100GB</td>
               </tr>
               <tr>
+                <td>リージョン</td>
+                <td>東京</td>
+              </tr>
+              <tr>
                 <td>サーバー料金</td>
                 <td>14.6 円/時間</td>
+              </tr>
+              <tr>
+                <td>VPS割引きっぷ</td>
+                <td>利用しない</td>
               </tr>
               <tr>
                 <td>合計</td>
@@ -71,6 +64,7 @@ const PricingCard = (props: PricingCardProps) => {
           </table>
           <button className="add-button">追加</button>
         </div>
+      </div>
       )}
       {!isFareButton && !isChatButton && (
       <div className="button-container">
