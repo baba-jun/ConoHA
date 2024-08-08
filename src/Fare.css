@@ -1,0 +1,156 @@
+.fare-container {
+  max-width: 350px;
+  min-width: 350px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+  
+.section {
+  margin-bottom: 20px;
+}
+  
+.section label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.section p {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+  
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 16px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+  
+.checkbox-label {
+  flex: 1 1 calc(33.33% - 10px);
+  margin: 5px;
+  display: flex;
+  align-items: center;
+}
+ 
+.checkbox-label input {
+  margin-right: 10px;
+}
+ 
+.select-button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+  
+.select-button.selected {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+  
+.select-button:hover {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+  
+.select-button:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+  border-color: #ddd;
+}
+
+.next-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #00bcd4;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.next-button:hover {
+  background-color: #0097a7;
+}
+
+.next-button:disabled {
+  background-color: #cccccc; /* グレー背景色 */
+  color: #666666; /* グレー文字色 */
+  /*cursor: not-allowed;*/
+}
+
+.close-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff5722;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.close-button:hover {
+  background-color: #e64a19;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.pricing-table th, .pricing-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  width: calc(100% / 3);
+  text-align: center;
+}
+
+.pricing-table th {
+  background-color: #f2f2f2;
+}
+
+.selected-os {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: red;
+}
+
+.real-price {
+  color: green;
+  font-weight: bold;
+}
