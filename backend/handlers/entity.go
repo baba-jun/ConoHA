@@ -20,9 +20,9 @@ type RequestData struct {
 
 type ServerData struct {
 	ServerName string `json:"server_name"`
-	status      string `json:"status"`
-	OSName  string `json:"os_name"`
-	plan  string `json:"plan"`
+	Status     string `json:"status"`
+	FlavorName string `json:"flavor_name"`
+	OSName     string `json:"os_name"`
 	ip  string `json:"ip_address"`
 }
 

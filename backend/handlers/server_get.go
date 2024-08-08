@@ -70,8 +70,14 @@ func listServers(token, tenantID string) ([]ServerData, error) {
 		metadata := server["metadata"].(map[string]interface{})
 		instanceNameTag := metadata["instance_name_tag"].(string)
 		status := server["status"].(string)
-		volumesAttached := server["os-extended-volumes:volumes_attached"].([]interface{})
+		flavorID := server["flavor"].(map[string]interface{})["id"].(string)
 
+		flavorName, err := getFlavorName(token, flavorID)
+		if err != nil {
+			return nil, err
+		}
+
+		volumesAttached := server["os-extended-volumes:volumes_attached"].([]interface{})
 		var OSName string
 		if len(volumesAttached) > 0 {
 			volumeID := volumesAttached[0].(map[string]interface{})["id"].(string)
@@ -83,16 +89,17 @@ func listServers(token, tenantID string) ([]ServerData, error) {
 
 		servers = append(servers, ServerData{
 			ServerName: instanceNameTag,
-			status:      status,
-			OSName:  OSName,
+			Status:     status,
+			FlavorName: flavorName,
+			OSName:     OSName,
 		})
 	}
 
 	return servers, nil
 }
 
-func getVolumeOSName(token, tenantID, volumeID string) (string, error) {
-	url := fmt.Sprintf("https://block-storage.c3j1.conoha.io/v3/%s/volumes/detail", tenantID)
+func getFlavorName(token, flavorID string) (string, error) {
+	url := fmt.Sprintf("https://compute.c3j1.conoha.io/v2.1/flavors/%s", flavorID)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return "", err
@@ -112,17 +119,50 @@ func getVolumeOSName(token, tenantID, volumeID string) (string, error) {
 		return "", err
 	}
 
-	var data map[string][]map[string]interface{}
+	var data map[string]map[string]interface{}
 	if err := json.Unmarshal(body, &data); err != nil {
 		return "", err
 	}
 
-	for _, volume := range data["volumes"] {
-		if volume["id"].(string) == volumeID {
-			volumeImageMetadata := volume["volume_image_metadata"].(map[string]interface{})
-			return volumeImageMetadata["image_name"].(string), nil
-		}
+	flavorName := data["flavor"]["name"].(string)
+	return flavorName, nil
+}
+
+func getVolumeOSName(token, tenantID, volumeID string) (string, error) {
+	url := fmt.Sprintf("https://block-storage.c3j1.conoha.io/v3/%s/volumes/%s", tenantID, volumeID)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return "", err
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("X-Auth-Token", token)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
 	}
 
-	return "", fmt.Errorf("volume ID not found: %s", volumeID)
+	var data map[string]map[string]interface{}
+	if err := json.Unmarshal(body, &data); err != nil {
+		return "", err
+	}
+
+	volumeImageMetadata, ok := data["volume"]["volume_image_metadata"].(map[string]interface{})
+	if !ok {
+		return "", fmt.Errorf("volume image metadata not found for volume ID: %s", volumeID)
+	}
+
+	osName, ok := volumeImageMetadata["image_name"].(string)
+	if !ok {
+		return "", fmt.Errorf("OS name not found in volume image metadata for volume ID: %s", volumeID)
+	}
+
+	return osName, nil
 }
