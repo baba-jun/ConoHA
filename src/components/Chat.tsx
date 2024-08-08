@@ -71,6 +71,7 @@ const Chat = () => {
   const [, setAnswers] = useState<string[]>([]);
   const [isFinishedSetting, setIsFinishedSetting] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
+  const [term, setTerm] = useState<number>(0);
 
   const handleOptionClick = (option: string) => {
     // ユーザーの回答をチャット履歴に追加
@@ -79,9 +80,6 @@ const Chat = () => {
       { type: "user", text: option },
     ]);
 
-  const handleTermOnClick = () => {
-    setIsFinishedSetting(true);
-  }
 
     // 選択された回答を保存
     setAnswers((prevAnswers) => [...prevAnswers, option]);
@@ -159,8 +157,9 @@ const Chat = () => {
     setCurrentQuestionIndex(nextQuestionIndex);
   };
 
-  const handleTermonClick = () => {
+  const handleTermonClick = (term:number) => {
     setIsFinishedSetting(true);
+    setTerm(term);
   };
 
   const handleSendInfo = () => {
@@ -213,17 +212,26 @@ const Chat = () => {
           <div className="avatar">A</div>
           <div className="message-bubble">
             どのくらいの期間使い続ける予定ですか？
-            <div className="options">
-              <div className="option" onClick={handleTermonClick}>1ヶ月</div>
-              <div className="option">3ヶ月</div>
-              <div className="option">6ヶ月</div>
-              <div className="option">6ヶ月</div>
-              <div className="option">1年間</div>
-              <div className="option">2年間</div>
-              <div className="option">3年間</div>
+            <div className="options-term">
+              <div className="option-term" onClick={() => handleTermonClick(1)}>1ヶ月</div>
+              <div className="option-term">3ヶ月</div>
+              <div className="option-term">6ヶ月</div>
+              <div className="option-term">6ヶ月</div>
+              <div className="option-term">1年間</div>
+              <div className="option-term">2年間</div>
+              <div className="option-term">3年間</div>
             </div>
           </div>
         </div>
+      )}
+
+      {isFinishedSetting && (
+        <div className="message user">
+        <div className="message-bubble">
+          {term}ヶ月
+        </div>
+        <div className="avatar">B</div>
+      </div>
       )}
 
       {isFinishedSetting && (
