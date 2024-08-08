@@ -10,7 +10,27 @@ type PricingData = {
   fare : number | null;
 };
 
-const PricingCard = (props : PricingData) => {
+type PricingCardProps = {
+  service: number | null;
+  image: number | null;
+  plan: number | null;
+  realFare: number | null;
+  fare: number | null;
+};
+
+const PricingCard = (props: PricingCardProps) => {
+  const serviceList = ["VPS", "WindowsServer", "GPUサーバー", "メールサーバー", "DBサーバー"];
+  const imageList = ["CentOS", "Ubuntu", "Debian", "Rocky Linux", "AlmaLinux", "Oracle Linux", "MIRACLE LINUX", "FreeBSD", "Arch Linux", "NetBSD", "OpenBSD"];
+  const planList = [
+    {ram: "512MB", cpu: "1Core", ssd: "30GB"},
+    {ram: "1GB", cpu: "2Core", ssd: "100GB"},
+    {ram: "2GB", cpu: "3Core", ssd: "100GB"},
+    {ram: "4GB", cpu: "4Core", ssd: "100GB"},
+    {ram: "8GB", cpu: "6Core", ssd: "100GB"},
+    {ram: "16GB", cpu: "8Core", ssd: "100GB"},
+    {ram: "32GB", cpu: "12Core", ssd: "100GB"},
+  ]
+
   const [isFareButton, setIsFareBUtton] = useState(false);
   const [isChatButton, setIsChatbutton] = useState(false);
 
@@ -33,19 +53,43 @@ const PricingCard = (props : PricingData) => {
             <tbody>
               <tr>
                 <td>サービス</td>
-                <td>VPS</td>
+                <td>
+                  {
+                    props.service != null && serviceList[props.service]
+                  }
+                </td>
+              </tr>
+              <tr>
+                <td>イメージタイプ</td>
+                <td>
+                  {
+                    props.image != null && imageList[props.image]
+                  }
+                </td>
               </tr>
               <tr>
                 <td>CPU</td>
-                <td>6Core</td>
+                <td>
+                  {
+                    props.plan != null && planList[props.plan].cpu
+                  }
+                </td>
               </tr>
               <tr>
                 <td>メモリ</td>
-                <td>8GB</td>
+                <td>
+                  {
+                    props.plan != null && planList[props.plan].ram
+                  }
+                </td>
               </tr>
               <tr>
                 <td>SSD</td>
-                <td>100GB</td>
+                <td>
+                  {
+                    props.plan != null && planList[props.plan].ssd
+                  }
+                </td>
               </tr>
               <tr>
                 <td>リージョン</td>
@@ -61,7 +105,9 @@ const PricingCard = (props : PricingData) => {
               </tr>
               <tr>
                 <td>合計</td>
-                <td>月額最大</td>
+                {
+                  props.plan == 0 && <td>月額最大</td>
+                }
               </tr>
               <tr>
                 <td className="price" colSpan={2}>{props.fare} 円/月</td>
