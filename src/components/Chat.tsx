@@ -89,61 +89,53 @@ const Chat = () => {
     // 次の質問を設定（条件に応じて分岐）
     switch (option) {
       case "Webサイトの公開":
-        nextQuestionIndex = 1;
-        break;
+      nextQuestionIndex = 1;
+      break;
       case "ゲームサーバーのホスティング":
-        nextQuestionIndex = 2;
-        break;
+      nextQuestionIndex = 2;
+      break;
       case "WordPress":
-        nextQuestionIndex = 3;
-        break;
+      nextQuestionIndex = 3;
+      break;
       case "それ以外":
-        setResultIndex(0);
-        setIscontinue(false);
-        break;
       case "1つ":
-        setResultIndex(1);
-        setIscontinue(false);
-        break;
       case "複数サイト":
-        setResultIndex(0);
-        setIscontinue(false);
-        break;
+      setResultIndex(0);
+      setIscontinue(false);
+      break;
       case "Minecraft java版":
-        nextQuestionIndex = 5;
-        break;
       case "Minecraft 統合版":
-        nextQuestionIndex = 5;
-        break;
+      nextQuestionIndex = 5;
+      break;
       case "ARK: Survival Evolved":
-        nextQuestionIndex = 6;
-        break;
+      nextQuestionIndex = 6;
+      break;
       case "4人以下":
-        setResultIndex(2);
-        setIscontinue(false);
-        break;
+      setResultIndex(2);
+      setIscontinue(false);
+      break;
       case "5人から10人":
-        setResultIndex(3);
-        setIscontinue(false);
-        break;
+      setResultIndex(3);
+      setIscontinue(false);
+      break;
       case "11人以上":
-        setResultIndex(4);
-        setIscontinue(false);
-        break;
+      setResultIndex(4);
+      setIscontinue(false);
+      break;
       case "最大プレーヤーが30人以下":
-        setResultIndex(4);
-        setIscontinue(false);
-        break;
+      setResultIndex(4);
+      setIscontinue(false);
+      break;
       case "最大プレーヤーが70人以下":
-        setResultIndex(5);
-        setIscontinue(false);
-        break;
+      setResultIndex(5);
+      setIscontinue(false);
+      break;
       case "Palworld":
-        setResultIndex(6);
-        setIscontinue(false);
-        break;
+      setResultIndex(6);
+      setIscontinue(false);
+      break;
       default:
-        break;
+      break;
     }
 
     // 次の質問をチャット履歴に追加
@@ -214,12 +206,11 @@ const Chat = () => {
             どのくらいの期間使い続ける予定ですか？
             <div className="options-term">
               <div className="option-term" onClick={() => handleTermonClick(1)}>1ヶ月</div>
-              <div className="option-term">3ヶ月</div>
-              <div className="option-term">6ヶ月</div>
-              <div className="option-term">6ヶ月</div>
-              <div className="option-term">1年間</div>
-              <div className="option-term">2年間</div>
-              <div className="option-term">3年間</div>
+              <div className="option-term" onClick={() => handleTermonClick(3)}>3ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(6)}>6ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(12)}>12ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(24)}>24ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(36)}>36ヶ月</div>
             </div>
           </div>
         </div>
