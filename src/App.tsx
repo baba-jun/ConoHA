@@ -14,7 +14,7 @@ const App: React.FC = () => {
       <div className="content">
         {/* <Sidebar /> */}
         <Routes>
-        <Route path="/" element={<Navigate to="/vps"/>} />
+        <Route path="/" element={<Navigate to="/server-list"/>} />
         <Route path="/vps" element={<Vps />} />
         <Route path="/game" element={<Game />} />
         <Route path="/fare" element={<Fare/>} />
