@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../App.css';
 import Chat from './Chat';
 import Fare from './Fare';
 
+type PricingData = {
+  service : number | null;
+  image : number | null;
+  realFare : number | null;
+  fare : number | null;
+};
 
-const PricingCard = (props) => {
+const PricingCard = (props : PricingData) => {
   const [isFareButton, setIsFareBUtton] = useState(false);
   const [isChatButton, setIsChatbutton] = useState(false);
 
