@@ -41,6 +41,7 @@ func main() {
 	r.Route("/api", func(r chi.Router) {
 		r.Get("/price", handlers.GetPriceHandler)
 		r.Post("/server/create", handlers.CreateServerHandler)
+		r.Get("/server/list", handlers.GetServerHandler)
 	})
 
 	port := os.Getenv("PORT")
