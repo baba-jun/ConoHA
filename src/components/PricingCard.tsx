@@ -4,7 +4,7 @@ import Chat from './Chat';
 import Fare from './Fare';
 
 
-const PricingCard = () => {
+const PricingCard = (props) => {
   const [isFareButton, setIsFareBUtton] = useState(false);
   const [isChatButton, setIsChatbutton] = useState(false);
 
@@ -15,7 +15,6 @@ const PricingCard = () => {
   const handleFareButton = () => {
     setIsFareBUtton(true);
   }
-
 
   return (
     <div>
@@ -58,7 +57,7 @@ const PricingCard = () => {
                 <td>月額最大</td>
               </tr>
               <tr>
-                <td className="price" colSpan={2}>8,082 円/月</td>
+                <td className="price" colSpan={2}>{props.fare} 円/月</td>
               </tr>
             </tbody>
           </table>
