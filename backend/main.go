@@ -37,6 +37,7 @@ func main() {
 		r.Use(corsHandler)
 		r.Post("/token/create", handlers.CreateTokenHandler)
 		r.Get("/price", handlers.GetPriceHandler)
+		r.Get("/server/create", handlers.CreateServerHandler)
 	})
 
 	port := os.Getenv("PORT")
