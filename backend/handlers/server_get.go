@@ -70,6 +70,7 @@ func listServers(token, tenantID string) ([]ServerData, error) {
 		metadata := server["metadata"].(map[string]interface{})
 		instanceNameTag := metadata["instance_name_tag"].(string)
 		status := server["status"].(string)
+		ID := server["id"].(string)
 		flavorID := server["flavor"].(map[string]interface{})["id"].(string)
 
 		flavorName, err := getFlavorName(token, flavorID)
@@ -102,6 +103,7 @@ func listServers(token, tenantID string) ([]ServerData, error) {
 		}
 
 		servers = append(servers, ServerData{
+			ID:			ID,
 			ServerName: instanceNameTag,
 			Status:     status,
 			FlavorName: flavorName,
