@@ -263,10 +263,10 @@ const Vps = () => {
         )}
       <div className="right-area">
         {realFareValue ===0 &&
-        <PricingCard service={selectedService} image={selectedImage} plan={selectedPlan} realFare={realFareValue} fare={originalPare} />
+        <PricingCard service={selectedService} image={selectedImage} fareType={selectedFare} plan={selectedPlan} realFare={realFareValue} fare={originalPare} />
         }
         {realFareValue !==0 &&
-        <PricingCard  service={selectedService} image={selectedImage} plan={selectedPlan} realFare={realFareValue} fare={realFareValue} />
+        <PricingCard  service={selectedService} image={selectedImage} fareType={selectedFare} plan={selectedPlan} realFare={realFareValue} fare={realFareValue} />
     }
       </div>
     </main>

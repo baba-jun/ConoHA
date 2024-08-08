@@ -37,7 +37,8 @@
 }
 
 .message.user .message-bubble {
-    background-color: #cfd8dc;
+    background-color: #00bcd4;
+    color: #fff;
 }
 
 .message .avatar {

@@ -7,6 +7,7 @@ import Fare from './Fare';
 type PricingCardProps = {
   service: number | null;
   image: number | null;
+  fareType: number | null;
   plan: number | null;
   realFare: number | null;
   fare: number | null;
@@ -47,7 +48,7 @@ const PricingCard = (props: PricingCardProps) => {
           <table className="pricing-card">
             <tbody>
               <tr>
-                <td>サービス</td>
+                <td className='itemName'>サービス</td>
                 <td>
                   {
                     props.service != null && serviceList[props.service]
@@ -55,7 +56,7 @@ const PricingCard = (props: PricingCardProps) => {
                 </td>
               </tr>
               <tr>
-                <td>イメージタイプ</td>
+                <td className='itemName'>イメージタイプ</td>
                 <td>
                   {
                     props.image != null && imageList[props.image]
@@ -63,7 +64,7 @@ const PricingCard = (props: PricingCardProps) => {
                 </td>
               </tr>
               <tr>
-                <td>CPU</td>
+                <td className='itemName'>CPU</td>
                 <td>
                   {
                     props.plan != null && planList[props.plan].cpu
@@ -71,7 +72,7 @@ const PricingCard = (props: PricingCardProps) => {
                 </td>
               </tr>
               <tr>
-                <td>メモリ</td>
+                <td className='itemName'>メモリ</td>
                 <td>
                   {
                     props.plan != null && planList[props.plan].ram
@@ -79,7 +80,7 @@ const PricingCard = (props: PricingCardProps) => {
                 </td>
               </tr>
               <tr>
-                <td>SSD</td>
+                <td className='itemName'>SSD</td>
                 <td>
                   {
                     props.plan != null && planList[props.plan].ssd
@@ -87,9 +88,9 @@ const PricingCard = (props: PricingCardProps) => {
                 </td>
               </tr>
               <tr>
-                <td>合計</td>
+                <td className='itemName'>合計</td>
                 {
-                  props.plan == 0 && <td>月額最大</td>
+                  props.fareType == 0 && <td>月額最大</td>
                 }
               </tr>
               <tr>
