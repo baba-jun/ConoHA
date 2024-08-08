@@ -27,7 +27,6 @@ const Vps = () => {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log(data.RealPrice);
       setOriginalFare(data.OriginalPrice);
       setFareValue(data.RealPrice);
       return data.RealPrice
@@ -175,10 +174,10 @@ const Vps = () => {
       </div>
       <div className="right-area">
         {realFareValue ===0 &&
-        <PricingCard  fare={originalPare} />
+        <PricingCard service={selectedService} image={selectedService} realFare={realFareValue} fare={originalPare} />
         }
         {realFareValue !==0 &&
-        <PricingCard  fare={realFareValue} />
+        <PricingCard  service={selectedService} image={selectedService} realFare={realFareValue} fare={realFareValue} />
     }
       </div>
     </main>
