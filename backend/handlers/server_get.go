@@ -87,11 +87,26 @@ func listServers(token, tenantID string) ([]ServerData, error) {
 			}
 		}
 
+		ip := ""
+		addresses := server["addresses"].(map[string]interface{})
+		for _, addrList := range addresses {
+			for _, addrData := range addrList.([]interface{}) {
+				if addrData.(map[string]interface{})["version"].(float64) == 4 {
+					ip = addrData.(map[string]interface{})["addr"].(string)
+					break
+				}
+			}
+			if ip != "" {
+				break
+			}
+		}
+
 		servers = append(servers, ServerData{
 			ServerName: instanceNameTag,
 			Status:     status,
 			FlavorName: flavorName,
 			OSName:     OSName,
+			IP:         ip,
 		})
 	}
 

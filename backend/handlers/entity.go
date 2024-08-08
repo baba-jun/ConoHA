@@ -23,7 +23,7 @@ type ServerData struct {
 	Status     string `json:"status"`
 	FlavorName string `json:"flavor_name"`
 	OSName     string `json:"os_name"`
-	ip  string `json:"ip_address"`
+	IP         string `json:"ip_address"`
 }
 
 type ResponseServerData struct {
