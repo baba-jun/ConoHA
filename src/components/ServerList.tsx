@@ -6,8 +6,8 @@ type ServerData = {
   id: string;
   server_name: string;
   status: string;
+  flavor_name: string;
   ip_address: string;
-  spec: string;
   os_name: string;
 };
 
@@ -68,7 +68,7 @@ const ServerList = () => {
             {!isMobile && (
               <>
                 <th>IPアドレス</th>
-                <th>OSタイプ</th>
+                <th>スペック</th>
               </>
             )}
             <th>操作</th>
@@ -88,9 +88,9 @@ const ServerList = () => {
                 <>
                   <td>{server.ip_address}</td>
                   <td>
-                    {server.spec}&nbsp;
+                    {server.flavor_name.replace(/.*-.*-c(\d+)m(\d+)/, "CPU $1core/メモリ $2MB ")}
                     <span className={server.os_name?.includes("win") ? "tag windows" : "tag vps"}>
-                      {server.os_name || "Unknown"}
+                      {server.os_name?.includes("win") ? "Windows" : server.os_name.replace(/^[^-]*-(.*)-[^-]*$/, "$1")}
                     </span>
                   </td>
                 </>
