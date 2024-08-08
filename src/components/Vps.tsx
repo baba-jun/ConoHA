@@ -85,7 +85,7 @@ const Vps = () => {
   }
 
   const selectImageItem = (index:number) => {
-    setSelectedService(index)
+    setSelectedImage(index)
   }
 
   const selectFareitem = (index:number) => {
