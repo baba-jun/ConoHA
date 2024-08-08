@@ -86,18 +86,6 @@ const PricingCard = (props: PricingCardProps) => {
                 </td>
               </tr>
               <tr>
-                <td>リージョン</td>
-                <td>東京</td>
-              </tr>
-              <tr>
-                <td>サーバー料金</td>
-                <td>14.6 円/時間</td>
-              </tr>
-              <tr>
-                <td>VPS割引きっぷ</td>
-                <td>利用しない</td>
-              </tr>
-              <tr>
                 <td>合計</td>
                 {
                   props.plan == 0 && <td>月額最大</td>

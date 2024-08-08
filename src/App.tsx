@@ -8,6 +8,7 @@ import ServerList from './components/ServerList';
 // import Sidebar from './components/Sidebar';
 
 const App: React.FC = () => {
+  const randomInt = Math.floor(Math.random() * 100);
   return (
     <div className="app">
       <Header />
@@ -15,7 +16,7 @@ const App: React.FC = () => {
         {/* <Sidebar /> */}
         <Routes>
         <Route path="/" element={<Navigate to="/server-list"/>} />
-        <Route path="/vps" element={<Vps />} />
+        <Route path="/vps" element={<Vps randomInt={randomInt}/>} />
         <Route path="/game" element={<Game />} />
         <Route path="/fare" element={<Fare/>} />
         <Route path="/server-list" element={<ServerList/>} />

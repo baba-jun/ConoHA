@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import PricingCard from "./PricingCard";
 import { API_URL } from "../main";
+import SelectionForm from "./Fare";
+import Chat from "./Chat";
 
 const Vps = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
@@ -9,6 +11,8 @@ const Vps = () => {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [originalPare, setOriginalFare] = useState<number | null>(0);
   const [realFareValue, setFareValue] = useState<number | null>(0);
+  const [isFareButtonSP, setIsFareBUttonSP] = useState(false);
+  const [isChatButtonSP, setIsChatbuttonSP] = useState(false);
 
   interface Price {
     OriginalPrice: number;
@@ -142,6 +146,14 @@ const Vps = () => {
     ],
   ];
 
+  const handleChatButton = () => {
+    setIsChatbuttonSP(true);
+  }
+
+  const handleFareButton = () => {
+    setIsFareBUttonSP(true);
+  }
+
   const selectServiceItem = (index:number) => {
     setSelectedService(index)
   }
@@ -160,6 +172,7 @@ const Vps = () => {
 
   return (
     <main>
+      {!isFareButtonSP && !isChatButtonSP && (
       <div className="left-area">
         <section className="service-section">
           <h2>サービス</h2>
@@ -236,7 +249,18 @@ const Vps = () => {
             <input type="text" className="text-input" id="name-tag" name="name-tag" />
           </div>
         </section>
+        <div className="button-container-for-sp">
+            <button id="fare-button" className="circle-button" onClick={handleFareButton}>料金比較</button>
+            <button id="chat-button" className="circle-button" onClick={handleChatButton}>何かお困りですか？</button>
+          </div>
       </div>
+      )}
+      {isFareButtonSP && (
+        <SelectionForm/>
+      )}
+      {isChatButtonSP && (
+        <Chat/>
+        )}
       <div className="right-area">
         {realFareValue ===0 &&
         <PricingCard service={selectedService} image={selectedImage} plan={selectedPlan} realFare={realFareValue} fare={originalPare} />

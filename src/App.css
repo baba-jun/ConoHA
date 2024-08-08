@@ -1,4 +1,8 @@
 /* App.css */
+*{
+  box-sizing: border-box;
+}
+
 .app {
   font-family: Arial, sans-serif;
 }
@@ -84,8 +88,8 @@ aside ul li {
 }
 
 h2 {
-  position: relative; 
-  padding-left: 20px; 
+  position: relative;
+  padding-left: 20px;
 }
 
 h2::before {
@@ -94,9 +98,9 @@ h2::before {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 5px; 
-  height: 100%; 
-  background-color: #00bcd4; 
+  width: 5px;
+  height: 100%;
+  background-color: #00bcd4;
 }
 
 .next {
@@ -148,12 +152,16 @@ main {
 }
 
 .left-area {
-  width: 70%;
+  width: 80%;
 }
 
 .right-area {
-  width: 30%;
+  width: 20%;
   padding-left: 0;
+}
+
+.button-container-for-sp{
+  display: none;
 }
 
 @media screen and (max-width: 1024px) {
@@ -164,6 +172,9 @@ main {
     width: 40%;
     padding-left: 0;
   }
+  .button-container-for-sp{
+    display: none;
+  }
 }
 
 @media screen and (max-width: 599px) {
@@ -172,6 +183,10 @@ main {
   }
   .right-area {
     display: none;
+  }
+
+  .button-container-for-sp{
+    display: block;
   }
 }
 
@@ -292,10 +307,18 @@ main {
 
 .pricing-card-wrapper-wrapper{
   position: fixed;
+  width: 20%;
+}
+
+@media screen and (max-width: 1024px) {
+  .pricing-card-wrapper-wrapper{
+    position: fixed;
+    width: 40%;
+  }
 }
 
 .pricing-card-wrapper {
-  width: 80%;
+  width: 100%;
 }
 
 .pricing-card {
@@ -399,7 +422,6 @@ main {
 .chat-container{
   position: fixed;
   bottom: 20px;
-  right: 20px;
 }
 
 .fare-container{

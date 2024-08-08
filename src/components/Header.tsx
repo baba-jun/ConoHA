@@ -3,6 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 const Header: React.FC = () => {
   const location = useLocation();
 
+  const randomInt = () => {
+  return Math.floor(Math.random() * 100);
+  }
+
   return (
     <header>
       <div className="logo">
@@ -14,8 +18,9 @@ const Header: React.FC = () => {
         <ul>
           <li>
             <Link
-              to="/vps"
+              to={"/vps"}
               className={`header-nav-link ${location.pathname === '/vps' ? 'active' : ''}`}
+
             >
               VPS
             </Link>

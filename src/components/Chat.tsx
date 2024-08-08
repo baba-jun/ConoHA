@@ -66,7 +66,7 @@ const Chat = () => {
   >([
     {
       type: "bot",
-      text: "サーバーを借りるために、いくつか質問しますね。",
+      text: "サーバーを借りるために、いくつか質問しますね。\n \r\nまずは、どの用途に使用したいですか？",
     },
   ]);
   const [, setAnswers] = useState<string[]>([]);
@@ -188,7 +188,7 @@ const Chat = () => {
       {iscontinue &&
         chatHistory.map((message, index) => (
           <div key={index} className={`message ${message.type}`}>
-            <div className="avatar">{message.type === "bot" ? "A" : "B"}</div>
+            <div className="avatar"></div>
             <div className="message-bubble">{message.text}</div>
           </div>
         ))}
@@ -196,7 +196,7 @@ const Chat = () => {
       {/* 現在の質問に対する選択肢を表示 */}
       {iscontinue && (
         <div className="message">
-          <div className="avatar">A</div>
+          <div className="avatar"></div>
           <div className="message-bubble">
             <div className="options">
               {questions[currentQuestionIndex].options.map((option, index) => (
@@ -216,7 +216,7 @@ const Chat = () => {
 
       {!iscontinue && (
         <div className="message">
-          <div className="avatar">A</div>
+          <div className="avatar"></div>
           <div className="message-bubble">
             <div className="result">{result[resultIndex].description}</div>
           </div>
@@ -225,7 +225,7 @@ const Chat = () => {
 
       {!iscontinue && (
         <div className="message">
-          <div className="avatar">A</div>
+          <div className="avatar"></div>
           <div className="message-bubble">
             どのくらいの期間使い続ける予定ですか？
             <div className="options-term">
@@ -251,10 +251,11 @@ const Chat = () => {
 
       {isFinishedSetting && (
           <div className="message">
-          <div className="avatar">A</div>
+          <div className="avatar"></div>
           <div className="message-bubble">
+            ルートパスワードを入力してください
             <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password" onChange={(e) => {setPassword(e.target.value)}}/></div>
-            <button className="submit-button" onClick={handleSendInfo}>送信</button>
+            <button className="submit-button" onClick={handleSendInfo}>申し込む</button>
           </div>
         </div>
         )}
