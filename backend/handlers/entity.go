@@ -18,6 +18,18 @@ type RequestData struct {
 	FlavorName  string `json:"flavor_name"`
 }
 
+type ServerData struct {
+	ServerName  string `json:"server_name"`
+	OSName  string `json:"os_name"`
+	isRun  string `json:"is_run"`
+	plan  string `json:"plan"`
+	ip  string `json:"ip_address"`
+}
+
+type ResponseServerData struct {
+	ServerList []ServerData `json:"server_list"`
+}
+
 /*==========================Auth==========================*/
 
 type AuthRequest struct {
