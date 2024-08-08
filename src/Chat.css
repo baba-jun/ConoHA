@@ -6,6 +6,15 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+    position: fixed;
+    bottom: 20px;
+}
+
+@media screen and (max-width: 599px) {
+    .chat-container {
+        width: 80%;
+        margin: auto
+    }
 }
 
 .message {

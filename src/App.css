@@ -420,10 +420,6 @@ main {
   right: 160px;
 }
 
-.chat-container{
-  position: fixed;
-  bottom: 20px;
-}
 
 .fare-container{
   position: fixed;
