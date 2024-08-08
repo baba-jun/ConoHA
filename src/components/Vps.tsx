@@ -3,11 +3,11 @@ import PricingCard from "./PricingCard";
 const Vps = () => {
 
   const services =[
-    { id: "VPS", value: "VPS", alt: "VPS", caption: "VPS" },
-    { id: "WindowsServer", value: "Windows Server", alt: "WindowsServer", caption: "WindowsServer" },
-    { id: "GPUServer", value: "GPUServer", alt: "GPUServer", caption: "GPUサーバー" },
-    { id: "MailServer", value: "MailServer", alt: "MailServer", caption: "メールサーバー" },
-    { id: "DBServer", value: "DBServer", alt: "DBServer", caption: "DBサーバー" },
+    { id: "VPS", value: "VPS", alt: "VPS", caption: "VPS", check: "checked" },
+    { id: "WindowsServer", value: "Windows Server", alt: "WindowsServer", caption: "WindowsServer", check: "" },
+    { id: "GPUServer", value: "GPUServer", alt: "GPUServer", caption: "GPUサーバー", check: "" },
+    { id: "MailServer", value: "MailServer", alt: "MailServer", caption: "メールサーバー", check: "" },
+    { id: "DBServer", value: "DBServer", alt: "DBServer", caption: "DBサーバー", check: "" },
   ]
 
   const images = [

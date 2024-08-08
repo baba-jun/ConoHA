@@ -141,7 +141,6 @@ main {
   margin-left: 2%;
 }
 
-
 .service-grid, .os-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);

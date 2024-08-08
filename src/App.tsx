@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Vps from './components/Vps';
 import Game from './components/Game';
 import Fare from './components/Fare';
+import ServerList from './components/ServerList';
 // import Sidebar from './components/Sidebar';
 
 const App: React.FC = () => {
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Route path="/vps" element={<Vps />} />
         <Route path="/game" element={<Game />} />
         <Route path="/fare" element={<Fare/>} />
+        <Route path="/server-list" element={<ServerList/>} />
         </Routes>
       </div>
     </div>
