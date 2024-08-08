@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PricingCard from "./PricingCard";
 
 const Vps = () => {
@@ -6,8 +6,36 @@ const Vps = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [selectedFare, setSelectedFare] = useState<number | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
+  const [originalPare, setOriginalFare] = useState<number | null>(0);
+  const [realFareValue, setFareValue] = useState<number | null>(0);
 
+  interface Price {
+    OriginalPrice: number;
+    RealPrice?: number;
+  }
 
+  useEffect(() => {
+    if (selectedFare !== null && selectedPlan !== null) {
+      fetchPrice(selectedFare, selectedPlan)
+    }
+  }, [selectedFare, selectedPlan]);
+
+  const fetchPrice = async (type_id: number, plan_id: number): Promise<Price | 'error'> => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/price?type_id=${type_id}&plan_id=${plan_id}`);
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      const data = await response.json();
+      console.log(data.RealPrice);
+      setOriginalFare(data.OriginalPrice);
+      setFareValue(data.RealPrice);
+      return data.RealPrice
+    } catch (error) {
+      console.error(`Failed to fetch price for type_id=${type_id}, plan_id=${plan_id}:`, error);
+      return 'error';
+    }
+  };
 
   const services =[
     { id: "VPS", value: "VPS", alt: "VPS", caption: "VPS", check: "checked" },
@@ -64,6 +92,10 @@ const Vps = () => {
     setSelectedFare(index)
   }
 
+  const selectPlanitem = (index:number) => {
+    setSelectedPlan(index)
+  }
+
   return (
     <main>
       <div className="left-area">
@@ -113,7 +145,7 @@ const Vps = () => {
           <div className="os-grid">
           {plans.map((item, index) => (
               <div className="radio-button" key={item.size}>
-                <input type="radio" id={item.size} name="service" value={item.value} onChange={() => selectFareitem(index)}/>
+                <input type="radio" id={item.size} name="service" value={item.value} onChange={() => selectPlanitem(index)}/>
                 <label htmlFor={item.size}>
                 <div className="pricing-table">
                 <div className="size">{item.size}</div>
@@ -142,7 +174,12 @@ const Vps = () => {
         </section>
       </div>
       <div className="right-area">
-        <PricingCard />
+        {realFareValue ===0 &&
+        <PricingCard  fare={originalPare} />
+        }
+        {realFareValue !==0 &&
+        <PricingCard  fare={realFareValue} />
+    }
       </div>
     </main>
   );
