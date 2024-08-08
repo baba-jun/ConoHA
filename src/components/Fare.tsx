@@ -161,10 +161,10 @@ const SelectionForm: React.FC = () => {
                 price !== 'loading' && price !== 'error' ? (
                   price.RealPrice ? (
                     <div>
-                      <span className="real-price">{price.RealPrice}</span> <span className="original-price">{price.OriginalPrice}</span>
+                      <span className="real-price">{price.RealPrice} 円/月</span><br></br><span className="original-price">{price.OriginalPrice} 円/月</span>
                     </div>
                   ) : (
-                    <span>{price.OriginalPrice}</span>
+                    <span>{price.OriginalPrice} 円/月</span>
                   )
                 ) : (
                   price === 'loading' ? 'Loading...' : 'Error'
@@ -187,7 +187,7 @@ const SelectionForm: React.FC = () => {
           <p>料金タイプ: {[...selectedPlans].sort((a, b) => planOptions.indexOf(a) - planOptions.indexOf(b)).join(', ')}</p>
           <p>ストレージ: {[...selectedStorages].sort((a, b) => storageOptions.indexOf(a) - storageOptions.indexOf(b)).join(', ')}</p>
         </div>
-        <table className="pricing-table">
+        <table className="compare-table">
           <thead>
             <tr>
               <th>料金タイプ</th>
@@ -234,6 +234,7 @@ const SelectionForm: React.FC = () => {
                     disabled={!selectedPlans.includes(plan) && selectedPlans.length >= 3}
                   />
                   {plan}
+                  <span className="checkmark"></span>
                 </label>
               ))}
             </div>
@@ -251,6 +252,7 @@ const SelectionForm: React.FC = () => {
                     disabled={(selectedOS === 'ubuntu' && storage === '512MB') || (!selectedStorages.includes(storage) && selectedStorages.length >= 3)}
                   />
                   {storage}
+                  <span className="checkmark"></span>
                 </label>
               ))}
             </div>
@@ -268,4 +270,3 @@ const SelectionForm: React.FC = () => {
 };
 
 export default SelectionForm;
-
