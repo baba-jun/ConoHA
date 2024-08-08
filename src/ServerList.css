@@ -60,3 +60,12 @@ th {
     background-color: #87CEFA;
     color: black;
 }
+
+.button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0078D6;
+    color: white;
+    cursor: pointer;
+}
