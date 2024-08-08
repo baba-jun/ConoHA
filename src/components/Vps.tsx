@@ -106,7 +106,7 @@ const Vps = () => {
               <div className="radio-button" key={item.id}>
                 <input type="radio" id={item.id} name="service" value={item.value} onChange={() => selectServiceItem(index)}/>
                 <label htmlFor={item.id}>
-                  <img src={`src/assets/VPSs/${item.alt}.png`} alt={item.alt} />
+                  <img src={`VPSs/${item.alt}.png`} alt={item.alt} />
                 </label>
                 <p className="undercaption">{item.caption}</p>
               </div>
@@ -121,7 +121,7 @@ const Vps = () => {
               <div className="radio-button" key={item.id}>
                 <input type="radio" id={item.id} name="image" value={item.value} onChange={() => selectImageItem(index)}/>
                 <label htmlFor={item.id}>
-                  <img src={`src/assets/VPSs/${item.alt}.png`} alt={item.alt} />
+                  <img src={`VPSs/${item.alt}.png`} alt={item.alt} />
                 </label>
                 <p className="undercaption">{item.caption}</p>
               </div>
