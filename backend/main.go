@@ -28,14 +28,17 @@ func main() {
 	r.Use(middleware.Recoverer)
 
 	corsHandler := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
 		AllowCredentials: true,
+		MaxAge:           300,
 	}).Handler
 
+	r.Use(corsHandler)
+
 	r.Route("/api", func(r chi.Router) {
-		r.Use(corsHandler)
-		r.Post("/token/create", handlers.CreateTokenHandler)
 		r.Get("/price", handlers.GetPriceHandler)
 	})
 

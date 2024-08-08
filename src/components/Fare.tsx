@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../Fare.css';
 import PricingCard from './PricingCard';
+
+interface Price {
+  OriginalPrice: number;
+  RealPrice?: number;
+}
 
 const SelectionForm: React.FC = () => {
   const [selectedOS, setSelectedOS] = useState<string>('centos');
   const [selectedPlans, setSelectedPlans] = useState<string[]>([]);
   const [selectedStorages, setSelectedStorages] = useState<string[]>([]);
+  const [prices, setPrices] = useState<{ [key: string]: Price | 'loading' | 'error' }>({});
 
   const planOptions = ['時間課金', '1ヶ月', '3ヶ月', '6ヶ月', '12ヶ月', '24ヶ月', '36ヶ月'];
   const storageOptions = ['512MB', '1GB', '2GB', '4GB', '8GB', '16GB', '32GB', '64GB'];
@@ -84,23 +90,87 @@ const SelectionForm: React.FC = () => {
     }
   };
 
-  const planNumbers = selectedPlans.map(plan => planOptions.indexOf(plan)).join(', ');
-  const storageNumbers = selectedStorages.map(storage => storageOptions.indexOf(storage)).join(', ');
+  const fetchPrice = async (type_id: number, plan_id: number): Promise<Price | 'error'> => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/price?type_id=${type_id}&plan_id=${plan_id}`);
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      const data = await response.json();
+      return { OriginalPrice: data.OriginalPrice, RealPrice: data.RealPrice };
+    } catch (error) {
+      console.error(`Failed to fetch price for type_id=${type_id}, plan_id=${plan_id}:`, error);
+      return 'error';
+    }
+  };
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      const newPrices: { [key: string]: Price | 'loading' | 'error' } = {};
+      for (const plan of selectedPlans) {
+        for (const storage of selectedStorages) {
+          const type_id = planOptions.indexOf(plan);
+          const plan_id = storageOptions.indexOf(storage);
+          newPrices[`${type_id}-${plan_id}`] = 'loading';
+        }
+      }
+      setPrices(newPrices);
+
+      const pricePromises = selectedPlans.flatMap(plan =>
+        selectedStorages.map(async storage => {
+          const type_id = planOptions.indexOf(plan);
+          const plan_id = storageOptions.indexOf(storage);
+          const priceKey = `${type_id}-${plan_id}`;
+          const price = await fetchPrice(type_id, plan_id);
+          return { priceKey, price };
+        })
+      );
+
+      const resolvedPrices = await Promise.all(pricePromises);
+
+      const updatedPrices: { [key: string]: Price | 'loading' | 'error' } = {};
+      resolvedPrices.forEach(({ priceKey, price }) => {
+        updatedPrices[priceKey] = price;
+      });
+
+      setPrices(updatedPrices);
+    };
+
+    if (selectedPlans.length > 0 && selectedStorages.length > 0) {
+      fetchPrices();
+    }
+  }, [selectedPlans, selectedStorages]);
 
   const renderTableRows = () => {
     const rows: JSX.Element[] = [];
     const sortedPlans = [...selectedPlans].sort((a, b) => planOptions.indexOf(a) - planOptions.indexOf(b));
     const sortedStorages = [...selectedStorages].sort((a, b) => storageOptions.indexOf(a) - storageOptions.indexOf(b));
-    
+
     sortedPlans.forEach((plan, i) => {
       sortedStorages.forEach((storage, j) => {
-        const planIndex = planOptions.indexOf(plan);
-        const storageIndex = storageOptions.indexOf(storage);
+        const type_id = planOptions.indexOf(plan);
+        const plan_id = storageOptions.indexOf(storage);
+        const priceKey = `${type_id}-${plan_id}`;
+        const price = prices[priceKey];
         rows.push(
           <tr key={`${i}-${j}`}>
             <td>{plan}</td>
             <td>{storage}</td>
-            <td>{planIndex},{storageIndex}</td>
+            <td>
+              {price !== undefined ? (
+                price !== 'loading' && price !== 'error' ? (
+                  price.RealPrice ? (
+                    <div>
+                      <span className="real-price">{price.RealPrice}</span> <span className="original-price">{price.OriginalPrice}</span>
+                    </div>
+                  ) : (
+                    <span>{price.OriginalPrice}</span>
+                  )
+                ) : (
+                  price === 'loading' ? 'Loading...' : 'Error'
+                )
+              ) : 'Loading...'}
+            </td>
           </tr>
         );
       });
@@ -114,15 +184,15 @@ const SelectionForm: React.FC = () => {
       <div className="fare-container">
         <div className="selected-os">
           <p>OS: {osDisplayName(selectedOS)}</p>
-          <p>料金タイプ: {selectedPlans.join(', ')}</p>
-          <p>ストレージ: {selectedStorages.join(', ')}</p>
+          <p>料金タイプ: {[...selectedPlans].sort((a, b) => planOptions.indexOf(a) - planOptions.indexOf(b)).join(', ')}</p>
+          <p>ストレージ: {[...selectedStorages].sort((a, b) => storageOptions.indexOf(a) - storageOptions.indexOf(b)).join(', ')}</p>
         </div>
         <table className="pricing-table">
           <thead>
             <tr>
               <th>料金タイプ</th>
               <th>プラン</th>
-              <th>番号</th>
+              <th>料金</th>
             </tr>
           </thead>
           <tbody>
