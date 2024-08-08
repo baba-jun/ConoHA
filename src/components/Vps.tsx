@@ -22,7 +22,7 @@ const Vps = () => {
 
   const fetchPrice = async (type_id: number, plan_id: number): Promise<Price | 'error'> => {
     try {
-      const response = await fetch(`http://localhost:8080/api/price?type_id=${type_id}&plan_id=${plan_id}`);
+      const response = await fetch(`http://160.251.180.174/api/price?type_id=${type_id}&plan_id=${plan_id}`);
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }

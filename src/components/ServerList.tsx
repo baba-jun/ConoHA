@@ -29,7 +29,7 @@ const ServerList = () => {
 
   useEffect(() => {
     console.log("Fetching server list...");
-    fetch("http://localhost:8080/api/server/list")
+    fetch("http://160.251.180.174/api/server/list")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
