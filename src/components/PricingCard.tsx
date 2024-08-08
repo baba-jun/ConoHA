@@ -23,6 +23,7 @@ const PricingCard = (props: PricingCardProps) => {
     {ram: "8GB", cpu: "6Core", ssd: "100GB"},
     {ram: "16GB", cpu: "8Core", ssd: "100GB"},
     {ram: "32GB", cpu: "12Core", ssd: "100GB"},
+    {ram: "64GB", cpu: "24Core", ssd: "100GB"},
   ]
 
   const [isFareButton, setIsFareBUtton] = useState(false);
