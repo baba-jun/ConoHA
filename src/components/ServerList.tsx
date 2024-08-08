@@ -1,5 +1,6 @@
 import "../ServerList.css";
 import { useState, useEffect } from "react";
+import { API_URL } from "../main";
 
 type ServerData = {
   server_name: string;
@@ -29,7 +30,7 @@ const ServerList = () => {
 
   useEffect(() => {
     console.log("Fetching server list...");
-    fetch("http://160.251.180.174/api/server/list")
+    fetch(`${API_URL}/api/server/list`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

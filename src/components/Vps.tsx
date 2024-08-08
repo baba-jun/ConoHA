@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PricingCard from "./PricingCard";
+import { API_URL } from "../main";
 
 const Vps = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
@@ -22,7 +23,7 @@ const Vps = () => {
 
   const fetchPrice = async (type_id: number, plan_id: number): Promise<Price | 'error'> => {
     try {
-      const response = await fetch(`http://160.251.180.174/api/price?type_id=${type_id}&plan_id=${plan_id}`);
+      const response = await fetch(`${API_URL}/api/price?type_id=${type_id}&plan_id=${plan_id}`);
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
