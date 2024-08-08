@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../Chat.css";
+import { API_URL } from "../main";
 
 interface Question {
   question: string;
@@ -155,10 +156,7 @@ const Chat = () => {
   };
 
   const handleSendInfo = async () => {
-    const passwordInput = document.getElementById("root-password") as HTMLInputElement;
-    const passwordValue = passwordInput?.value;
-    setPassword(passwordValue);
-    console.log(passwordValue)
+    console.log(password);
 
     // try {
     //   const response = await fetch(`${API_URL}/api/server/create`, {
@@ -255,7 +253,7 @@ const Chat = () => {
           <div className="message">
           <div className="avatar">A</div>
           <div className="message-bubble">
-            <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password"/></div>
+            <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password" onChange={(e) => {setPassword(e.target.value)}}/></div>
             <button className="submit-button" onClick={handleSendInfo}>送信</button>
           </div>
         </div>
