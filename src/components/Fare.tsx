@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '/workspaces/ConoHA/src/Fare.css';
+import '../Fare.css';
 import PricingCard from './PricingCard';
 
 const SelectionForm: React.FC = () => {
