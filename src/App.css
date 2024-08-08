@@ -64,8 +64,8 @@ aside ul li {
 }
 
 h2 {
-  position: relative; /* relativeを追加して疑似要素を正しく配置 */
-  padding-left: 20px; /* 四角形とテキストの間にスペースを確保 */
+  position: relative; 
+  padding-left: 20px; 
 }
 
 h2::before {
@@ -74,9 +74,9 @@ h2::before {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 5px; /* 四角形の幅 */
-  height: 100%; /* 四角形の高さをタイトルと同じに */
-  background-color: #00bcd4; /* 四角形の色 */
+  width: 5px; 
+  height: 100%; 
+  background-color: #00bcd4; 
 }
 
 .next {
@@ -174,7 +174,6 @@ main {
 .radio-button .radio-button-landscape{
   display: inline-block;
   margin: 5px;
-  position:		relative;	/* 相対位置指定 */
   overflow:		hidden;
 }
 
@@ -197,18 +196,6 @@ main {
   display: none;
 }
 
-.radio-button .radio-button-landscape .mask {
-	width:			100%;
-	height:			100%;
-	position:		absolute;	/* 絶対位置指定 */
-	top:			0;
-	left:			0;
-	opacity:		0;	/* マスクを表示しない */
-	background-color:	rgba(0,0,0,0.4);	/* マスクは半透明 */
-  border-radius: 20px;
-	-webkit-transition:	all 0.2s ease;
-	transition:		all 0.2s ease;
-}
 
 
 .radio-button label {
@@ -356,6 +343,12 @@ main {
 }
 
 .chat-container{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.fare-container{
   position: fixed;
   bottom: 20px;
   right: 20px;
