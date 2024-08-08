@@ -69,6 +69,8 @@ const Chat = () => {
     },
   ]);
   const [, setAnswers] = useState<string[]>([]);
+  const [isFinishedSetting, setIsFinishedSetting] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
 
   const handleOptionClick = (option: string) => {
     // ユーザーの回答をチャット履歴に追加
@@ -76,6 +78,10 @@ const Chat = () => {
       ...prevChatHistory,
       { type: "user", text: option },
     ]);
+
+  const handleTermOnClick = () => {
+    setIsFinishedSetting(true);
+  }
 
     // 選択された回答を保存
     setAnswers((prevAnswers) => [...prevAnswers, option]);
@@ -153,6 +159,15 @@ const Chat = () => {
     setCurrentQuestionIndex(nextQuestionIndex);
   };
 
+  const handleTermonClick = () => {
+    setIsFinishedSetting(true);
+  };
+
+  const handleSendInfo = () => {
+    const passwordInput = document.getElementById("root-password") as HTMLInputElement;
+    setPassword(passwordInput?.value);
+  }
+
   return (
     <div className="chat-container">
       {iscontinue &&
@@ -199,7 +214,7 @@ const Chat = () => {
           <div className="message-bubble">
             どのくらいの期間使い続ける予定ですか？
             <div className="options">
-              <div className="option">1ヶ月</div>
+              <div className="option" onClick={handleTermonClick}>1ヶ月</div>
               <div className="option">3ヶ月</div>
               <div className="option">6ヶ月</div>
               <div className="option">6ヶ月</div>
@@ -210,6 +225,16 @@ const Chat = () => {
           </div>
         </div>
       )}
+
+      {isFinishedSetting && (
+          <div className="message">
+          <div className="avatar">A</div>
+          <div className="message-bubble">
+            <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password" /></div>
+            <button className="submit-button" onClick={handleSendInfo}>送信</button>
+          </div>
+        </div>
+        )}
     </div>
   );
 };
