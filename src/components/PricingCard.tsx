@@ -4,7 +4,8 @@ import Chat from './Chat';
 import Fare from './Fare';
 
 
-const PricingCard = () => {
+const PricingCard = (props) => {
+  const serviceList = ["VPS", "WindowsServer", "GPUサーバー", "メールサーバー", "DBサーバー"];
   const [isFareButton, setIsFareBUtton] = useState(false);
   const [isChatButton, setIsChatbutton] = useState(false);
 
@@ -16,7 +17,6 @@ const PricingCard = () => {
     setIsFareBUtton(true);
   }
 
-
   return (
     <div>
       {isFareButton && <div className="fare-button"><Fare/></div>}
@@ -27,7 +27,15 @@ const PricingCard = () => {
             <tbody>
               <tr>
                 <td>サービス</td>
-                <td>VPS</td>
+                <td>
+                  {
+                    props.service && serviceList[props.service]
+                  }
+                </td>
+              </tr>
+              <tr>
+                <td>イメージタイプ</td>
+                <td>Ubuntu</td>
               </tr>
               <tr>
                 <td>CPU</td>
@@ -42,23 +50,15 @@ const PricingCard = () => {
                 <td>100GB</td>
               </tr>
               <tr>
-                <td>リージョン</td>
-                <td>東京</td>
-              </tr>
-              <tr>
                 <td>サーバー料金</td>
                 <td>14.6 円/時間</td>
-              </tr>
-              <tr>
-                <td>VPS割引きっぷ</td>
-                <td>利用しない</td>
               </tr>
               <tr>
                 <td>合計</td>
                 <td>月額最大</td>
               </tr>
               <tr>
-                <td className="price" colSpan={2}>8,082 円/月</td>
+                <td className="price" colSpan={2}>{props.fare} 円/月</td>
               </tr>
             </tbody>
           </table>

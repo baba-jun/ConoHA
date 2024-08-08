@@ -15,6 +15,26 @@ header {
   border-bottom: 1px solid #e0e0e0;
 }
 
+.header-nav-link {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 5px 10px;
+  transition: color 0.3s, border-bottom 0.3s;
+  border-bottom: 2px solid transparent;
+}
+
+.header-nav-link:hover {
+  color: #00bcd4;
+  border-bottom: 2px solid #00bcd4;
+}
+
+.header-nav-link.active {
+  color: #00bcd4;
+  border-bottom: 2px solid #00bcd4;
+}
+
+
 .logo {
   color: #00bcd4;
   font-size: 24px;
@@ -187,7 +207,7 @@ main {
   text-align: center;
 }
 
-.active {
+.active:not(.header-nav-link) {
   background-color: #00bcd4;
   color: white;
 }
