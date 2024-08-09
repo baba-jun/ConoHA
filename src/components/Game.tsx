@@ -1,8 +1,22 @@
+import { useState } from "react";
 import PricingCard from "./PricingCard";
+import SelectionForm from "./Fare";
+import Chat from "./Chat";
 
 const Game = () => {
+  const [isFareButtonSP, setIsFareBUttonSP] = useState(false);
+  const [isChatButtonSP, setIsChatbuttonSP] = useState(false);
+
+  const handleChatButton = () => {
+    setIsChatbuttonSP(true);
+  }
+
+  const handleFareButton = () => {
+    setIsFareBUttonSP(true);
+  }
   return (
     <main>
+      {!isFareButtonSP && !isChatButtonSP && (
     <div className='left-area'>
     <section className="os-selection">
       <h2>イメージタイプ</h2>
@@ -202,7 +216,18 @@ const Game = () => {
         <button className="next">次へ</button>
       </div>
     </section>
+    <div className="button-container-for-sp">
+            <button id="fare-button" className="circle-button" onClick={handleFareButton}>料金比較</button>
+            <button id="chat-button" className="circle-button" onClick={handleChatButton}>何かお困りですか？</button>
+        </div>
     </div>
+    )}
+        {isFareButtonSP && (
+        <SelectionForm/>
+      )}
+      {isChatButtonSP && (
+        <Chat/>
+        )}
     <div className="right-area">
       <PricingCard service={null} image={null} realFare={null} fare={null} plan={null} fareType={null}/>
     </div>
