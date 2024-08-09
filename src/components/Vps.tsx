@@ -150,8 +150,8 @@ const Vps = () => {
     setIsChatbuttonSP(true);
   }
 
-  const handleFareButton = () => {
-    setIsFareBUttonSP(true);
+  const handleFareButton = (is:boolean) => {
+    setIsFareBUttonSP(is);
   }
 
   const selectServiceItem = (index:number) => {
@@ -250,13 +250,13 @@ const Vps = () => {
           </div>
         </section>
         <div className="button-container-for-sp">
-            <button id="fare-button" className="circle-button" onClick={handleFareButton}>料金比較</button>
+            <button id="fare-button" className="circle-button" onClick={() => handleFareButton(true)}>料金比較</button>
             <button id="chat-button" className="circle-button" onClick={handleChatButton}>何かお困りですか？</button>
           </div>
       </div>
       )}
       {isFareButtonSP && (
-        <SelectionForm/>
+        <SelectionForm handleFareButton={handleFareButton}/>
       )}
       {isChatButtonSP && (
         <Chat/>
