@@ -319,6 +319,12 @@ const Chat = () => {
             <button className="submit-button" onClick={handleSendInfo}>申し込む</button>
           </div>
         </div>
+        <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+            申し込みをやめたい方は<Link to={"/server-list"}>こちら</Link>
+          </div>
+        </div>
         {isSend && (
           <div className="message">
           <div className="avatar"></div>
