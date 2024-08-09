@@ -50,8 +50,8 @@ const Chat = () => {
   ];
 
   const result: { type: string; description: string; flavor: string | null; plan?: number }[] = [
-    {type: "vps", description :"Ubuntu：24.04, 4GB, IPv4V6-Webがおすすめです", plan:3, flavor: "g2l-t-c4m4"},
-    {type: "vps", description: "Ubuntu：24.04, 2GB, IPv4V6-Webがおすすめです", plan:2, flavor: "g2l-t-c3m2"},
+    {type: "vps", description :"Ubuntu：24.04, 4GBがおすすめです", plan:3, flavor: "g2l-t-c4m4"},
+    {type: "vps", description: "Ubuntu：24.04, 2GBがおすすめです", plan:2, flavor: "g2l-t-c3m2"},
     {type: "game", description: "2GBプランがおすすめです", flavor: null},
     {type: "game", description: "4GBプランがおすすめです", flavor: null},
     {type: "game", description: "8GBプランがおすすめです", flavor: null},
