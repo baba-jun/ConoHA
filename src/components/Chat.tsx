@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useLocation } from 'react-router-dom';
 import "../Chat.css";
 import { API_URL } from "../main";
 
@@ -218,8 +219,6 @@ const Chat = () => {
     }
   }
 
-
-
   return (
     <div className="chat-container">
       {iscontinue &&
@@ -316,10 +315,24 @@ const Chat = () => {
           </div>
         )}
         {isCreated && (
+          <div>
           <div className="message">
           <div className="avatar"></div>
           <div className="message-bubble">
             サーバーが作成されました
+          </div>
+          </div>
+          <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+          <Link
+              to={"/server-list"}
+              className={`${location.pathname === '/server-list' ? 'active' : ''}`}
+
+            >
+              サーバー一覧を確認する
+            </Link>
+            </div>
           </div>
           </div>
         )}
