@@ -140,7 +140,7 @@ const SelectionForm: React.FC = () => {
     if (selectedPlans.length > 0 && selectedStorages.length > 0) {
       fetchPrices();
     }
-  }, [selectedPlans, selectedStorages, planOptions, storageOptions]);
+  }, [selectedPlans, selectedStorages]);
 
   const renderTableRows = () => {
     const rows: JSX.Element[] = [];
