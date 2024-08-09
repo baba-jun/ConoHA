@@ -278,7 +278,6 @@ const Chat = () => {
           </div>
         </div>
       )}
-
       {!iscontinue && (
         <div className="message">
           <div className="avatar"></div>
@@ -288,7 +287,7 @@ const Chat = () => {
         </div>
       )}
 
-      {!iscontinue && (
+      {!iscontinue && result[resultIndex].type === "vps" && (
         <div className="message">
           <div className="avatar"></div>
           <div className="message-bubble">
