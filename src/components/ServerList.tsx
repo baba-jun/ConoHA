@@ -1,62 +1,20 @@
-import "../ServerList.css"
-import { useState, useEffect } from 'react';
+import "../ServerList.css";
+import { useState, useEffect } from "react";
+import { API_URL } from "../main";
 
-const ServerListTemp = {
-  servers: [
-    {
-      name: "名称未設定",
-      status: "稼働中",
-      ip: "xxxxxxxx.sakura.ne.jp",
-      spec: "仮想8Core 16GB メモリ SSD 800GB",
-      tag: "Windows v5"
-    },
-    {
-      name: "名称未設定",
-      status: "停止中",
-      ip: "xxxxxxxx.sakura.ne.jp",
-      spec: "仮想8Core 16GB メモリ SSD 600GB",
-      tag: "Windows v4"
-    },
-    {
-      name: "名称未設定",
-      status: "稼働中",
-      ip: "xxxxxxxx.sakura.ne.jp",
-      spec: "仮想6Core 8GB メモリ HDD 800GB",
-      tag: "VPS v3"
-    },
-    {
-      name: "名称未設定",
-      status: "稼働中",
-      ip: "xxxxxxxx.sakura.ne.jp",
-      spec: "仮想6Core 8GB メモリ SSD 200GB",
-      tag: "VPS v4"
-    },
-    {
-      name: "名称未設定",
-      status: "停止中",
-      ip: "xxxxxxxx.sakura.ne.jp",
-      spec: "仮想4Core 4GB メモリ SSD 200GB",
-      tag: "Windows v5"
-    },
-    {
-      name: "名称未設定",
-      status: "稼働中",
-      ip: "xxxxxxxx.sakura.ne.jp",
-      spec: "仮想4Core 4GB メモリ HDD 400GB",
-      tag: "VPS v4"
-    },
-    {
-      name: "名称未設定",
-      status: "稼働中",
-      ip: "xxxxxxxx.sakura.ne.jp",
-      spec: "仮想4Core 4GB メモリ HDD 400GB",
-      tag: "VPS v4"
-    }
-  ]
-}
+type ServerData = {
+  id: string;
+  server_name: string;
+  status: string;
+  flavor_name: string;
+  ip_address: string;
+  os_name: string;
+};
 
 const ServerList = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [serverList, setServerList] = useState<ServerData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -64,16 +22,44 @@ const ServerList = () => {
     };
 
     checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
+    window.addEventListener("resize", checkIsMobile);
 
     return () => {
-      window.removeEventListener('resize', checkIsMobile);
+      window.removeEventListener("resize", checkIsMobile);
     };
   }, []);
 
+  useEffect(() => {
+    console.log("Fetching server list...");
+    fetch(`${API_URL}/api/server/list`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Data fetched:", data);
+        setServerList(data.server_list);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching server list:", error);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="loading-container">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
-      <h1>サーバー一覧 ({ServerListTemp.servers.length}台)</h1>
+      <h2>サーバーリスト ({serverList.length}台)</h2>
       <table>
         <thead>
           <tr>
@@ -89,31 +75,31 @@ const ServerList = () => {
           </tr>
         </thead>
         <tbody>
-          {ServerListTemp.servers.map((server, index) => (
+          {serverList.map((server, index) => (
             <tr key={index}>
               <td>
                 <div className="status">
-                  <div className={server.status === "稼働中" ? "green" : "red"}></div>
+                  <div className={server.status === "ACTIVE" ? "green" : "red"}></div>
                   {!isMobile && server.status}
                 </div>
               </td>
-              <td>{server.name}</td>
+              <td>{server.server_name}</td>
               {!isMobile && (
                 <>
-                  <td>{server.ip}</td>
+                  <td>{server.ip_address}</td>
                   <td>
-                    {server.spec}&nbsp;
-                    <span className={server.tag.includes("Windows") ? "tag windows" : "tag vps"}>
-                      {server.tag}
+                    {server.flavor_name.replace(/.*-.*-c(\d+)m(\d+)/, "CPU $1core/メモリ $2MB ")}
+                    <span className={server.os_name?.includes("win") ? "tag windows" : "tag vps"}>
+                      {server.os_name?.includes("win") ? "Windows" : server.os_name.replace(/^[^-]*-(.*)-[^-]*$/, "$1")}
                     </span>
                   </td>
                 </>
               )}
               <td className="control">
-                {server.status === "稼働中" ? (
-                  <button className="button" onClick={() => handleStop(server.name)}>停止</button>
+                {server.status === "ACTIVE" ? (
+                  <button className="button" onClick={() => handleStop(server.id)}>停止</button>
                 ) : (
-                  <button className="button" onClick={() => handleStart(server.name)}>再開</button>
+                  <button className="button" onClick={() => handleStart(server.id)}>再開</button>
                 )}
               </td>
             </tr>
@@ -121,17 +107,31 @@ const ServerList = () => {
         </tbody>
       </table>
     </div>
-  )
-}
-
-const handleStop = (serverName : string) => {
-  // サーバー停止のロジックをここに追加
-  console.log(`サーバー ${serverName} を停止します`);
+  );
 };
 
-const handleStart = (serverName : string) => {
-  // サーバー再開のロジックをここに追加
-  console.log(`サーバー ${serverName} を再開します`);
+const handleStop = (serverId: string) => {
+  fetch(`${API_URL}/api/server/operation/stop`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      server_id: serverId,
+    }),
+  })
 };
 
-export default ServerList
+const handleStart = (serverId: string) => {
+  fetch(`${API_URL}/api/server/operation/start`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      server_id: serverId,
+    }),
+  })
+};
+
+export default ServerList;

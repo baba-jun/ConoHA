@@ -17,7 +17,9 @@ const App: React.FC = () => {
         <Route path="/" element={<Navigate to="/server-list"/>} />
         <Route path="/vps" element={<Vps />} />
         <Route path="/game" element={<Game />} />
-        <Route path="/fare" element={<Fare/>} />
+        <Route path="/fare" element={<Fare handleFareButton={function (): void {
+            throw new Error('Function not implemented.');
+          } }/>} />
         <Route path="/server-list" element={<ServerList/>} />
         </Routes>
       </div>

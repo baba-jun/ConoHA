@@ -1,9 +1,20 @@
 .chat-container {
     background-color: #e0f7fa;
-    width: 320px;
+    width: 20%;
     padding: 10px;
+    margin: 0px 30px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 20px;
+}
+
+@media screen and (max-width: 599px) {
+    .chat-container {
+        width: 80%;
+        margin: auto
+    }
 }
 
 .message {
@@ -26,14 +37,17 @@
 }
 
 .message.user .message-bubble {
-    background-color: #cfd8dc;
+    background-color: #00bcd4;
+    color: #fff;
 }
 
 .message .avatar {
     width: 40px;
     height: 40px;
     margin-right: 10px;
-    background-color: #78909c;
+    background-image: url(/Chat/conoha-chan.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -45,7 +59,7 @@
 .message.user .avatar {
     margin-left: 10px;
     margin-right: 0;
-    background-color: #607d8b;
+    background-image: url(/Chat/user.png);
 }
 
 .options, .options-term {
@@ -66,3 +80,19 @@
  .option-term:hover {
     background-color: #ffcc80; /* クリック時の背景色 */
 }
+
+.submit-button{
+    appearance: none;
+  border: 0;
+  border-radius: 5px;
+  background: #4676D7;
+  color: #fff;
+  padding: 4px 16px;
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.root-password-input{
+    border: 1px solid #dadada;
+    padding: 5px 10px;
+  }

@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import '../Fare.css';
 import PricingCard from './PricingCard';
+import { API_URL } from '../main';
 
 interface Price {
   OriginalPrice: number;
   RealPrice?: number;
 }
 
-const SelectionForm: React.FC = () => {
+type SelectionFormProps = {
+  handleFareButton: (value: boolean) => void;
+};
+
+const SelectionForm: React.FC<SelectionFormProps> = (props) => {
   const [selectedOS, setSelectedOS] = useState<string>('centos');
   const [selectedPlans, setSelectedPlans] = useState<string[]>([]);
   const [selectedStorages, setSelectedStorages] = useState<string[]>([]);
@@ -59,6 +64,7 @@ const SelectionForm: React.FC = () => {
   const handleClose = () => {
     setIsCloseButton(true);
     setIsNextButton(false);
+    props.handleFareButton(false)
   };
 
   const isButtonDisabled = selectedPlans.length === 0 || selectedStorages.length === 0;
@@ -92,7 +98,7 @@ const SelectionForm: React.FC = () => {
 
   const fetchPrice = async (type_id: number, plan_id: number): Promise<Price | 'error'> => {
     try {
-      const response = await fetch(`http://localhost:8080/api/price?type_id=${type_id}&plan_id=${plan_id}`);
+      const response = await fetch(`${API_URL}/api/price?type_id=${type_id}&plan_id=${plan_id}`);
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
@@ -161,10 +167,10 @@ const SelectionForm: React.FC = () => {
                 price !== 'loading' && price !== 'error' ? (
                   price.RealPrice ? (
                     <div>
-                      <span className="real-price">{price.RealPrice}</span> <span className="original-price">{price.OriginalPrice}</span>
+                      <span className="real-price">{price.RealPrice} 円/月</span><br></br><span className="original-price">{price.OriginalPrice} 円/月</span>
                     </div>
                   ) : (
-                    <span>{price.OriginalPrice}</span>
+                    <span>{price.OriginalPrice} 円/月</span>
                   )
                 ) : (
                   price === 'loading' ? 'Loading...' : 'Error'
@@ -180,14 +186,14 @@ const SelectionForm: React.FC = () => {
 
   return (
     <div>
-      {isNextButton && 
+      {isNextButton &&
       <div className="fare-container">
         <div className="selected-os">
           <p>OS: {osDisplayName(selectedOS)}</p>
           <p>料金タイプ: {[...selectedPlans].sort((a, b) => planOptions.indexOf(a) - planOptions.indexOf(b)).join(', ')}</p>
           <p>ストレージ: {[...selectedStorages].sort((a, b) => storageOptions.indexOf(a) - storageOptions.indexOf(b)).join(', ')}</p>
         </div>
-        <table className="pricing-table">
+        <table className="compare-table">
           <thead>
             <tr>
               <th>料金タイプ</th>
@@ -203,7 +209,7 @@ const SelectionForm: React.FC = () => {
           <button id="close-button" className="close-button" onClick={handleClose}>閉じる</button>
         </div>
       </div>}
-      {isCloseButton && <div><PricingCard /></div>}
+      {isCloseButton && <div><PricingCard service={null} image={null} realFare={null} fare={null} plan={null} fareType={null}/></div>}
       {!isNextButton && !isCloseButton && (
         <div className="fare-container">
           <div className="section">
@@ -234,6 +240,7 @@ const SelectionForm: React.FC = () => {
                     disabled={!selectedPlans.includes(plan) && selectedPlans.length >= 3}
                   />
                   {plan}
+                  <span className="checkmark"></span>
                 </label>
               ))}
             </div>
@@ -251,6 +258,7 @@ const SelectionForm: React.FC = () => {
                     disabled={(selectedOS === 'ubuntu' && storage === '512MB') || (!selectedStorages.includes(storage) && selectedStorages.length >= 3)}
                   />
                   {storage}
+                  <span className="checkmark"></span>
                 </label>
               ))}
             </div>
@@ -268,4 +276,3 @@ const SelectionForm: React.FC = () => {
 };
 
 export default SelectionForm;
-

@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import PricingCard from "./PricingCard";
+import { API_URL } from "../main";
+import SelectionForm from "./Fare";
+import Chat from "./Chat";
 
 const Vps = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [ selectedImage, setSelectedImage] = useState<number | null>(null);
   const [selectedFare, setSelectedFare] = useState<number | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [originalPare, setOriginalFare] = useState<number | null>(0);
   const [realFareValue, setFareValue] = useState<number | null>(0);
+  const [isFareButtonSP, setIsFareBUttonSP] = useState(false);
+  const [isChatButtonSP, setIsChatbuttonSP] = useState(false);
 
   interface Price {
     OriginalPrice: number;
@@ -22,12 +27,11 @@ const Vps = () => {
 
   const fetchPrice = async (type_id: number, plan_id: number): Promise<Price | 'error'> => {
     try {
-      const response = await fetch(`http://localhost:8080/api/price?type_id=${type_id}&plan_id=${plan_id}`);
+      const response = await fetch(`${API_URL}/api/price?type_id=${type_id}&plan_id=${plan_id}`);
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log(data.RealPrice);
       setOriginalFare(data.OriginalPrice);
       setFareValue(data.RealPrice);
       return data.RealPrice
@@ -70,22 +74,92 @@ const Vps = () => {
   ]
 
   const plans = [
-    { size: '512MB', price: '750円/月', cpu: '1Core', ssd: '30GB', value: '512MB' },
-    { size: '1GB', price: '1,064円/月', cpu: '2Core', ssd: '100GB', value: '1GB', highlighted: true },
-    { size: '2GB', price: '2,032円/月', cpu: '3Core', ssd: '100GB', value: '2GB' },
-    { size: '4GB', price: '3,968円/月', cpu: '4Core', ssd: '100GB', value: '4GB' },
-    { size: '8GB', price: '8,082円/月', cpu: '6Core', ssd: '100GB', value: '8GB' },
-    { size: '16GB', price: '15,730円/月', cpu: '8Core', ssd: '100GB', value: '16GB' },
-    { size: '32GB', price: '31,460円/月', cpu: '12Core', ssd: '100GB', value: '32GB' },
-    { size: '64GB', price: '59,290円/月', cpu: '24Core', ssd: '100GB', value: '64GB' },
+    [
+      { size: '512MB', price: '750円', cpu: '1Core', ssd: '30GB', value: '512MB' },
+      { size: '1GB', price: '1,064円', cpu: '2Core', ssd: '100GB', value: '1GB', highlighted: true },
+      { size: '2GB', price: '2,032円', cpu: '3Core', ssd: '100GB', value: '2GB' },
+      { size: '4GB', price: '3,968円', cpu: '4Core', ssd: '100GB', value: '4GB' },
+      { size: '8GB', price: '8,082円', cpu: '6Core', ssd: '100GB', value: '8GB' },
+      { size: '16GB', price: '15,730円', cpu: '8Core', ssd: '100GB', value: '16GB' },
+      { size: '32GB', price: '31,460円', cpu: '12Core', ssd: '100GB', value: '32GB' },
+      { size: '64GB', price: '59,290円', cpu: '24Core', ssd: '100GB', value: '64GB' },
+    ],
+    [
+      { size: '512MB', price: '459円/月', cpu: '1Core', ssd: '30GB', value: '512MB' },
+      { size: '1GB', price: '762円/月', cpu: '2Core', ssd: '100GB', value: '1GB', highlighted: true },
+      { size: '2GB', price: '1,144円/月', cpu: '3Core', ssd: '100GB', value: '2GB' },
+      { size: '4GB', price: '2,189円/月', cpu: '4Core', ssd: '100GB', value: '4GB' },
+      { size: '8GB', price: '4,389円/月', cpu: '6Core', ssd: '100GB', value: '8GB' },
+      { size: '16GB', price: '9,746円/月', cpu: '8Core', ssd: '100GB', value: '16GB' },
+      { size: '32GB', price: '22,099円/月', cpu: '12Core', ssd: '100GB', value: '32GB' },
+      { size: '64GB', price: '44,198円/月', cpu: '24Core', ssd: '100GB', value: '64GB' },
+    ],
+    [
+      { size: '512MB', price: '399円/月', cpu: '1Core', ssd: '30GB', value: '512MB' },
+      { size: '1GB', price: '666円/月', cpu: '2Core', ssd: '100GB', value: '1GB', highlighted: true },
+      { size: '2GB', price: '955円/月', cpu: '3Core', ssd: '100GB', value: '2GB' },
+      { size: '4GB', price: '1,832円/月', cpu: '4Core', ssd: '100GB', value: '4GB' },
+      { size: '8GB', price: '3,672円/月', cpu: '6Core', ssd: '100GB', value: '8GB' },
+      { size: '16GB', price: '8,144円/月', cpu: '8Core', ssd: '100GB', value: '16GB' },
+      { size: '32GB', price: '19,939円/月', cpu: '12Core', ssd: '100GB', value: '32GB' },
+      { size: '64GB', price: '39,884円/月', cpu: '24Core', ssd: '100GB', value: '64GB' },
+    ],
+    [
+      { size: '512MB', price: '347円/月', cpu: '1Core', ssd: '30GB', value: '512MB' },
+      { size: '1GB', price: '547円/月', cpu: '2Core', ssd: '100GB', value: '1GB', highlighted: true },
+      { size: '2GB', price: '892円/月', cpu: '3Core', ssd: '100GB', value: '2GB' },
+      { size: '4GB', price: '1,712円/月', cpu: '4Core', ssd: '100GB', value: '4GB' },
+      { size: '8GB', price: '3,431円/月', cpu: '6Core', ssd: '100GB', value: '8GB' },
+      { size: '16GB', price: '7,610円/月', cpu: '8Core', ssd: '100GB', value: '16GB' },
+      { size: '32GB', price: '18,491円/月', cpu: '12Core', ssd: '100GB', value: '32GB' },
+      { size: '64GB', price: '36,989円/月', cpu: '24Core', ssd: '100GB', value: '64GB' },
+    ],
+    [
+      { size: '512MB', price: '321円/月', cpu: '1Core', ssd: '30GB', value: '512MB' },
+      { size: '1GB', price: '508円/月', cpu: '2Core', ssd: '100GB', value: '1GB', highlighted: true },
+      { size: '2GB', price: '757円/月', cpu: '3Core', ssd: '100GB', value: '2GB' },
+      { size: '4GB', price: '1,522円/月', cpu: '4Core', ssd: '100GB', value: '4GB' },
+      { size: '8GB', price: '3,052円/月', cpu: '6Core', ssd: '100GB', value: '8GB' },
+      { size: '16GB', price: '6,623円/月', cpu: '8Core', ssd: '100GB', value: '16GB' },
+      { size: '32GB', price: '16,567円/月', cpu: '12Core', ssd: '100GB', value: '32GB' },
+      { size: '64GB', price: '33,142円/月', cpu: '24Core', ssd: '100GB', value: '64GB' },
+    ],
+    [
+      { size: '512MB', price: '310円/月', cpu: '1Core', ssd: '30GB', value: '512MB' },
+      { size: '1GB', price: '491円/月', cpu: '2Core', ssd: '100GB', value: '1GB', highlighted: true },
+      { size: '2GB', price: '689円/月', cpu: '3Core', ssd: '100GB', value: '2GB' },
+      { size: '4GB', price: '1,393円/月', cpu: '4Core', ssd: '100GB', value: '4GB' },
+      { size: '8GB', price: '2,713円/月', cpu: '6Core', ssd: '100GB', value: '8GB' },
+      { size: '16GB', price: '5,993円/月', cpu: '8Core', ssd: '100GB', value: '16GB' },
+      { size: '32GB', price: '15,193円/月', cpu: '12Core', ssd: '100GB', value: '32GB' },
+      { size: '64GB', price: '30,793円/月', cpu: '24Core', ssd: '100GB', value: '64GB' },
+    ],
+    [
+      { size: '512MB', price: '296円/月', cpu: '1Core', ssd: '30GB', value: '512MB' },
+      { size: '1GB', price: '468円/月', cpu: '2Core', ssd: '100GB', value: '1GB', highlighted: true },
+      { size: '2GB', price: '616円/月', cpu: '3Core', ssd: '100GB', value: '2GB' },
+      { size: '4GB', price: '1,268円/月', cpu: '4Core', ssd: '100GB', value: '4GB' },
+      { size: '8GB', price: '2,394円/月', cpu: '6Core', ssd: '100GB', value: '8GB' },
+      { size: '16GB', price: '5,393円/月', cpu: '8Core', ssd: '100GB', value: '16GB' },
+      { size: '32GB', price: '13,868円/月', cpu: '12Core', ssd: '100GB', value: '32GB' },
+      { size: '64GB', price: '28,493円/月', cpu: '24Core', ssd: '100GB', value: '64GB' },
+    ],
   ];
+
+  const handleChatButton = () => {
+    setIsChatbuttonSP(true);
+  }
+
+  const handleFareButton = (is:boolean) => {
+    setIsFareBUttonSP(is);
+  }
 
   const selectServiceItem = (index:number) => {
     setSelectedService(index)
   }
 
   const selectImageItem = (index:number) => {
-    setSelectedService(index)
+    setSelectedImage(index)
   }
 
   const selectFareitem = (index:number) => {
@@ -98,6 +172,7 @@ const Vps = () => {
 
   return (
     <main>
+      {!isFareButtonSP && !isChatButtonSP && (
       <div className="left-area">
         <section className="service-section">
           <h2>サービス</h2>
@@ -106,7 +181,7 @@ const Vps = () => {
               <div className="radio-button" key={item.id}>
                 <input type="radio" id={item.id} name="service" value={item.value} onChange={() => selectServiceItem(index)}/>
                 <label htmlFor={item.id}>
-                  <img src={`src/assets/VPSs/${item.alt}.png`} alt={item.alt} />
+                  <img src={`VPSs/${item.alt}.png`} alt={item.alt} />
                 </label>
                 <p className="undercaption">{item.caption}</p>
               </div>
@@ -121,7 +196,7 @@ const Vps = () => {
               <div className="radio-button" key={item.id}>
                 <input type="radio" id={item.id} name="image" value={item.value} onChange={() => selectImageItem(index)}/>
                 <label htmlFor={item.id}>
-                  <img src={`src/assets/VPSs/${item.alt}.png`} alt={item.alt} />
+                  <img src={`VPSs/${item.alt}.png`} alt={item.alt} />
                 </label>
                 <p className="undercaption">{item.caption}</p>
               </div>
@@ -142,8 +217,9 @@ const Vps = () => {
 
         <section className="plan-selection">
           <h2>プラン</h2>
+          {selectedFare !== null &&
           <div className="os-grid">
-          {plans.map((item, index) => (
+          {plans[selectedFare].map((item, index) => (
               <div className="radio-button" key={item.size}>
                 <input type="radio" id={item.size} name="service" value={item.value} onChange={() => selectPlanitem(index)}/>
                 <label htmlFor={item.size}>
@@ -157,6 +233,7 @@ const Vps = () => {
               </div>
             ))}
             </div>
+    }
         </section>
 
         <section className="root-password">
@@ -172,13 +249,24 @@ const Vps = () => {
             <input type="text" className="text-input" id="name-tag" name="name-tag" />
           </div>
         </section>
+        <div className="button-container-for-sp">
+            <button id="fare-button" className="circle-button" onClick={() => handleFareButton(true)}>料金比較</button>
+            <button id="chat-button" className="circle-button" onClick={handleChatButton}>何かお困りですか？</button>
+          </div>
       </div>
+      )}
+      {isFareButtonSP && (
+        <SelectionForm handleFareButton={handleFareButton}/>
+      )}
+      {isChatButtonSP && (
+        <Chat/>
+        )}
       <div className="right-area">
         {realFareValue ===0 &&
-        <PricingCard  fare={originalPare} />
+        <PricingCard service={selectedService} image={selectedImage} fareType={selectedFare} plan={selectedPlan} realFare={realFareValue} fare={originalPare} />
         }
         {realFareValue !==0 &&
-        <PricingCard  fare={realFareValue} />
+        <PricingCard  service={selectedService} image={selectedImage} fareType={selectedFare} plan={selectedPlan} realFare={realFareValue} fare={realFareValue} />
     }
       </div>
     </main>

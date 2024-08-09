@@ -39,8 +39,15 @@ func main() {
 	r.Use(corsHandler)
 
 	r.Route("/api", func(r chi.Router) {
+		r.Route("/server", func(r chi.Router) {
+			r.Get("/list", handlers.GetServerHandler)
+			r.Post("/create", handlers.CreateServerHandler)
+			r.Route("/operation", func(r chi.Router) {
+				r.Post("/start", handlers.StartServerHandler)
+				r.Post("/stop", handlers.StopServerHandler)
+			})
+		})
 		r.Get("/price", handlers.GetPriceHandler)
-		r.Post("/server/create", handlers.CreateServerHandler)
 	})
 
 	port := os.Getenv("PORT")

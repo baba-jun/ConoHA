@@ -2,7 +2,7 @@
   max-width: 350px;
   min-width: 350px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 20px 20px 0 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #f9f9f9;
@@ -41,14 +41,67 @@ select {
   
 .checkbox-label {
   flex: 1 1 calc(33.33% - 10px);
+  position: relative;
   margin: 5px;
+  padding-left: 35px; 
   display: flex;
   align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
 }
- 
+
 .checkbox-label input {
-  margin-right: 10px;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
+
+.checkbox-label .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.checkbox-label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.checkbox-label input:checked ~ .checkmark {
+  background-color: #0097a7;
+}
+
+.checkbox-label .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-label .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-label input:disabled ~ .checkmark {
+  background-color: #e9ecef;
+  opacity: 0.3;
+}
+
  
 .select-button {
   padding: 10px 20px;
@@ -98,8 +151,8 @@ select {
 }
 
 .next-button:disabled {
-  background-color: #cccccc; /* グレー背景色 */
-  color: #666666; /* グレー文字色 */
+  background-color: #cccccc; 
+  color: #666666; 
   /*cursor: not-allowed;*/
 }
 
@@ -121,21 +174,29 @@ select {
   background-color: #e64a19;
 }
 
-.pricing-table {
+.compare-table {
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.pricing-table th, .pricing-table td {
+.compare-table th, .compare-table td {
   border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-  width: calc(100% / 3);
+  padding: 6px;
   text-align: center;
 }
 
-.pricing-table th {
+.compare-table th {
+  background-color: #0097a7;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.compare-table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
@@ -147,10 +208,10 @@ select {
 
 .original-price {
   text-decoration: line-through;
-  color: red;
+  color: #f55;
 }
 
 .real-price {
-  color: green;
+  color: #0097a7;
   font-weight: bold;
 }

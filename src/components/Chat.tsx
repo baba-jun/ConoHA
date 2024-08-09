@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 import "../Chat.css";
+import { API_URL } from "../main";
 
 interface Question {
   question: string;
@@ -47,15 +49,24 @@ const Chat = () => {
     },
   ];
 
-  const result: { type: string; description: string; flavor: string | null }[] = [
-      {type: "vps", description :"Ubuntu：24.04, 4GB, IPv4V6-Webがおすすめです", flavor: "g2l-t-c4m4"},
-      {type: "vps", description: "Ubuntu：24.04, 2GB, IPv4V6-Webがおすすめです", flavor: "g2l-t-c3m2"},
-      {type: "game", description: "2GBプランがおすすめです", flavor: null},
-      {type: "game", description: "4GBプランがおすすめです", flavor: null},
-      {type: "game", description: "8GBプランがおすすめです", flavor: null},
-      {type: "game", description: "16GBプランがおすすめです", flavor: null},
-      {type: "game", description: "16GB（安定した運用には32GB）プランがおすすめです", flavor: null},
+  const result: { type: string; description: string; flavor: string | null; plan?: number }[] = [
+    {type: "vps", description :"Ubuntu：24.04, 4GB, IPv4V6-Webがおすすめです", plan:3, flavor: "g2l-t-c4m4"},
+    {type: "vps", description: "Ubuntu：24.04, 2GB, IPv4V6-Webがおすすめです", plan:2, flavor: "g2l-t-c3m2"},
+    {type: "game", description: "2GBプランがおすすめです", flavor: null},
+    {type: "game", description: "4GBプランがおすすめです", flavor: null},
+    {type: "game", description: "8GBプランがおすすめです", flavor: null},
+    {type: "game", description: "16GBプランがおすすめです", flavor: null},
+    {type: "game", description: "16GB（安定した運用には32GB）プランがおすすめです", flavor: null},
   ];
+
+  const termzlist: { term: number; description: string }[] = [
+    {term: 1, description: "1ヶ月"},
+    {term: 3, description: "3ヶ月"},
+    {term: 6, description: "6ヶ月"},
+    {term: 12, description: "12ヶ月"},
+    {term: 24, description: "24ヶ月"},
+    {term: 36, description: "36ヶ月"},
+  ]
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [resultIndex, setResultIndex] = useState<number>(0);
@@ -65,13 +76,17 @@ const Chat = () => {
   >([
     {
       type: "bot",
-      text: "サーバーを借りるために、いくつか質問しますね。",
+      text: "サーバーを借りるために、いくつか質問しますね。\n \r\nまずは、どの用途に使用したいですか？",
     },
   ]);
   const [, setAnswers] = useState<string[]>([]);
   const [isFinishedSetting, setIsFinishedSetting] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [term, setTerm] = useState<number>(0);
+  const [fare, setFare] = useState<number>(0);
+  const [isSend, setIsSend] = useState<boolean>(false);
+  const [isCreated, setIsCreated] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const handleOptionClick = (option: string) => {
     // ユーザーの回答をチャット履歴に追加
@@ -152,37 +167,56 @@ const Chat = () => {
   const handleTermonClick = async (term:number) => {
     setIsFinishedSetting(true);
     setTerm(term);
+    fetchFare(term)
   };
 
   const handleSendInfo = async () => {
-    const passwordInput = document.getElementById("root-password") as HTMLInputElement;
-    const passwordValue = passwordInput?.value;
-    setPassword(passwordValue);
-    console.log(passwordValue)
+    setIsSend(true);
 
-    // try {
-    //   const response = await fetch("http://localhost:8080/api/server/create", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       flag: "1",
-    //       password: "adminPass111",
-    //       server_name: "test_server",
-    //       flavor_name: result[resultIndex].flavor,
-    //     }),
-    //   });
+    try {
+      const response = await fetch(`${API_URL}/api/server/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          flag: "1",
+          password: password,
+          server_name: "automatically-created-server",
+          flavor_name: result[resultIndex].flavor,
+        }),
+      });
 
-    //   if (!response.ok) {
-    //     throw new Error(`HTTP error! status: ${response.status}`);
-    //   }
+      if (!response.ok) {
+        setIsError(true);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }else if(response.ok){
+        setIsCreated(true);
+      }
 
-    //   const data = await response.json();
-    //   console.log("Server response:", data);
-    // } catch (error) {
-    //   console.error("Error fetching data:", error);
-    // }
+      const data = await response.json()
+      console.log("Server response:", data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  const fetchFare = async (term: number) => {
+    try {
+      const response = await fetch(`${API_URL}/api/price?type_id=${term}&plan_id=${result[resultIndex].plan}`);
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      const data = await response.json();
+      if (data.real_price != 0) {
+        setFare(data.RealPrice);
+      }else{
+        setFare(data.OriginalPrice);
+      }
+    } catch (error) {
+      console.error(`Failed to fetch price for type_id=${term}, plan_id=${result[resultIndex].plan}:`, error);
+      return 'error';
+    }
   }
 
   return (
@@ -190,15 +224,16 @@ const Chat = () => {
       {iscontinue &&
         chatHistory.map((message, index) => (
           <div key={index} className={`message ${message.type}`}>
-            <div className="avatar">{message.type === "bot" ? "A" : "B"}</div>
+            <div className="avatar"></div>
             <div className="message-bubble">{message.text}</div>
           </div>
         ))}
 
       {/* 現在の質問に対する選択肢を表示 */}
       {iscontinue && (
+        <div>
         <div className="message">
-          <div className="avatar">A</div>
+          <div className="avatar"></div>
           <div className="message-bubble">
             <div className="options">
               {questions[currentQuestionIndex].options.map((option, index) => (
@@ -213,30 +248,42 @@ const Chat = () => {
             </div>
           </div>
         </div>
+        </div>
       )}
 
 
-      {!iscontinue && (
+      {!iscontinue && result[resultIndex].type === "game" && (
+        <div>
+          {!iscontinue &&
+        chatHistory.map((message, index) => (
+          index !== chatHistory.length - 1 && (
+            <div key={index} className={`message ${message.type}`}>
+              <div className="avatar"></div>
+              <div className="message-bubble">{message.text}</div>
+            </div>
+          )
+        ))}
         <div className="message">
-          <div className="avatar">A</div>
+          <div className="avatar"></div>
           <div className="message-bubble">
             <div className="result">{result[resultIndex].description}</div>
           </div>
         </div>
+        </div>
       )}
 
-      {!iscontinue && (
+      {!iscontinue && result[resultIndex].type === "vps" && (
         <div className="message">
-          <div className="avatar">A</div>
+          <div className="avatar"></div>
           <div className="message-bubble">
             どのくらいの期間使い続ける予定ですか？
             <div className="options-term">
               <div className="option-term" onClick={() => handleTermonClick(1)}>1ヶ月</div>
-              <div className="option-term" onClick={() => handleTermonClick(3)}>3ヶ月</div>
-              <div className="option-term" onClick={() => handleTermonClick(6)}>6ヶ月</div>
-              <div className="option-term" onClick={() => handleTermonClick(12)}>12ヶ月</div>
-              <div className="option-term" onClick={() => handleTermonClick(24)}>24ヶ月</div>
-              <div className="option-term" onClick={() => handleTermonClick(36)}>36ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(2)}>3ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(3)}>6ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(4)}>12ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(5)}>24ヶ月</div>
+              <div className="option-term" onClick={() => handleTermonClick(6)}>36ヶ月</div>
             </div>
           </div>
         </div>
@@ -245,19 +292,77 @@ const Chat = () => {
       {isFinishedSetting && (
         <div className="message user">
         <div className="message-bubble">
-          {term}ヶ月
+          {termzlist[term-1].description}
         </div>
         <div className="avatar">B</div>
       </div>
       )}
 
       {isFinishedSetting && (
+        <div>
+          {result[resultIndex].type === "vps" && (
           <div className="message">
-          <div className="avatar">A</div>
-          <div className="message-bubble">
-            <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password"/></div>
-            <button className="submit-button" onClick={handleSendInfo}>送信</button>
+            <div className="avatar"></div>
+            <div className="message-bubble">
+              料金は{fare}円/月です
+            </div>
           </div>
+          )}
+
+          <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+            rootパスワードを設定してください
+            <br/>
+            （アルファベット大文字、小文字、数字、記号をそれぞれ含めてください。）
+            <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password" onChange={(e) => {setPassword(e.target.value)}}/></div>
+            <button className="submit-button" onClick={handleSendInfo}>申し込む</button>
+          </div>
+        </div>
+        <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+            申し込みをやめたい方は<Link to={"/server-list"}>こちら</Link>
+          </div>
+        </div>
+        {isSend && (
+          <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+            作成中…そのままでお待ちください
+          </div>
+          </div>
+        )}
+        {isCreated && (
+          <div>
+          <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+            サーバーが作成されました
+          </div>
+          </div>
+          <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+          <Link
+              to={"/server-list"}
+              className={`${location.pathname === '/server-list' ? 'active' : ''}`}
+
+            >
+              サーバー一覧を確認する
+            </Link>
+            </div>
+          </div>
+          </div>
+        )}
+        {isError && (
+          <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+            サーバーの作成に失敗しました
+          </div>
+          </div>
+        )}
         </div>
         )}
     </div>
