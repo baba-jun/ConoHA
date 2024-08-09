@@ -229,7 +229,7 @@ const Game = () => {
         <Chat/>
         )}
     <div className="right-area">
-      <PricingCard service={null} image={null} realFare={null} fare={null} plan={null} fareType={null}/>
+      <PricingCard type={"Game"} service={null} image={null} realFare={null} fare={null} plan={null} fareType={null}/>
     </div>
     </main>
   );

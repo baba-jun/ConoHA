@@ -206,7 +206,7 @@ main {
 @media screen and (max-width: 599px) {
   .service-grid, .os-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 160px);
+    grid-template-columns: repeat(auto-fit, 140px);
     gap: 20px;
     justify-items: center;
   }
@@ -273,8 +273,8 @@ main {
   color: black;
   border-radius: 20px;
   cursor: pointer;
-  height: 160px;
-  width: 160px;
+  height: 140px;
+  width: 140px;
   text-align: center;
   font-size: 25px;
   aspect-ratio: 1/1;

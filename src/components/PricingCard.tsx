@@ -5,6 +5,7 @@ import Fare from './Fare';
 
 
 type PricingCardProps = {
+  type: string;
   service: number | null;
   image: number | null;
   fareType: number | null;
@@ -44,7 +45,7 @@ const PricingCard = (props: PricingCardProps) => {
         throw new Error('Function not implemented.');
       } }/></div>}
       {isChatButton && <div className="chat-button"><Chat/></div>}
-      {!isFareButton && !isChatButton && (
+      {!isFareButton && !isChatButton && props.type === "VPS" && (
       <div className="pricing-card-wrapper-wrapper">
         <div className="pricing-card-wrapper">
           <table className="pricing-card">
