@@ -8,7 +8,11 @@ interface Price {
   RealPrice?: number;
 }
 
-const SelectionForm: React.FC = () => {
+type SelectionFormProps = {
+  handleFareButton: (value: boolean) => void;
+};
+
+const SelectionForm: React.FC<SelectionFormProps> = (props) => {
   const [selectedOS, setSelectedOS] = useState<string>('centos');
   const [selectedPlans, setSelectedPlans] = useState<string[]>([]);
   const [selectedStorages, setSelectedStorages] = useState<string[]>([]);
@@ -60,6 +64,7 @@ const SelectionForm: React.FC = () => {
   const handleClose = () => {
     setIsCloseButton(true);
     setIsNextButton(false);
+    props.handleFareButton(false)
   };
 
   const isButtonDisabled = selectedPlans.length === 0 || selectedStorages.length === 0;
