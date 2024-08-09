@@ -301,6 +301,8 @@ const Chat = () => {
           <div className="avatar"></div>
           <div className="message-bubble">
             rootパスワードを設定してください
+            <br/>
+            （アルファベット大文字、小文字、数字、記号をそれぞれ含めてください。）
             <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password" onChange={(e) => {setPassword(e.target.value)}}/></div>
             <button className="submit-button" onClick={handleSendInfo}>申し込む</button>
           </div>
