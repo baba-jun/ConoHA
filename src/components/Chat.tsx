@@ -231,6 +231,7 @@ const Chat = () => {
 
       {/* 現在の質問に対する選択肢を表示 */}
       {iscontinue && (
+        <div>
         <div className="message">
           <div className="avatar"></div>
           <div className="message-bubble">
@@ -247,19 +248,31 @@ const Chat = () => {
             </div>
           </div>
         </div>
+        </div>
       )}
 
 
-      {!iscontinue && (
+      {!iscontinue && result[resultIndex].type === "game" && (
+        <div>
+          {!iscontinue &&
+        chatHistory.map((message, index) => (
+          index !== chatHistory.length - 1 && (
+            <div key={index} className={`message ${message.type}`}>
+              <div className="avatar"></div>
+              <div className="message-bubble">{message.text}</div>
+            </div>
+          )
+        ))}
         <div className="message">
           <div className="avatar"></div>
           <div className="message-bubble">
             <div className="result">{result[resultIndex].description}</div>
           </div>
         </div>
+        </div>
       )}
 
-      {!iscontinue && (
+      {!iscontinue && result[resultIndex].type === "vps" && (
         <div className="message">
           <div className="avatar"></div>
           <div className="message-bubble">
