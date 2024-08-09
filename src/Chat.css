@@ -45,7 +45,7 @@
     width: 40px;
     height: 40px;
     margin-right: 10px;
-    background-image: url(../public/Chat/conoha-chan.png);
+    background-image: url(/Chat/conoha-chan.png);
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 50%;
@@ -59,7 +59,7 @@
 .message.user .avatar {
     margin-left: 10px;
     margin-right: 0;
-    background-image: url(../public/Chat/user.png);
+    background-image: url(/Chat/user.png);
 }
 
 .options, .options-term {
