@@ -3,10 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 const Header: React.FC = () => {
   const location = useLocation();
 
-  const randomInt = () => {
-  return Math.floor(Math.random() * 100);
-  }
-
   return (
     <header>
       <div className="logo">

@@ -204,7 +204,7 @@ const SelectionForm: React.FC = () => {
           <button id="close-button" className="close-button" onClick={handleClose}>閉じる</button>
         </div>
       </div>}
-      {isCloseButton && <div><PricingCard service={null} image={null} realFare={null} fare={null} plan={null}/></div>}
+      {isCloseButton && <div><PricingCard service={null} image={null} realFare={null} fare={null} plan={null} fareType={null}/></div>}
       {!isNextButton && !isCloseButton && (
         <div className="fare-container">
           <div className="section">
