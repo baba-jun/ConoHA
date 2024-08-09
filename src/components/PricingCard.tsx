@@ -52,7 +52,7 @@ const PricingCard = (props: PricingCardProps) => {
             <tbody>
               <tr>
                 <td className='itemName'>サービス</td>
-                <td>
+                <td className='itemValue'>
                   {
                     props.service != null && serviceList[props.service]
                   }
@@ -60,7 +60,7 @@ const PricingCard = (props: PricingCardProps) => {
               </tr>
               <tr>
                 <td className='itemName'>イメージタイプ</td>
-                <td>
+                <td className='itemValue'>
                   {
                     props.image != null && imageList[props.image]
                   }
@@ -68,7 +68,7 @@ const PricingCard = (props: PricingCardProps) => {
               </tr>
               <tr>
                 <td className='itemName'>CPU</td>
-                <td>
+                <td className='itemValue'>
                   {
                     props.plan != null && planList[props.plan].cpu
                   }
@@ -76,7 +76,7 @@ const PricingCard = (props: PricingCardProps) => {
               </tr>
               <tr>
                 <td className='itemName'>メモリ</td>
-                <td>
+                <td className='itemValue'>
                   {
                     props.plan != null && planList[props.plan].ram
                   }
@@ -84,7 +84,7 @@ const PricingCard = (props: PricingCardProps) => {
               </tr>
               <tr>
                 <td className='itemName'>SSD</td>
-                <td>
+                <td className='itemValue'>
                   {
                     props.plan != null && planList[props.plan].ssd
                   }
@@ -93,7 +93,7 @@ const PricingCard = (props: PricingCardProps) => {
               <tr>
                 <td className='itemName'>合計</td>
                 {
-                  props.fareType == 0 && <td>月額最大</td>
+                  props.fareType == 0 && <td className='max-price-per-month'>月額最大</td>
                 }
               </tr>
               <tr>
