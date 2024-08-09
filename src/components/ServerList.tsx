@@ -59,7 +59,7 @@ const ServerList = () => {
 
   return (
     <div className="container">
-      <h1>サーバー一覧 ({serverList.length}台)</h1>
+      <h2>サーバーリスト ({serverList.length}台)</h2>
       <table>
         <thead>
           <tr>
