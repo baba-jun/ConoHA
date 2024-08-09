@@ -40,7 +40,9 @@ const PricingCard = (props: PricingCardProps) => {
 
   return (
     <div>
-      {isFareButton && <div className="fare-button"><Fare/></div>}
+      {isFareButton && <div className="fare-button"><Fare handleFareButton={function (): void {
+        throw new Error('Function not implemented.');
+      } }/></div>}
       {isChatButton && <div className="chat-button"><Chat/></div>}
       {!isFareButton && !isChatButton && (
       <div className="pricing-card-wrapper-wrapper">
