@@ -87,21 +87,45 @@ const Chat = () => {
   const [isSend, setIsSend] = useState<boolean>(false);
   const [isCreated, setIsCreated] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const validatePassword = (password: string) => {
+    const minLength = 9;
+    const maxLength = 70;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[\^$+\-*/|()[\]{}.,?!_=&@~%#:;'"]/g.test(password);
+
+    if (password.length < minLength || password.length > maxLength) {
+      return "パスワードは9〜70文字で入力してください。";
+    }
+    if (!hasUpperCase) {
+      return "パスワードには大文字を含めてください。";
+    }
+    if (!hasLowerCase) {
+      return "パスワードには小文字を含めてください。";
+    }
+    if (!hasNumber) {
+      return "パスワードには数字を含めてください。";
+    }
+    if (!hasSpecialChar) {
+      return "パスワードには記号を含めてください。";
+    }
+    return "";
+  };
 
   const handleOptionClick = (option: string) => {
-    // ユーザーの回答をチャット履歴に追加
     setChatHistory((prevChatHistory) => [
       ...prevChatHistory,
       { type: "user", text: option },
     ]);
 
 
-    // 選択された回答を保存
     setAnswers((prevAnswers) => [...prevAnswers, option]);
 
     let nextQuestionIndex = currentQuestionIndex + 1;
 
-    // 次の質問を設定（条件に応じて分岐）
     switch (option) {
       case "Webサイトの公開":
       nextQuestionIndex = 1;
@@ -153,7 +177,6 @@ const Chat = () => {
       break;
     }
 
-    // 次の質問をチャット履歴に追加
     if (iscontinue && nextQuestionIndex < questions.length) {
       setChatHistory((prevChatHistory) => [
         ...prevChatHistory,
@@ -171,7 +194,14 @@ const Chat = () => {
   };
 
   const handleSendInfo = async () => {
+    const validationMessage = validatePassword(password);
+    if (validationMessage) {
+      setErrorMessage(validationMessage);
+      return;
+    }
+
     setIsSend(true);
+    setErrorMessage("");
 
     try {
       const response = await fetch(`${API_URL}/api/server/create`, {
@@ -231,7 +261,6 @@ const Chat = () => {
 
       {/* 現在の質問に対する選択肢を表示 */}
       {iscontinue && (
-        <div>
         <div className="message">
           <div className="avatar"></div>
           <div className="message-bubble">
@@ -248,31 +277,18 @@ const Chat = () => {
             </div>
           </div>
         </div>
-        </div>
       )}
 
-
-      {!iscontinue && result[resultIndex].type === "game" && (
-        <div>
-          {!iscontinue &&
-        chatHistory.map((message, index) => (
-          index !== chatHistory.length - 1 && (
-            <div key={index} className={`message ${message.type}`}>
-              <div className="avatar"></div>
-              <div className="message-bubble">{message.text}</div>
-            </div>
-          )
-        ))}
+      {!iscontinue && (
         <div className="message">
           <div className="avatar"></div>
           <div className="message-bubble">
             <div className="result">{result[resultIndex].description}</div>
           </div>
         </div>
-        </div>
       )}
 
-      {!iscontinue && result[resultIndex].type === "vps" && (
+      {!iscontinue && (
         <div className="message">
           <div className="avatar"></div>
           <div className="message-bubble">
@@ -316,13 +332,10 @@ const Chat = () => {
             <br/>
             （アルファベット大文字、小文字、数字、記号をそれぞれ含めてください。）
             <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password" onChange={(e) => {setPassword(e.target.value)}}/></div>
+            {errorMessage && (
+              <div className="error-message">{errorMessage}</div>
+            )}
             <button className="submit-button" onClick={handleSendInfo}>申し込む</button>
-          </div>
-        </div>
-        <div className="message">
-          <div className="avatar"></div>
-          <div className="message-bubble">
-            申し込みをやめたい方は<Link to={"/server-list"}>こちら</Link>
           </div>
         </div>
         {isSend && (
@@ -346,8 +359,7 @@ const Chat = () => {
           <div className="message-bubble">
           <Link
               to={"/server-list"}
-              className={`${location.pathname === '/server-list' ? 'active' : ''}`}
-
+              className={'active'}
             >
               サーバー一覧を確認する
             </Link>
