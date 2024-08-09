@@ -212,11 +212,13 @@ main {
   }
 }
 
-.fare-grid{
+.fare-grid {
   display: flex;
-  justify-items: left;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  overflow-x: auto; /* 横スクロールを許可 */
+  -webkit-overflow-scrolling: touch; /* iOS用のスムーズスクロール */
 }
-
 
 .service-item, .os-item {
   border: 1px solid #e0e0e0;
@@ -251,8 +253,9 @@ main {
   display: none;
 }
 
-.radio-button-landscape{
-  width: 14.26%;
+.radio-button-landscape {
+  flex: 1 0 auto;
+  margin: 0 2px; /* 隣接するボタン間の間隔を狭く */
 }
 
 .radio-button-landscape input {
@@ -277,8 +280,7 @@ main {
   aspect-ratio: 1/1;
 }
 
-.radio-button-landscape label{
-  display: inline-block;
+.radio-button-landscape label {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -286,15 +288,27 @@ main {
   color: black;
   border-radius: 5px;
   cursor: pointer;
-  padding: 1rem 0 1rem 0;
+  padding: 0.5rem;
   text-align: center;
-  font-size: 18px;
   font-weight: 600;
+  height: 60px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 1024px) {
+  .radio-button-landscape label {
+    font-size: 14px;
+  }
 }
 
 @media screen and (max-width: 599px) {
-  .radio-button-landscape label{
-    font-size: 15px;
+  .radio-button-landscape label {
+    font-size: 12px;
+    padding: 0.25rem;
+    height: 50px;
   }
 }
 
