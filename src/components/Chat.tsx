@@ -83,6 +83,9 @@ const Chat = () => {
   const [password, setPassword] = useState<string>("");
   const [term, setTerm] = useState<number>(0);
   const [fare, setFare] = useState<number>(0);
+  const [isSend, setIsSend] = useState<boolean>(false);
+  const [isCreated, setIsCreated] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const handleOptionClick = (option: string) => {
     // ユーザーの回答をチャット履歴に追加
@@ -167,6 +170,7 @@ const Chat = () => {
   };
 
   const handleSendInfo = async () => {
+    setIsSend(true);
 
     try {
       const response = await fetch(`${API_URL}/api/server/create`, {
@@ -183,10 +187,13 @@ const Chat = () => {
       });
 
       if (!response.ok) {
+        setIsError(true);
         throw new Error(`HTTP error! status: ${response.status}`);
+      }else if(response.ok){
+        setIsCreated(true);
       }
 
-      const data = await response.json();
+      const data = await response.json()
       console.log("Server response:", data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -293,11 +300,35 @@ const Chat = () => {
           <div className="message">
           <div className="avatar"></div>
           <div className="message-bubble">
-            ルートパスワードを入力してください
+            rootパスワードを設定してください
             <div className="result"><input type="password" className="root-password-input" id="root-password" name="root-password" onChange={(e) => {setPassword(e.target.value)}}/></div>
             <button className="submit-button" onClick={handleSendInfo}>申し込む</button>
           </div>
         </div>
+        {isSend && (
+          <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+            作成中…そのままでお待ちください
+          </div>
+          </div>
+        )}
+        {isCreated && (
+          <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+            サーバーが作成されました
+          </div>
+          </div>
+        )}
+        {isError && (
+          <div className="message">
+          <div className="avatar"></div>
+          <div className="message-bubble">
+            サーバーの作成に失敗しました
+          </div>
+          </div>
+        )}
         </div>
         )}
     </div>
