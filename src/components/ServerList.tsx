@@ -88,7 +88,7 @@ const ServerList = () => {
                 <>
                   <td>{server.ip_address}</td>
                   <td>
-                    {server.flavor_name.replace(/.*-.*-c(\d+)m(\d+)/, "CPU $1core/メモリ $2MB ")}
+                    {server.flavor_name.replace(/.*-.*-c(\d+)m(\d+)/, "CPU $1core/メモリ $2GB ")}
                     <span className={server.os_name?.includes("win") ? "tag windows" : "tag vps"}>
                       {server.os_name?.includes("win") ? "Windows" : server.os_name.replace(/^[^-]*-(.*)-[^-]*$/, "$1")}
                     </span>
